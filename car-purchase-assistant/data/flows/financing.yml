@@ -1,0 +1,12 @@
+flows:
+  calculate_loan:
+    description: calculate loan details for a car purchase.
+    steps:
+      - collect: loan_term
+        description: The desired loan term in months (e.g., 36, 48, 60).
+      - action: action_provide_financing_options
+      - action: utter_financing_initial
+      - collect: down_payment_amount
+        description: The amount the user wants to put down as a down payment. The value of the slot should be a valid float.
+      - action: action_provide_financing_options
+      - action: utter_financing_with_dp

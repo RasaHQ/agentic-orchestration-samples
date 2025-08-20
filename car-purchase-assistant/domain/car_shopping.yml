@@ -1,0 +1,82 @@
+version: "3.1"
+
+actions:
+  - action_car_shopping
+
+slots:
+  car_price:
+    type: float
+    mappings:
+      - type: from_llm
+    initial_value: 10000.0
+  car_type:
+    type: categorical
+    mappings:
+      - type: from_llm
+    values:
+      - "compact SUV"
+      - "sedan"
+      - "hatchback"
+      - "EV"
+  new_or_used:
+    type: text
+    mappings:
+      - type: from_llm
+  price_range_min:
+    type: float
+    mappings:
+      - type: from_llm
+    initial_value: 0.0
+  price_range_max:
+    type: float
+    mappings:
+      - type: from_llm
+  chosen_car_model:
+    type: text
+    mappings:
+      - type: controlled
+  dealer_location:
+    type: text
+    mappings:
+      - type: controlled
+  car_features:
+    type: text
+    mappings:
+      - type: controlled
+  cars_under_consideration:
+    type: any
+    mappings:
+      - type: controlled
+    initial_value: []
+  car_shopping_active:
+    type: bool
+    initial_value: false
+  car_shopping_task_id:
+    type: text
+  car_shopping_context_id:
+    type: text
+  user_message:
+    type: text
+  search_additional_info:
+    type: text
+    initial_value: "car"
+
+responses:
+  utter_starting_car_search:
+    - text: "I'll help you find a car! Let me connect to our car search system..."
+  utter_car_search_completed:
+    - text: "Car search completed! Is there anything else I can help you with?"
+  utter_ask_car_type:
+    - text: "What type of car are you looking for? Sedan, compact SUV, or EV?"
+  utter_ask_new_or_used:
+    - text: "Are you looking for a new or used car?"
+  utter_ask_price_range_min:
+    - text: "What's the minimum price you're looking at?"
+  utter_ask_price_range_max:
+    - text: "What's your budget?"
+  utter_matching_cars:
+    - text: "Okay, I found a {chosen_car_model} at €{car_price} at {dealer_location}. Does that sound suitable?"
+  utter_no_matches_found:
+    - text: "unfortunately I don't see a {new_or_used} {car_type} under {price_range_max}."
+  utter_car_search_error:
+    - text: "I'm sorry, I couldn't find a car matching your criteria: {car_search_error}"

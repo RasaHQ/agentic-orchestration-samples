@@ -1,0 +1,73 @@
+version: "3.1"
+
+actions:
+  - query_available_appointments
+  - llm_appointment_wrapper
+
+slots:
+  user_availability_start_date:
+    type: text
+    initial_value: any
+  user_availability_end_date:
+    type: text
+    initial_value: any
+  user_availability_start_time:
+    type: text
+    initial_value: any
+  user_availability_end_time:
+    type: text
+    initial_value: any
+  preferred_doctor:
+    type: categorical
+    values:
+      - dr. smith
+      - dr. schmidt
+      - dr. anthony
+      - any
+    initial_value: any
+  available_appointment_slots:
+    type: text
+    initial_value: all
+  selected_appointment_slot:
+    type: text
+  booking_complete:
+    type: bool
+    initial_value: false
+  non_available_days:
+    type: text
+    initial_value: any
+  user_confirmation:
+    type: bool
+
+responses:
+  utter_ask_user_availability_start_date:
+    - text: From what date are you available?
+  utter_ask_availability_end_date:
+    - text: Until what date are you available?
+  utter_ask_availability_start_time:
+    - text: Do you have an hour from which you are available on that day?
+  utter_ask_availability_end_time:
+    - text: Do you have an hour until when you are available on that day?
+  utter_ask_preferred_doctor:
+    - text: Do you have a preferred doctor that you want to see?
+  utter_ask_available_appointment_slots:
+    - text: Here are the available time slots
+  utter_ask_user_selected_time_slot:
+    - text: What's the most convenient time slot for you?
+  utter_confirm_query:
+    - text: "Okay I am going to look for an appointment with the following params-\nstart_date: {user_availability_start_date}\nend_date: {user_availability_end_date}\nstart_time: {user_availability_start_time}\nend_time: {user_availability_end_time}\npreferred_doc: {preferred_doctor}\nnon_available_days: {non_available_days}"
+  utter_appointment_confirmed:
+    - text: Okay I have booked that one for you!
+  utter_cancelling:
+    - text: "Okay I'll hold off on booking that for you!"
+  utter_available_appointments:
+    - text: "Here are the available appointments: {available_appointment_slots}"
+  utter_ask_non_available_days:
+    - text: "What days are you not available on"
+  utter_ask_user_confirmation:
+    - text: Are you sure you want to book the {selected_appointment_slot}?
+      buttons:
+        - payload: "/SetSlots(user_confirmation=true)"
+          title: Yes
+        - payload: "/SetSlots(user_confirmation=false)"
+          title: No, cancel

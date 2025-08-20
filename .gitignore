@@ -1,0 +1,7 @@
+.rasa/
+__pycache__
+.idea
+models
+actions/__init__.py
+actions/__pycache__/
+.history

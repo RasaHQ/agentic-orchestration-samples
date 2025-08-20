@@ -1,0 +1,22 @@
+flows:
+  schedule_new_appointment:
+    description: help user schedule a doctor appointment
+    name: schedule new appointment
+    steps:
+      - call: appointment_selector
+        exit_if:
+          - slots.selected_appointment_slot is not null
+      - collect: user_confirmation
+        ask_before_filling: true
+        description: Confirmation from the user whether the user wants to go ahead with the selected time slot
+        next:
+          - if: slots.user_confirmation == True
+            then:
+              - action: utter_appointment_confirmed
+                next: END
+          - else:
+              - action: utter_cancelling
+                next: END
+      # ideally the appointment_selector agent should only return a
+      # chosen slot and then the flow should have a collect step to get user confirmation
+      # followed by a call to a tool to make the booking.

@@ -1,5 +1,6 @@
 flows:
   calculate_loan:
+    name: "calculate loan"
     description: calculate loan details for a car purchase.
     steps:
       - collect: loan_term

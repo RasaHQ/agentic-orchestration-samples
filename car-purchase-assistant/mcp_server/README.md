@@ -1,6 +1,7 @@
 # MCP Web Search Server
 
-A standalone MCP (Model Context Protocol) server that provides web search capabilities via the Tavily API.
+A standalone MCP (Model Context Protocol) server that provides web search capabilities
+via the [Tavily API](https://www.tavily.com/).
 
 ## What This MCP Server Does
 
@@ -14,25 +15,6 @@ This MCP server acts as a bridge between AI agents and real-time web search func
 
 ## Setup
 
-### Option 1: Using uv (Recommended)
-
-1. Install dependencies:
-```bash
-uv sync
-```
-
-2. Set your Tavily API key:
-```bash
-export TAVILY_API_KEY=your_api_key_here
-```
-
-3. Run the server:
-```bash
-uv run .
-```
-
-### Option 2: Using pip (Alternative)
-
 1. Install dependencies:
 ```bash
 pip install -e .
@@ -43,7 +25,7 @@ pip install -e .
 export TAVILY_API_KEY=your_api_key_here
 ```
 
-3. Run the server:
+3. Run the server from the root directory (`car-purchase-assistant`):
 ```bash
 python -m mcp_server
 ```

@@ -6,14 +6,11 @@ flows:
       - id: run_car_shopping
         action: action_car_shopping
         next:
-          - if: slots.car_shopping_active == true
+          - if: slots.dealer_found is True
             then:
-              - action: action_listen
-                next:
-                  - if: slots.car_shopping_active == false
-                    then: END
-                  - else: run_car_shopping
+              - action: utter_dealer_found
+                next: END
           - else:
-            - noop: true
+            - action: utter_dealer_not_found
               next: END
 

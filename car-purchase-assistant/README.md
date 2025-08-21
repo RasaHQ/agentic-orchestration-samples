@@ -67,8 +67,6 @@ To run the car purchase assistant, follow these steps in order:
    For detailed setup and configuration instructions, see the [MCP Server README](mcp_server/README.md).
 
    ```bash
-   cd mcp_server
-   pip install -e .
    python -m mcp_server
    ```
    Leave this terminal open, as the MCP server must keep running.

@@ -1,11 +1,10 @@
 [project]
-name = "car-agent-a2a-demo"
+name = "car-purchase-assistant"
 version = "0.1.0"
-description = "A demonstration of Agent-to-Agent (A2A) communication, Model Context Protocol (MCP) integration, and CALM orchestration for end-to-end car buying"
+description = "A car purchase assistant using MCP."
 requires-python = ">=3.11,<3.13"
 dependencies = [
     "rasa-pro==3.14.0.dev2",
-    "a2a-sdk==0.2.8",
     "openai==1.68.2",
     "mcp==1.12.0",
     "httpx==0.28.1",

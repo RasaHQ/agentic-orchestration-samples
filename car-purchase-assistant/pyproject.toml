@@ -6,7 +6,7 @@ requires-python = ">=3.10,<3.13"
 dependencies = [
     "rasa-pro==3.14.0.dev2",
     "fastmcp>=2.0.0,<3.0.0",
-    "tavily-python>=0.3.0,<0.4.0",
+    "tavily-python>=0.3.0,<1.0.0",
 ]
 
 [project.scripts]

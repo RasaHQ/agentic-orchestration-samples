@@ -13,23 +13,6 @@ This MCP server acts as a bridge between AI agents and real-time web search func
 - **Manages rate limiting and error handling** for the search API
 - **Provides a standardized interface** for agents to access web search capabilities
 
-## Setup
-
-1. Install dependencies:
-```bash
-pip install -e .
-```
-
-2. Set your Tavily API key:
-```bash
-export TAVILY_API_KEY=your_api_key_here
-```
-
-3. Run the server from the root directory (`car-purchase-assistant`):
-```bash
-python -m mcp_server
-```
-
 ## Tools
 
 ### `tavily_search`

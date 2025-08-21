@@ -6,3 +6,5 @@ actions/__init__.py
 actions/__pycache__/
 .history
 .ruff_cache
+.python-version
+.venv

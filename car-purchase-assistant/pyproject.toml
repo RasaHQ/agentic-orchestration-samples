@@ -2,14 +2,11 @@
 name = "car-purchase-assistant"
 version = "0.1.0"
 description = "A car purchase assistant using MCP."
-requires-python = ">=3.11,<3.13"
+requires-python = ">=3.10,<3.13"
 dependencies = [
     "rasa-pro==3.14.0.dev2",
-    "openai==1.68.2",
-    "mcp==1.12.0",
-    "httpx==0.28.1",
-    "uvicorn==0.34.3",
-    "deprecated>=1.2.0",
+    "fastmcp>=2.0.0,<3.0.0",
+    "tavily-python>=0.3.0,<0.4.0",
 ]
 
 [project.scripts]

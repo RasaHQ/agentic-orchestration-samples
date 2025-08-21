@@ -63,8 +63,7 @@ directory.
 To run the car purchase assistant, follow these steps in order:
 
 1. **Start the MCP server**
-   Open a terminal, navigate to the `mcp_server` directory, and start the server.
-   For detailed setup and configuration instructions, see the [MCP Server README](mcp_server/README.md).
+   Open a terminal and start the MCP server.
 
    ```bash
    python -m mcp_server

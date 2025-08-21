@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-import asyncio
 import sys
-from mcp.server.fastmcp import FastMCP
-from tools.tavily import TavilySearchTool
+from fastmcp import FastMCP
+from .tools.tavily import TavilySearchTool
 
 # Create FastMCP server as global variable for CLI discovery
 mcp = FastMCP("Web Search Server")
@@ -41,10 +40,8 @@ def main():
 
     print(f"Starting Web Search MCP server on http://localhost:{port}", file=sys.stderr)
 
-    # Run with uvicorn directly for custom port
-    import uvicorn
-
-    uvicorn.run(mcp.streamable_http_app(), host="localhost", port=port)
+    # Run with streamable HTTP transport (newer, more reliable)
+    mcp.run(transport="http", host="0.0.0.0", port=8000, path="/mcp")
 
 
 if __name__ == "__main__":

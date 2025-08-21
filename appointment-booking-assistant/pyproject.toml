@@ -9,7 +9,7 @@ description = "An appointment booking assistant using MCP."
 requires-python = ">=3.10,<3.13"
 dependencies = [
     "rasa-pro==3.14.0.dev2",
-    "mcp==1.12.0",
+    "fastmcp>=2.0.0,<3.0.0",
 ]
 
 [tool.hatch.build.targets.wheel]

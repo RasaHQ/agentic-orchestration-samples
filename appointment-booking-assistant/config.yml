@@ -6,12 +6,11 @@ language: en
 # This default value must be replaced with a unique assistant name within your deployment
 assistant_id: 20250711-005358-oscillating-volcano
 
-language: en
 pipeline:
 - name: CompactLLMCommandGenerator
   llm:
     model_group: openai-gpt-4o
-    prompt_template: prompt_templates/no_search_chitchat.jinja2
+  prompt_template: prompt_templates/no_search_chitchat.jinja2
   flow_retrieval:
     active: false
 

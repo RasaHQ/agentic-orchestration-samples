@@ -38,6 +38,10 @@ slots:
     initial_value: any
   user_confirmation:
     type: bool
+  appointment_confirmed:
+    type: bool
+    mappings:
+      - type: controlled
 
 responses:
   utter_ask_user_availability_start_date:
@@ -56,8 +60,6 @@ responses:
     - text: What's the most convenient time slot for you?
   utter_confirm_query:
     - text: "Okay I am going to look for an appointment with the following params-\nstart_date: {user_availability_start_date}\nend_date: {user_availability_end_date}\nstart_time: {user_availability_start_time}\nend_time: {user_availability_end_time}\npreferred_doc: {preferred_doctor}\nnon_available_days: {non_available_days}"
-  utter_appointment_confirmed:
-    - text: Okay I have booked that one for you!
   utter_cancelling:
     - text: "Okay I'll hold off on booking that for you!"
   utter_available_appointments:
@@ -71,3 +73,5 @@ responses:
           title: Yes
         - payload: "/SetSlots(user_confirmation=false)"
           title: No, cancel
+  utter_appointment_confirmed:
+    - text: "Okay I have booked that one for you!"

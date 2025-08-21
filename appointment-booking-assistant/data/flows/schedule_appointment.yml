@@ -11,12 +11,21 @@ flows:
         description: Confirmation from the user whether the user wants to go ahead with the selected time slot
         next:
           - if: slots.user_confirmation == True
-            then:
-              - action: utter_appointment_confirmed
-                next: END
+            then: call_book_appointment
           - else:
               - action: utter_cancelling
                 next: END
-      # ideally the appointment_selector agent should only return a
-      # chosen slot and then the flow should have a collect step to get user confirmation
-      # followed by a call to a tool to make the booking.
+      - id: call_book_appointment
+        call: book_appointment
+        mcp_server: appointment-booking
+        mapping:
+          input:
+            - param: appointment_slot
+              slot: selected_appointment_slot
+          output: appointment_confirmed
+            # - slot: appointment_confirmed
+            #   result_key: result.appointment_confirmed
+        next: confirm_appointment
+      - id: confirm_appointment
+        action: utter_appointment_confirmed
+        next: END

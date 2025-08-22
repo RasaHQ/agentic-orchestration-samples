@@ -24,7 +24,7 @@ flows:
               slot: selected_appointment_slot
           output:
             - slot: appointment_confirmed
-              result_key: result.appointment_confirmed
+              result_key: result.structuredContent.appointment_confirmed
         next: confirm_appointment
       - id: confirm_appointment
         action: utter_appointment_confirmed

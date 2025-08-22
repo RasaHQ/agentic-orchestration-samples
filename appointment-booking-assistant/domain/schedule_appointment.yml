@@ -25,4 +25,4 @@ responses:
   utter_cancelling:
     - text: "Okay I'll hold off on booking that for you!"
   utter_appointment_confirmed:
-    - text: "Okay I have booked that one for you!"
+    - text: "Okay I have booked the slot '{selected_appointment_slot}' for you!"

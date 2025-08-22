@@ -5,7 +5,6 @@ Provides a tool to query available appointment slots based on user preferences.
 Much simpler implementation using FastMCP library.
 """
 
-import asyncio
 import json
 from datetime import datetime, timedelta, date
 import random

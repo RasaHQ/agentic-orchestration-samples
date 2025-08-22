@@ -62,12 +62,9 @@ directory.
 To run the appointment booking assistant, follow these steps in order:
 
 1. **Start the MCP server**
-   Open a terminal, navigate to the `mcp_server` directory, and start the server:
-   ```bash
-   cd mcp_server
-   python appointment_server_http.py
-   ```
-   Leave this terminal open, as the MCP server must keep running.
+
+To start the MCP server, follow the instructions provided in the `mcp_server/README.md`
+file located in the `mcp_server` directory.
 
 2. **Start the action server**
    In a new terminal window (from the project root directory), run:

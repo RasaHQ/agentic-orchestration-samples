@@ -29,3 +29,33 @@ The MCP server (`mcp_server/appointment_server_http.py`) provides a powerful app
 - **JSON Responses**: Returns structured JSON with success/error handling
 - **Error Handling**: Comprehensive error handling for invalid date/time formats
 - **Realistic Constraints**: Generates realistic appointment slots considering business rules
+
+## Setup Instructions
+
+Follow these steps to get the MCP server up and running:
+
+### Requirements
+
+- **Python 3.10 or higher** is required.
+
+### 1. Create and Activate a Virtual Environment
+
+```bash
+python -m venv mcp-server-venv
+source activate mcp-server-venv/bin/activate
+```
+
+### Install FastMCP
+
+```bash
+pip install fastmcp==2.11.3
+```
+
+### Start the server
+
+```bash
+python run appointment_server_http.py
+```
+
+Keep the terminal open.
+

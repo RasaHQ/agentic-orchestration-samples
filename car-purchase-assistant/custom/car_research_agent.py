@@ -12,7 +12,7 @@ from rasa.shared.core.events import SlotSet
 
 
 class CarResearchAgent(MCPOpenAgent):
-    @staticmethod
+
     def get_custom_tool_definitions() -> List[Dict[str, Any]]:
         car_recommend_tool = {
             "type": "function",
@@ -37,7 +37,7 @@ class CarResearchAgent(MCPOpenAgent):
                 },
                 "strict": True,
             },
-            "tool_executor": recommend_cars,
+            "tool_executor": self.recommend_cars,
         }
         return [car_recommend_tool]
 

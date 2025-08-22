@@ -13,7 +13,7 @@ from rasa.shared.core.events import SlotSet
 
 class CarResearchAgent(MCPOpenAgent):
 
-    def get_custom_tool_definitions() -> List[Dict[str, Any]]:
+    def get_custom_tool_definitions(self) -> List[Dict[str, Any]]:
         car_recommend_tool = {
             "type": "function",
             "function": {
@@ -56,9 +56,12 @@ class CarResearchAgent(MCPOpenAgent):
         )
 
     async def recommend_cars(
-        self, search_results: str, max_recommendations: int
+        self, arguments: Dict[str, Any]
     ) -> AgentToolResult:
         """Analyze search results and return structured car recommendations."""
+        search_results = arguments["search_results"]
+        max_recommendations = arguments["max_recommendations"]
+
         try:
             llm_client = self.get_llm_client()
             response = await llm_client.chat.completions.create(

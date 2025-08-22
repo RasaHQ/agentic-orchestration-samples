@@ -5,3 +5,8 @@ slots:
     type: any
     mappings:
       - type: controlled
+
+  confirmation:
+    type: bool
+    mappings:
+      - type: from_llm

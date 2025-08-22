@@ -54,7 +54,7 @@ pip install fastmcp==2.11.3
 ### Start the server
 
 ```bash
-python run appointment_server_http.py
+python appointment_server_http.py
 ```
 
 Keep the terminal open.

@@ -22,9 +22,9 @@ flows:
           input:
             - param: appointment_slot
               slot: selected_appointment_slot
-          output: appointment_confirmed
-            # - slot: appointment_confirmed
-            #   result_key: result.appointment_confirmed
+          output:
+            - slot: appointment_confirmed
+              result_key: result.appointment_confirmed
         next: confirm_appointment
       - id: confirm_appointment
         action: utter_appointment_confirmed

@@ -13,6 +13,7 @@ from typing import Any, Dict, List, Optional, Union
 
 from fastmcp import FastMCP
 
+
 # Create FastMCP server
 mcp = FastMCP("Appointment Booking Server")
 
@@ -128,7 +129,7 @@ def query_available_appointments(
     user_availability_end_time: str,
     preferred_doctor: str,
     non_available_days: str,
-) -> str:
+) -> Dict[str, Any]:
     """
     Query available appointment slots based on user preferences.
     Returns up to 10 available appointment slots within the specified criteria.
@@ -262,42 +263,36 @@ def query_available_appointments(
                 "No appointments are available in your specified time range. Please try a different date or time."
             )
 
-        return json.dumps(result, indent=2)
+        return result
 
     except ValueError as e:
-        return json.dumps(
-            {
+        return {
                 "success": False,
                 "error": "I couldn't understand the date or time format. Please use dd/mm/yyyy for dates and HH:MM for times.",
                 "available_slots": [],
                 "search_criteria": {},
-            },
-            indent=2,
-        )
+            }
     except Exception as e:
-        return json.dumps(
-            {
+        return {
                 "success": False,
                 "error": f"Sorry, there was an error finding appointments: {str(e)}",
                 "available_slots": [],
                 "search_criteria": {},
-            },
-            indent=2,
-        )
-
+            }
 
 @mcp.tool()
-def book_appointment(appointment_slot: str) -> str:
+def book_appointment(appointment_slot: str) -> Dict[str, Any]:
     """
     Book an appointment at the specified time.
     """
     # mock the booking process
-    result: Dict[str, Any] = {
+    return {
         "success": True,
         "appointment_confirmed": True,
         "message": f"Appointment booked for {appointment_slot}",
     }
-    return json.dumps(result, indent=2)
+
+    return result
 
 
 if __name__ == "__main__":

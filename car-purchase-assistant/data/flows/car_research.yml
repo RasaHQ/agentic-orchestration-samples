@@ -1,6 +1,0 @@
-flows:
-  car_research:
-    name: "car research"
-    description: Help the user choose a car to buy by searching the web, and answer questions about specific cars as well as generic car-related questions. Trigger this proactively if the user isn't clear which car they want.
-    steps:
-      - call: research_new_cars

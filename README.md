@@ -24,17 +24,6 @@ on user preferences and constraints. This sample showcases:
 
 📖 **[View README](appointment-booking-assistant/README.md)**
 
-### 2. Car Purchase Assistant
-A demonstration of advanced agentic orchestration for complex, multi-phase workflows.
-This sample showcases:
-- **MCP-Powered Research**: Uses an agent that leverages an MCP server to perform
-real-time car research and help users find suitable car models.
-- **End-to-End Workflow**: Guides users through research, shopping, and financing
-phases within a single conversational interface.
-- **Context Management**: Maintains and transfers relevant information seamlessly
-across all phases of the car buying journey.
-
-📖 **[View README](car-purchase-assistant/README.md)**
 
 ## Getting Started
 

@@ -3,8 +3,8 @@
 This car purchase assistant demonstrates advanced agentic orchestration patterns for
 complex, multi-phase workflows:
 
-**Primary Use Case**: Shows how to orchestrate a specialized agent (research) through
-a single conversational interface, demonstrating end-to-end workflow management.
+**Primary Use Case**: Shows how to orchestrate a specialized agents (research, shopping)
+through a single conversational interface, demonstrating end-to-end workflow management.
 
 **Context-Aware Orchestration**: Demonstrates how to maintain context across different
 phases, with structured data flow between research results, shopping decisions, and
@@ -21,6 +21,14 @@ search APIs, allowing it to retrieve up-to-date information for car research and
 decision-making.
 
 For setup and technical details, see the [MCP Server README](mcp_server/README.md).
+
+## A2A Server
+
+The assistant also includes an A2A (Agent-to-Agent) server that powers the car shopping
+and purchase workflow. This server provides structured car search and recommendation
+capabilities, enabling the assistant to help users find vehicles and connect with dealers.
+
+For more details on its features and configuration, see the [A2A Server README](a2a_server/README.md).
 
 ## Setup
 
@@ -70,19 +78,27 @@ To run the car purchase assistant, follow these steps in order:
    ```
    Leave this terminal open, as the MCP server must keep running.
 
-2. **Start the action server**
+2. **Start the A2A server**
+   Open a terminal and start the MCP server.
+
+   ```bash
+   python -m a2a_server
+   ```
+   Leave this terminal open, as the A2A server must keep running.
+
+3. **Start the action server**
    In a new terminal window (from the project root directory), run:
    ```bash
    rasa run actions
    ```
 
-3. **Train the Rasa model**
+4. **Train the Rasa model**
    In another terminal (from the project root), train the assistant:
    ```bash
    rasa train
    ```
 
-4. **Run the assistant in interactive mode**
+5. **Run the assistant in interactive mode**
    Still in the project root, start the assistant:
    ```bash
    rasa inspect
@@ -91,4 +107,4 @@ To run the car purchase assistant, follow these steps in order:
 
 **Note:**
 - Make sure your `.env` file is set up with the required API keys before starting.
-- The first two steps should be run in separate terminals so all services remain active.
+- The first three steps should be run in separate terminals so all services remain active.

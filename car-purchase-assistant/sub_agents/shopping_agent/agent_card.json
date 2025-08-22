@@ -1,0 +1,26 @@
+{
+  "name": "Car Shopping Agent",
+  "description": "This agent helps users shop for cars by connecting them with dealers and facilitating purchases",
+  "url": "http://localhost:10002/",
+  "version": "1.0.0",
+  "defaultInputModes": ["text", "text/plain"],
+  "defaultOutputModes": ["text", "text/plain", "application/json"],
+  "capabilities": {
+    "streaming": true
+  },
+  "skills": [
+    {
+      "id": "search_cars",
+      "name": "Car Shopping Tool",
+      "description": "Helps users shop for cars by connecting with dealers, getting quotes, and facilitating purchases based on their preferences.",
+      "tags": ["car_shopping", "automotive", "dealer", "purchase"],
+      "examples": [
+        "I'm looking for a new compact SUV between $25,000 and $30,000",
+        "Find me a used sedan under $25,000",
+        "I want to buy a car",
+        "Help me purchase a Toyota Camry",
+        "Connect me with a dealer for this car"
+      ]
+    }
+  ]
+}

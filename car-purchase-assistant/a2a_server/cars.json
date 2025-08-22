@@ -1,0 +1,298 @@
+[
+  {
+    "model": "2025 Skoda Kamiq",
+    "type": "compact SUV",
+    "price": 28000,
+    "new_or_used": "new",
+    "dealer_location": "Auto Zentrum Berlin",
+    "features": ["panoramic sunroof", "heated seats", "parking assist"]
+  },
+  {
+    "model": "2024 VW Golf",
+    "type": "hatchback",
+    "price": 27000,
+    "new_or_used": "new",
+    "dealer_location": "VW Autohaus",
+    "features": ["adaptive cruise control", "LED headlights"]
+  },
+  {
+    "model": "2023 Toyota Corolla",
+    "type": "sedan",
+    "price": 22000,
+    "new_or_used": "new",
+    "dealer_location": "Toyota City Motors",
+    "features": ["lane keeping assist", "rear view camera"]
+  },
+  {
+    "model": "2022 BMW 3 Series",
+    "type": "sedan",
+    "price": 26000,
+    "new_or_used": "used",
+    "dealer_location": "Premium Used Cars",
+    "features": ["leather interior", "sports package"]
+  },
+  {
+    "model": "2023 Tesla Model 3",
+    "type": "EV",
+    "price": 42000,
+    "new_or_used": "new",
+    "dealer_location": "Tesla Showroom Mitte",
+    "features": ["autopilot", "fast charging"]
+  },
+  {
+    "model": "2021 Renault Clio",
+    "type": "hatchback",
+    "price": 14500,
+    "new_or_used": "used",
+    "dealer_location": "Budget Cars Berlin",
+    "features": ["bluetooth", "parking sensors"]
+  },
+  {
+    "model": "2024 Mercedes-Benz C-Class",
+    "type": "sedan",
+    "price": 45000,
+    "new_or_used": "new",
+    "dealer_location": "Mercedes-Benz Berlin",
+    "features": ["MBUX infotainment", "ambient lighting"]
+  },
+  {
+    "model": "2020 Audi Q3",
+    "type": "compact SUV",
+    "price": 23500,
+    "new_or_used": "used",
+    "dealer_location": "Luxury Used Car Depot",
+    "features": ["Quattro AWD", "navigation system"]
+  },
+  {
+    "model": "2023 Hyundai Kona Electric",
+    "type": "EV",
+    "price": 35000,
+    "new_or_used": "new",
+    "dealer_location": "Hyundai Electric Hub",
+    "features": ["long range battery", "heated steering wheel"]
+  },
+  {
+    "model": "2019 Ford Focus",
+    "type": "hatchback",
+    "price": 11000,
+    "new_or_used": "used",
+    "dealer_location": "Reliable Used Cars",
+    "features": ["sync infotainment", "alloy wheels"]
+  },
+  {
+    "model": "2024 Peugeot 2008",
+    "type": "compact SUV",
+    "price": 29500,
+    "new_or_used": "new",
+    "dealer_location": "Peugeot Zentrum",
+    "features": ["i-Cockpit", "blind spot monitoring"]
+  },
+  {
+    "model": "2022 Nissan Qashqai",
+    "type": "compact SUV",
+    "price": 21000,
+    "new_or_used": "used",
+    "dealer_location": "Nissan Outlet",
+    "features": ["360 camera", "intelligent mobility"]
+  },
+  {
+    "model": "2024 Opel Corsa",
+    "type": "hatchback",
+    "price": 20000,
+    "new_or_used": "new",
+    "dealer_location": "Opel Autohaus",
+    "features": ["digital cockpit", "cruise control"]
+  },
+  {
+    "model": "2021 Volvo XC40",
+    "type": "compact SUV",
+    "price": 32000,
+    "new_or_used": "used",
+    "dealer_location": "Volvo Selekt",
+    "features": ["city safety", "harman kardon audio"]
+  },
+  {
+    "model": "2023 Fiat 500e",
+    "type": "EV",
+    "price": 31000,
+    "new_or_used": "new",
+    "dealer_location": "Fiat Store Berlin",
+    "features": ["retro design", "urban driving assist"]
+  },
+  {
+    "model": "2024 Honda CR-V",
+    "type": "compact SUV",
+    "price": 33000,
+    "new_or_used": "new",
+    "dealer_location": "Honda Dealership",
+    "features": ["Honda Sensing", "spacious interior"]
+  },
+  {
+    "model": "2024 Toyota RAV4",
+    "type": "compact SUV", 
+    "price": 35000,
+    "new_or_used": "new",
+    "dealer_location": "Toyota Center",
+    "features": ["all-wheel drive", "Toyota Safety 2.0"]
+  },
+  {
+    "model": "2024 Hyundai Tucson",
+    "type": "compact SUV",
+    "price": 32000,
+    "new_or_used": "new",
+    "dealer_location": "Hyundai Motors",
+    "features": ["digital key", "highway driving assist"]
+  },
+  {
+    "model": "2023 Hyundai Tucson",
+    "type": "compact SUV",
+    "price": 28000,
+    "new_or_used": "used",
+    "dealer_location": "Pre-Owned Hyundai",
+    "features": ["digital key", "highway driving assist"]
+  },
+  {
+    "model": "2024 Kia Sportage",
+    "type": "compact SUV",
+    "price": 30000,
+    "new_or_used": "new",
+    "dealer_location": "Kia Showroom",
+    "features": ["panoramic sunroof", "wireless charging"]
+  },
+  {
+    "model": "2023 Kia Sportage",
+    "type": "compact SUV",
+    "price": 26000,
+    "new_or_used": "used",
+    "dealer_location": "Certified Pre-Owned Kia",
+    "features": ["panoramic sunroof", "wireless charging"]
+  },
+  {
+    "model": "2024 Kia Soul",
+    "type": "compact SUV",
+    "price": 24000,
+    "new_or_used": "new",
+    "dealer_location": "Kia Downtown",
+    "features": ["boxy design", "spacious cargo"]
+  },
+  {
+    "model": "2024 Mazda CX-5",
+    "type": "compact SUV",
+    "price": 34000,
+    "new_or_used": "new",
+    "dealer_location": "Mazda Center",
+    "features": ["SKYACTIV technology", "premium interior"]
+  },
+  {
+    "model": "2024 Subaru Forester",
+    "type": "compact SUV",
+    "price": 31000,
+    "new_or_used": "new",
+    "dealer_location": "Subaru Outback",
+    "features": ["standard AWD", "EyeSight safety"]
+  },
+  {
+    "model": "2024 Honda Accord",
+    "type": "sedan",
+    "price": 29000,
+    "new_or_used": "new",
+    "dealer_location": "Honda Dealership",
+    "features": ["Honda Sensing", "turbocharged engine"]
+  },
+  {
+    "model": "2024 Toyota Camry",
+    "type": "sedan",
+    "price": 28000,
+    "new_or_used": "new",
+    "dealer_location": "Toyota Center",
+    "features": ["Toyota Safety 2.0", "hybrid available"]
+  },
+  {
+    "model": "2023 Toyota Camry",
+    "type": "sedan",
+    "price": 24000,
+    "new_or_used": "used",
+    "dealer_location": "Certified Toyota",
+    "features": ["Toyota Safety 2.0", "hybrid available"]
+  },
+  {
+    "model": "2024 Nissan Altima",
+    "type": "sedan",
+    "price": 26000,
+    "new_or_used": "new",
+    "dealer_location": "Nissan Central",
+    "features": ["ProPILOT Assist", "zero gravity seats"]
+  },
+  {
+    "model": "2024 Volkswagen Jetta",
+    "type": "sedan",
+    "price": 25000,
+    "new_or_used": "new",
+    "dealer_location": "VW Dealership",
+    "features": ["turbocharged engine", "digital cockpit"]
+  },
+  {
+    "model": "2024 Hyundai Elantra",
+    "type": "sedan",
+    "price": 24000,
+    "new_or_used": "new",
+    "dealer_location": "Hyundai Motors",
+    "features": ["SmartSense safety", "wireless Android Auto"]
+  },
+  {
+    "model": "2024 Honda Civic",
+    "type": "sedan",
+    "price": 27000,
+    "new_or_used": "new",
+    "dealer_location": "Honda Dealership",
+    "features": ["Honda Sensing", "turbocharged engine"]
+  },
+  {
+    "model": "2024 Ford F-150",
+    "type": "truck",
+    "price": 45000,
+    "new_or_used": "new",
+    "dealer_location": "Ford Country",
+    "features": ["best-in-class towing", "aluminum body"]
+  },
+  {
+    "model": "2023 Ford F-150",
+    "type": "truck",
+    "price": 38000,
+    "new_or_used": "used",
+    "dealer_location": "Pre-Owned Ford",
+    "features": ["best-in-class towing", "aluminum body"]
+  },
+  {
+    "model": "2024 Chevrolet Silverado",
+    "type": "truck",
+    "price": 42000,
+    "new_or_used": "new",
+    "dealer_location": "Chevy Trucks",
+    "features": ["powerful V8", "advanced trailering"]
+  },
+  {
+    "model": "2024 Honda Pilot",
+    "type": "SUV",
+    "price": 42000,
+    "new_or_used": "new",
+    "dealer_location": "Honda Family Center",
+    "features": ["8-passenger seating", "Honda Sensing"]
+  },
+  {
+    "model": "2024 Toyota Highlander",
+    "type": "SUV",
+    "price": 44000,
+    "new_or_used": "new",
+    "dealer_location": "Toyota Center",
+    "features": ["three-row seating", "hybrid available"]
+  },
+  {
+    "model": "2024 Subaru Outback",
+    "type": "SUV",
+    "price": 36000,
+    "new_or_used": "new",
+    "dealer_location": "Subaru Adventure",
+    "features": ["standard AWD", "ground clearance"]
+  }
+]

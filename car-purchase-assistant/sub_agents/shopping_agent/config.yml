@@ -1,0 +1,7 @@
+agent:
+  name: shopping_agent
+  protocol: a2a
+  description: "Helps users shop for cars by connecting them with dealers and facilitating purchases"
+
+configuration:
+  agent_card: ./sub_agents/shopping_agent/agent_card.json

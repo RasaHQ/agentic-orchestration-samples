@@ -1,0 +1,15 @@
+# general info
+agent:
+  name: appointment_selector
+  protocol: mcp
+  description: Helps users select an appointment slot for seeing a doctor.
+
+# Core agent configuration
+#configuration:
+#	prompt_template: # path to prompt template; only if protocol = mcp
+#	module: # optional python class containing customizations if any
+
+# Integrations
+connections:
+  mcp_servers:
+    - name: appointment-booking

@@ -19,7 +19,7 @@ agents within a single conversational interface. This includes:
 ### 1. Appointment Booking Assistant
 A demonstration of how to use an agent to intelligently fill appointment slots based
 on user preferences and constraints. This sample showcases:
-- **MCP Integration**: Using an MCP server for appointment scheduling capabilities
+- **ReAct style sub agents in a flow**: Using an MCP server to build a specialized reAct style sub agent for letting the user freely give their preferences and letting them pick an available slot.
 - **Direct Tool Integration**: Calling tools directly within Flows
 
 📖 **[View README](appointment-booking-assistant/README.md)**

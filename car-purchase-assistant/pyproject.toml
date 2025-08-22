@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "A car purchase assistant using MCP."
 requires-python = ">=3.10,<3.13"
 dependencies = [
-    "rasa-pro==3.14.0.dev2",
+    "rasa-pro==3.14.0.dev3",
     "fastmcp>=2.0.0,<3.0.0",
     "tavily-python>=0.3.0,<1.0.0",
 ]

@@ -12,9 +12,8 @@ from rasa.shared.core.events import SlotSet
 
 
 class CarResearchAgent(MCPOpenAgent):
-
     @staticmethod
-    def get_additional_tools(agent_input: AgentInput) -> List[Dict[str, Any]]:
+    def get_custom_tool_definitions() -> List[Dict[str, Any]]:
         car_recommend_tool = {
             "type": "function",
             "function": {
@@ -38,6 +37,7 @@ class CarResearchAgent(MCPOpenAgent):
                 },
                 "strict": True,
             },
+            "tool_executor": recommend_cars,
         }
         return [car_recommend_tool]
 
@@ -55,16 +55,8 @@ class CarResearchAgent(MCPOpenAgent):
             # Model will be specified in chat.completions.create calls
         )
 
-    async def execute_additional_tool(
-            self, tool_name: str, arguments: Dict[str, Any]
-    ) -> Optional[AgentToolResult]:
-
-        if tool_name == "recommend_cars":
-            return await self._recommend_cars(**arguments)
-        return None
-
-    async def _recommend_cars(
-            self, search_results: str, max_recommendations: int
+    async def recommend_cars(
+        self, search_results: str, max_recommendations: int
     ) -> AgentToolResult:
         """Analyze search results and return structured car recommendations."""
         try:
@@ -84,7 +76,7 @@ Return a JSON object with this exact structure:
       "type": "hatchback (type of car, e.g., sedan, SUV, hatchback)",
       "price_range": "25000-30000",
       "features": ["adaptive cruise control", "LED headlights", "..."]
-      "reason": "why this specific car model is recommended based on search results"      
+      "reason": "why this specific car model is recommended based on search results"
     }}
   ]
 }}
@@ -101,15 +93,19 @@ Extract recommendations based on what specific car models are mentioned, discuss
                 response_format={"type": "json_object"},
             )
 
-            return AgentToolResult(tool_name="recommend_cars", result=response.choices[0].message.content)
+            return AgentToolResult(
+                tool_name="recommend_cars", result=response.choices[0].message.content
+            )
 
         except Exception as e:
-
-            return AgentToolResult(tool_name="recommend_cars", result=json.dumps({
+            return AgentToolResult(
+                tool_name="recommend_cars",
+                result=json.dumps(
+                    {
                         "recommendations": [],
                         "error": f"Failed to generate recommendations: {str(e)}",
                     }
-                )
+                ),
             )
 
     async def process_output(self, output: AgentOutput) -> AgentOutput:
@@ -122,17 +118,27 @@ Extract recommendations based on what specific car models are mentioned, discuss
                 if result["tool_name"] == "recommend_cars":
                     try:
                         recommendations_data = json.loads(result["result"])
-                        recommendations = recommendations_data.get("recommendations", [])
+                        recommendations = recommendations_data.get(
+                            "recommendations", []
+                        )
                         if recommendations:
                             car_models = [rec["model"] for rec in recommendations]
                             car_details = {
-                                rec["model"]: rec for rec in recommendations if "model" in rec
+                                rec["model"]: rec
+                                for rec in recommendations
+                                if "model" in rec
                             }
-                            slot_events.append(SlotSet("recommended_car_models", car_models))
-                            slot_events.append(SlotSet("recommended_car_details", car_details))
+                            slot_events.append(
+                                SlotSet("recommended_car_models", car_models)
+                            )
+                            slot_events.append(
+                                SlotSet("recommended_car_details", car_details)
+                            )
                     except json.JSONDecodeError:
                         pass
                 if result["tool_name"] == "tavily_search":
                     slot_events.append(SlotSet("search_results", result["result"]))
-        output.events = slot_events if not output.events else output.events.extend(slot_events)
+        output.events = (
+            slot_events if not output.events else output.events.extend(slot_events)
+        )
         return output

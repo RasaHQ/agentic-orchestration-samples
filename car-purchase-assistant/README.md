@@ -48,7 +48,6 @@ Copy the example environment file and fill in your API keys:
    - `OPENAI_API_KEY`: Your OpenAI API key
    - `RASA_PRO_LICENSE`: Your Rasa Pro license key
    - `TAVILY_API_KEY`: Your Tavily API key for web search functionality
-   - `GOOGLE_API_KEY`: Your Google API key for Gemini integration
 
 The OPENAI_API_KEY is required as we are using `gpt-4o` as the default LLM within
 Rasa. If you switch to a different LLM (see
@@ -67,19 +66,13 @@ To run the car purchase assistant, follow these steps in order:
    To start the MCP server, follow the instructions provided in the `mcp_server/README.md`
    file located in the `mcp_server` directory.
 
-2. **Start the action server**
-   In a new terminal window (from the project root directory), run:
-   ```bash
-   rasa run actions
-   ```
-
-3. **Train the Rasa model**
+2. **Train the Rasa model**
    In another terminal (from the project root), train the assistant:
    ```bash
    rasa train
    ```
 
-4. **Run the assistant in interactive mode**
+3. **Run the assistant in interactive mode**
    Still in the project root, start the assistant:
    ```bash
    rasa inspect
@@ -87,5 +80,4 @@ To run the car purchase assistant, follow these steps in order:
    This will launch an interactive shell where you can chat with the assistant.
 
 **Note:**
-- Make sure your `.env` file is set up with the required API keys before starting.
-- The first two steps should be run in separate terminals so all services remain active.
+Make sure your `.env` file is set up with the required API keys before starting.

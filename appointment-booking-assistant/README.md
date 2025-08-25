@@ -63,8 +63,8 @@ To run the appointment booking assistant, follow these steps in order:
 
 1. **Start the MCP server**
 
-To start the MCP server, follow the instructions provided in the `mcp_server/README.md`
-file located in the `mcp_server` directory.
+   To start the MCP server, follow the instructions provided in the `mcp_server/README.md`
+   file located in the `mcp_server` directory.
 
 2. **Train the Rasa model**
    In another terminal (from the project root), train the assistant:

@@ -22,6 +22,6 @@ slots:
 
 responses:
   utter_dealer_found:
-    - text: "I found the car {car_model} you're looking for at {dealer_name} for ${car_price}."
+    - text: "I found the car you're looking for at {dealer_name} for ${car_price}."
   utter_dealer_not_found:
     - text: "I'm sorry, I couldn't find a dealer that sells the car you're looking for."

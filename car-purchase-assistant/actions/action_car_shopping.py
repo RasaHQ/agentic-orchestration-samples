@@ -28,6 +28,10 @@ class ActionCarShopping(Action):
 
         # If there are no recommended cars, return no events
         if not recommended_car_details or not isinstance(recommended_car_details, dict):
+            dispatcher.utter_message(
+                "I'm not sure which car you're looking for. "
+                "Please, search for a car first and let me recommend you some options."
+            )
             return []
 
         found_dealer = False

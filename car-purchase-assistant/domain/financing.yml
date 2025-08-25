@@ -1,0 +1,44 @@
+version: "3.1"
+
+actions:
+  - action_provide_financing_options
+
+slots:
+  savings_balance:
+    type: any
+    mappings:
+      - type: controlled
+  loan_term:
+    type: categorical
+    mappings:
+      - type: from_llm
+    values:
+      - 36
+      - 48
+      - 60
+  down_payment_amount:
+    type: float
+    mappings:
+      - type: from_llm
+  loan_total_interest:
+    type: float
+    mappings:
+      - type: controlled
+  loan_monthly_payment:
+    type: float
+    mappings:
+      - type: controlled
+  loan_principal_financed:
+    type: float
+    mappings:
+      - type: controlled
+
+responses:
+  utter_ask_loan_term:
+    - text: "would you like to repay in 36, 48, or 60 months?"
+  utter_financing_initial:
+    - text: "Alright, for a ${car_price} car on a {loan_term}-month term, your estimated **monthly payment** would be around **${loan_monthly_payment}**. You'd pay about **${loan_total_interest} in total interest**."
+  utter_ask_down_payment_amount:
+    - text: "how big of a down payment can you make?"
+  utter_financing_with_dp:
+    - text: "Great! With a **${down_payment_amount} down payment** on the ${car_price} car ({loan_term}-month loan), your estimated **monthly payment drops to ${loan_monthly_payment}**."

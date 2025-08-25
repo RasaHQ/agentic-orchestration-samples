@@ -1,32 +1,31 @@
-# Appointment Booking Assistant
+# Car Purchase Assistant
 
-This appointment booking assistant demonstrates key agentic orchestration patterns:
+This car purchase assistant demonstrates advanced agentic orchestration patterns for
+complex, multi-phase workflows:
 
-**Primary Use Case**: Shows how to use an agent to intelligently fill appointment slots
-based on user preferences and constraints, leveraging an MCP server for appointment
-scheduling.
+**Primary Use Case**: Shows how to orchestrate a specialized agent (research) through
+a single conversational interface, demonstrating end-to-end workflow management.
 
-**Direct Tool Integration**: Demonstrates calling tools directly within flows to book a
-certain appointment slot.
+**Context-Aware Orchestration**: Demonstrates how to maintain context across different
+phases, with structured data flow between research results, shopping decisions, and
+financing options.
 
-**Supporting Features**: Contact management (add, list, remove) is included to simulate
-realistic digressions from the main booking flow, showcasing how agents can handle
-context switching and multi-task conversations.
+**Supporting Features**: Contact management capabilities are included to simulate
+realistic digressions.
 
 ## MCP Server
 
-The appointment booking assistant includes an MCP (Model Context Protocol) server that
-provides intelligent appointment scheduling capabilities. The MCP server can query
-available appointment slots based on user preferences, automatically handle business
-hours and scheduling constraints, and generate realistic appointment options.
+The car purchase assistant uses an MCP (Model Context Protocol) server to provide
+real-time car research capabilities. The MCP server connects the assistant to external
+search APIs, allowing it to retrieve up-to-date information for car research and
+decision-making.
 
-For detailed information about the MCP server's capabilities, configuration, and
-technical implementation, see the [MCP Server README](mcp_server/README.md).
+For setup and technical details, see the [MCP Server README](mcp_server/README.md).
 
 ## Setup
 
 ### Prerequisites
-- Python 3.11 or 3.12
+- Python 3.10 or higher
 - pip (Python package installer)
 
 ### Installation
@@ -48,18 +47,19 @@ Copy the example environment file and fill in your API keys:
 2. **Open the `.env` file** in a text editor and fill in the required values:
    - `OPENAI_API_KEY`: Your OpenAI API key
    - `RASA_PRO_LICENSE`: Your Rasa Pro license key
+   - `TAVILY_API_KEY`: Your Tavily API key for web search functionality
 
 The OPENAI_API_KEY is required as we are using `gpt-4o` as the default LLM within
 Rasa. If you switch to a different LLM (see
 [documentation](https://rasa.com/docs/reference/config/components/llm-configuratio)),
 the key might not be needed.
 
-Make sure to save the `.env` file in the root of the `appointment-booking-assistant`
+Make sure to save the `.env` file in the root of the `car-purchase-assistant`
 directory.
 
 ### Running the Assistant
 
-To run the appointment booking assistant, follow these steps in order:
+To run the car purchase assistant, follow these steps in order:
 
 1. **Start the MCP server**
 

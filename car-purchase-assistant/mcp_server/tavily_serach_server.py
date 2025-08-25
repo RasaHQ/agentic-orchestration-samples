@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 from fastmcp import FastMCP
-from mcp_server.tools.tavily import TavilySearchTool
+from tools.tavily import TavilySearchTool
 
 # Create FastMCP server as global variable for CLI discovery
 mcp = FastMCP("Web Search Server")

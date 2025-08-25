@@ -29,8 +29,43 @@ JSON formatted search results including titles, URLs, content snippets, and opti
 
 ## Usage
 
-This server is designed to be used with MCP clients. It communicates via stdio using the MCP protocol.
+This server is designed to be used with MCP clients. It communicates via http using the MCP protocol.
 
 ## Environment Variables
 
 - `TAVILY_API_KEY`: Required. Your Tavily API key for web search functionality.
+
+
+## Setup Instructions
+
+Follow these steps to get the MCP server up and running:
+
+### Requirements
+
+- **Python 3.10 or higher** is required.
+
+### Create and Activate a Virtual Environment
+
+```bash
+python -m venv mcp-server-venv
+source activate mcp-server-venv/bin/activate
+```
+
+### Install FastMCP & Tavily Python
+
+```bash
+pip install fastmcp==2.11.3
+pip install tavily-python==0.7.11
+```
+
+### Start the server
+
+Make sure your `TAVILY_API_KEY` is set.
+
+```bash
+python tavily_search_server.py
+```
+
+Keep the terminal open.
+
+

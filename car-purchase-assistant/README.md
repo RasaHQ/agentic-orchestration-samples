@@ -33,7 +33,7 @@ For more details on its features and configuration, see the [A2A Server README](
 ## Setup
 
 ### Prerequisites
-- Python 3.11 or 3.12
+- Python 3.10 or higher
 - pip (Python package installer)
 
 ### Installation
@@ -71,12 +71,9 @@ directory.
 To run the car purchase assistant, follow these steps in order:
 
 1. **Start the MCP server**
-   Open a terminal and start the MCP server.
 
-   ```bash
-   python -m mcp_server
-   ```
-   Leave this terminal open, as the MCP server must keep running.
+   To start the MCP server, follow the instructions provided in the `mcp_server/README.md`
+   file located in the `mcp_server` directory.
 
 2. **Start the A2A server**
    Open a terminal and start the MCP server.

@@ -25,7 +25,7 @@ For setup and technical details, see the [MCP Server README](mcp_server/README.m
 ## Setup
 
 ### Prerequisites
-- Python 3.11 or 3.12
+- Python 3.10 or higher
 - pip (Python package installer)
 
 ### Installation

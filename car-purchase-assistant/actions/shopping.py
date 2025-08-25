@@ -42,7 +42,7 @@ class MockDealerAPI:
                 "price": float or None
             }
         """
-        is_available = random.choices([True, False], weights=[0.6, 0.4])[0]
+        is_available = random.choices([True, False], weights=[0.7, 0.3])[0]
         if is_available:
             dealer_name = random.choice(self.DEALER_NAMES)
             car_price = self._determine_price(price, price_range)
@@ -54,6 +54,7 @@ class MockDealerAPI:
             "available": is_available,
             "dealer_name": dealer_name,
             "price": car_price,
+            "car_model": car_model,
         }
 
     def _determine_price(

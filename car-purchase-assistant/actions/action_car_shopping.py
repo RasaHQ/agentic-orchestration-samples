@@ -32,7 +32,7 @@ class ActionCarShopping(Action):
 
         found_dealer = False
 
-        for car_info in recommended_car_details:
+        for car_info in recommended_car_details.values():
             api_result = self._check_car(car_info)
             if api_result.get("available", False):
                 found_dealer = True
@@ -45,7 +45,7 @@ class ActionCarShopping(Action):
         return [
             SlotSet("dealer_found", api_result.get("available", False)),
             SlotSet("dealer_name", api_result.get("dealer_name")),
-            SlotSet("car_model", api_result.get("model")),
+            SlotSet("car_model", api_result.get("car_model")),
             SlotSet("car_price", api_result.get("price")),
         ]
 

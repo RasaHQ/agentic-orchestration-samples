@@ -80,19 +80,13 @@ To run the car purchase assistant, follow these steps in order:
    To start the A2A server, follow the instructions provided in the `a2a_server/README.md`
    file located in the `a2a_server` directory.
 
-3. **Start the action server**
-   In a new terminal window (from the project root directory), run:
-   ```bash
-   rasa run actions
-   ```
-
-4. **Train the Rasa model**
+3. **Train the Rasa model**
    In another terminal (from the project root), train the assistant:
    ```bash
    rasa train
    ```
 
-5. **Run the assistant in interactive mode**
+4. **Run the assistant in interactive mode**
    Still in the project root, start the assistant:
    ```bash
    rasa inspect
@@ -100,5 +94,4 @@ To run the car purchase assistant, follow these steps in order:
    This will launch an interactive shell where you can chat with the assistant.
 
 **Note:**
-- Make sure your `.env` file is set up with the required API keys before starting.
-- The first three steps should be run in separate terminals so all services remain active.
+Make sure your `.env` file is set up with the required API keys before starting.

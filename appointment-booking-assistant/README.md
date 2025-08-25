@@ -80,5 +80,4 @@ To run the appointment booking assistant, follow these steps in order:
    This will launch an interactive shell where you can chat with the assistant.
 
 **Note:**
-- Make sure your `.env` file is set up with the required API keys before starting.
-- The first two step should be run in a separate terminal so all services remain active.
+Make sure your `.env` file is set up with the required API keys before starting.

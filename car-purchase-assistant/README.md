@@ -76,12 +76,9 @@ To run the car purchase assistant, follow these steps in order:
    file located in the `mcp_server` directory.
 
 2. **Start the A2A server**
-   Open a terminal and start the MCP server.
 
-   ```bash
-   python -m a2a_server
-   ```
-   Leave this terminal open, as the A2A server must keep running.
+   To start the A2A server, follow the instructions provided in the `a2a_server/README.md`
+   file located in the `a2a_server` directory.
 
 3. **Start the action server**
    In a new terminal window (from the project root directory), run:

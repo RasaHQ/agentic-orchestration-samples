@@ -46,3 +46,37 @@ JSON formatted response containing car details including:
 - **Default Port**: 10002
 - **Model**: gemini-2.0-flash-001
 - **Transport**: HTTP via A2A protocol
+
+
+## Setup Instructions
+
+Follow these steps to get the MCP server up and running:
+
+### Requirements
+
+- **Python 3.10 or higher** is required.
+
+### Create and Activate a Virtual Environment
+
+```bash
+python -m venv a2a-server-venv
+source activate a2a-server-venv/bin/activate
+```
+
+### Install FastMCP & Tavily Python
+
+```bash
+pip install -r requirements.txt
+```
+
+### Start the server
+
+Make sure your `GOOGLE_API_KEY` is set.
+
+```bash
+python car_shopping_server.py
+```
+
+Keep the terminal open.
+
+

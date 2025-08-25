@@ -42,17 +42,17 @@ class CarSearchAgentExecutor(AgentExecutor):
             task = new_task(context.message)
             await event_queue.enqueue_event(task)
 
-        updater = TaskUpdater(event_queue, task.id, task.contextId)
+        updater = TaskUpdater(event_queue, task.id, task.context_id)
 
         try:
-            async for item in self.agent.stream(query, task.contextId, structured_data):
+            async for item in self.agent.stream(query, task.context_id, structured_data):
                 is_task_complete = item["is_task_complete"]
 
                 if not is_task_complete:
                     await updater.update_status(
                         TaskState.working,
                         new_agent_text_message(
-                            item["updates"], task.contextId, task.id
+                            item["updates"], task.context_id, task.id
                         ),
                     )
                     continue
@@ -102,7 +102,7 @@ class CarSearchAgentExecutor(AgentExecutor):
                     await updater.update_status(
                         TaskState.input_required,
                         new_agent_text_message(
-                            str(content) if content else "", task.contextId, task.id
+                            str(content) if content else "", task.context_id, task.id
                         ),
                         final=True,
                     )
@@ -113,7 +113,7 @@ class CarSearchAgentExecutor(AgentExecutor):
                 TaskState.failed,
                 new_agent_text_message(
                     f"Car search failed: {str(e)}",
-                    task.contextId,
+                    task.context_id,
                     task.id,
                 ),
                 final=True,

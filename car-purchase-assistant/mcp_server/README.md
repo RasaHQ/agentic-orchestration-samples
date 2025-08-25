@@ -29,7 +29,7 @@ JSON formatted search results including titles, URLs, content snippets, and opti
 
 ## Usage
 
-This server is designed to be used with MCP clients. It communicates via stdio using the MCP protocol.
+This server is designed to be used with MCP clients. It communicates via http using the MCP protocol.
 
 ## Environment Variables
 
@@ -51,7 +51,7 @@ python -m venv mcp-server-venv
 source activate mcp-server-venv/bin/activate
 ```
 
-### Install FastMCP
+### Install FastMCP & Tavily Python
 
 ```bash
 pip install fastmcp==2.11.3

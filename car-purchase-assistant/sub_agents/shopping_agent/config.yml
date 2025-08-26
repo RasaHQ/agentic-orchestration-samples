@@ -5,3 +5,5 @@ agent:
 
 configuration:
   agent_card: ./sub_agents/shopping_agent/agent_card.json
+  module: custom.car_shopping_agent.CarShoppingAgent
+

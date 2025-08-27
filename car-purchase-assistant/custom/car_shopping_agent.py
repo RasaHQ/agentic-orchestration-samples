@@ -21,7 +21,21 @@ class CarShoppingAgent(A2AAgent):
         return input
 
     async def process_output(self, output: AgentOutput) -> AgentOutput:
-        """Post-process the output before returning it to Rasa."""
+        """Post-process the output before returning it to Rasa.
+
+        Example of tool_results:
+        tool_results=[
+          [{
+            'tool_name': 'shopping_agent_1',
+            'result': {
+              'car_model': '2024 Honda CR-V',
+              'price': 33000,
+              'dealer': 'Honda Dealership',
+              'car_type': 'SUV'
+            }
+          }]
+        ]
+        """
         tool_results = output.tool_results
         slot_events: List[SlotSet] = []
 

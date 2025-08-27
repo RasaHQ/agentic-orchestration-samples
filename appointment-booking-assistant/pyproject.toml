@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "An appointment booking assistant using MCP."
 requires-python = ">=3.10,<3.13"
 dependencies = [
-    "rasa-pro==3.14.0.dev4",
+    "rasa-pro==3.14.0.dev6",
 ]
 
 [tool.hatch.build.targets.wheel]

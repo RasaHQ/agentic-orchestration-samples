@@ -1,0 +1,2 @@
+fastmcp==2.11.3
+tavily-python==0.7.11

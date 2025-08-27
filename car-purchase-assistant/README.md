@@ -3,8 +3,8 @@
 This car purchase assistant demonstrates advanced agentic orchestration patterns for
 complex, multi-phase workflows:
 
-**Primary Use Case**: Shows how to orchestrate a specialized agent (research) through
-a single conversational interface, demonstrating end-to-end workflow management.
+**Primary Use Case**: Shows how to orchestrate a specialized agents (research, shopping)
+through a single conversational interface, demonstrating end-to-end workflow management.
 
 **Context-Aware Orchestration**: Demonstrates how to maintain context across different
 phases, with structured data flow between research results, shopping decisions, and
@@ -21,6 +21,14 @@ search APIs, allowing it to retrieve up-to-date information for car research and
 decision-making.
 
 For setup and technical details, see the [MCP Server README](mcp_server/README.md).
+
+## A2A Server
+
+The assistant also includes an A2A (Agent-to-Agent) server that powers the car shopping
+and purchase workflow. This server provides structured car search and recommendation
+capabilities, enabling the assistant to help users find vehicles and connect with dealers.
+
+For more details on its features and configuration, see the [A2A Server README](a2a_server/README.md).
 
 ## Setup
 
@@ -48,6 +56,7 @@ Copy the example environment file and fill in your API keys:
    - `OPENAI_API_KEY`: Your OpenAI API key
    - `RASA_PRO_LICENSE`: Your Rasa Pro license key
    - `TAVILY_API_KEY`: Your Tavily API key for web search functionality
+   - `GOOGLE_API_KEY`: Your Google API key for Gemini integration
 
 The OPENAI_API_KEY is required as we are using `gpt-4o` as the default LLM within
 Rasa. If you switch to a different LLM (see
@@ -66,13 +75,18 @@ To run the car purchase assistant, follow these steps in order:
    To start the MCP server, follow the instructions provided in the `mcp_server/README.md`
    file located in the `mcp_server` directory.
 
-2. **Train the Rasa model**
+2. **Start the A2A server**
+
+   To start the A2A server, follow the instructions provided in the `a2a_server/README.md`
+   file located in the `a2a_server` directory.
+
+3. **Train the Rasa model**
    In another terminal (from the project root), train the assistant:
    ```bash
    rasa train
    ```
 
-3. **Run the assistant in interactive mode**
+4. **Run the assistant in interactive mode**
    Still in the project root, start the assistant:
    ```bash
    rasa inspect

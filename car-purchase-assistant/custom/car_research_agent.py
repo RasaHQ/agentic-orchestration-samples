@@ -12,7 +12,6 @@ from rasa.shared.core.events import SlotSet
 
 
 class CarResearchAgent(MCPOpenAgent):
-
     def get_custom_tool_definitions(self) -> List[Dict[str, Any]]:
         car_recommend_tool = {
             "type": "function",
@@ -55,9 +54,7 @@ class CarResearchAgent(MCPOpenAgent):
             # Model will be specified in chat.completions.create calls
         )
 
-    async def recommend_cars(
-        self, arguments: Dict[str, Any]
-    ) -> AgentToolResult:
+    async def recommend_cars(self, arguments: Dict[str, Any]) -> AgentToolResult:
         """Analyze search results and return structured car recommendations."""
         search_results = arguments["search_results"]
         max_recommendations = arguments["max_recommendations"]
@@ -78,7 +75,7 @@ Return a JSON object with this exact structure:
       "model": "Honda CR-V (exact brand and model name)",
       "type": "hatchback (type of car, e.g., sedan, SUV, hatchback)",
       "price_range": "25000-30000",
-      "features": ["adaptive cruise control", "LED headlights", "..."]
+                              "features": ["adaptive cruise control", "LED headlights", "safety features"]
       "reason": "why this specific car model is recommended based on search results"
     }}
   ]

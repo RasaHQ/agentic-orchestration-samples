@@ -54,8 +54,7 @@ source activate mcp-server-venv/bin/activate
 ### Install FastMCP & Tavily Python
 
 ```bash
-pip install fastmcp==2.11.3
-pip install tavily-python==0.7.11
+pip install -r requirements.txt
 ```
 
 ### Start the server

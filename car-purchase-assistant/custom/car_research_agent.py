@@ -110,6 +110,8 @@ Extract recommendations based on what specific car models are mentioned, discuss
 
     async def process_output(self, output: AgentOutput) -> AgentOutput:
         """Post-process the output before returning it to Rasa."""
+        if not output.tool_results:
+            return output
         tool_results = output.tool_results
         slot_events = []
         for index in range(len(tool_results)):

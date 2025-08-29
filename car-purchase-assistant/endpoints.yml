@@ -30,5 +30,9 @@ model_groups:
 # MCP servers are used to define the MCP servers that are used in this assistant.
 mcp_servers:
   - name: web_search
-    url: http://localhost:8000/mcp
+    url: http://0.0.0.0:8000/mcp
+    type: http
+
+  - name: healthcare
+    url: http://127.0.0.1:8001/mcp
     type: http

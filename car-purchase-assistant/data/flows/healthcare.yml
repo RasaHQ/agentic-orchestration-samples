@@ -1,0 +1,6 @@
+flows:
+  healthcare_questions:
+    name: "healthcare queries"
+    description: Helps users ask questions about healthcare policies
+    steps:
+      - call: healthcare_agent

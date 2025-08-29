@@ -1,0 +1,12 @@
+agent:
+  name: healthcare_agent
+  protocol: mcp
+  description: "Helps users ask questions about healthcare policies"
+
+#configuration:
+#  prompt_template: ./sub_agents/web_research/prompt_template.jinja2
+#  module: custom.car_research_agent.CarResearchAgent
+
+connections:
+  mcp_servers:
+    - name: healthcare

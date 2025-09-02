@@ -2,9 +2,6 @@ actions:
   - action_check_loan_affordability
   - action_validate_financial_info
   - action_calculate_affordability
-  - action_ask_monthly_income
-  - action_ask_monthly_expenses
-  - action_ask_desired_car_payment
 
 slots:
   monthly_income:
@@ -29,6 +26,10 @@ slots:
       - type: controlled
   max_affordable_payment:
     type: float
+    mappings:
+      - type: controlled
+  valid_financial_info:
+    type: bool
     mappings:
       - type: controlled
 

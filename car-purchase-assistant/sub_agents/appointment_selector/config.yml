@@ -1,0 +1,10 @@
+# general info
+agent:
+  name: appointment_selector
+  protocol: mcp
+  description: Helps users select an appointment slot for seeing a doctor.
+
+# Integrations
+connections:
+  mcp_servers:
+    - name: appointment-booking

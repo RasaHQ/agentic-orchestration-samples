@@ -42,3 +42,5 @@ responses:
     - text: "how big of a down payment can you make?"
   utter_financing_with_dp:
     - text: "Great! With a **${down_payment_amount} down payment** on the ${car_price} car ({loan_term}-month loan), your estimated **monthly payment drops to ${loan_monthly_payment}**."
+  utter_dealer_not_found:
+    - text: "I'm sorry, you have not found a dealer for the car you're interested in. Please find a dealer first."

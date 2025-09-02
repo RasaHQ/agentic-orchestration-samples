@@ -14,5 +14,7 @@ flows:
             then:
               - action: action_calculate_affordability
               - action: utter_loan_affordability
+                next: END
           - else:
             - action: utter_financial_info_error
+              next: END

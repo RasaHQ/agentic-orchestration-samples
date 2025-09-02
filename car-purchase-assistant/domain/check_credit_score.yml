@@ -1,13 +1,10 @@
 actions:
   - action_check_credit_score
   - action_validate_credit_info
-  - action_ask_full_name
-  - action_ask_ssn_last_four
-  - action_ask_date_of_birth
 
 slots:
   credit_score:
-    type: int
+    type: float
     mappings:
       - type: controlled
   credit_rating:

@@ -11,7 +11,7 @@ slots:
     mappings:
       - type: controlled
   loan_count:
-    type: int
+    type: float
     mappings:
       - type: controlled
 

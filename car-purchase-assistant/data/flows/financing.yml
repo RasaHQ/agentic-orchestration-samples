@@ -3,7 +3,15 @@ flows:
     name: "calculate loan"
     description: calculate loan details for a car purchase.
     steps:
-      - collect: loan_term
+      - noop: true
+        next:
+          - if: slots.dealer_found
+            then: calculate_loan_step
+          - else:
+            - action: utter_dealer_not_found
+              next: END
+      - id: calculate_loan_step
+        collect: loan_term
         description: The desired loan term in months (e.g., 36, 48, 60).
       - action: action_provide_financing_options
       - action: utter_financing_initial

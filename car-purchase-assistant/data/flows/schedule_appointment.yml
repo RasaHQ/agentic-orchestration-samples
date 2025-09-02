@@ -17,7 +17,7 @@ flows:
                 next: END
       - id: call_book_appointment
         call: book_appointment
-        mcp_server: appointment-booking
+        mcp_server: appointment_booking
         mapping:
           input:
             - param: appointment_slot

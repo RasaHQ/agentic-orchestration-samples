@@ -15,5 +15,7 @@ flows:
             then:
             - action: action_check_credit_score
             - action: utter_credit_score
+              next: END
           - else:
             - action: utter_credit_score_error
+              next: END

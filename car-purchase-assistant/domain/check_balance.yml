@@ -9,4 +9,4 @@ slots:
 
 responses:
   utter_balance:
-    - text: "Your current account balance is ${balance:,.2f}."
+    - text: "Your current account balance is ${balance}."

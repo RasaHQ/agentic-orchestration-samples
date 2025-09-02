@@ -7,4 +7,4 @@ agent:
 # Integrations
 connections:
   mcp_servers:
-    - name: appointment-booking
+    - name: appointment_booking

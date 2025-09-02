@@ -17,4 +17,4 @@ slots:
 
 responses:
   utter_existing_loans:
-    - text: "You currently have {loan_count} active loan(s) with a total monthly payment of ${total_monthly_payments:,.2f}. Your existing loans are: {existing_loans}"
+    - text: "You currently have {loan_count} active loan(s) with a total monthly payment of ${total_monthly_payments}. Your existing loans are: {existing_loans}"

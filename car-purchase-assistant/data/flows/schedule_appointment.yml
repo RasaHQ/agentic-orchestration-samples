@@ -1,0 +1,31 @@
+flows:
+  schedule_new_appointment:
+    description: help user schedule a appointment with the car dealer
+    name: schedule new appointment
+    steps:
+      - call: appointment_selector
+        exit_if:
+          - slots.selected_appointment_slot is not null
+      - collect: user_confirmation
+        ask_before_filling: true
+        description: Confirmation from the user whether the user wants to go ahead with the selected time slot
+        next:
+          - if: slots.user_confirmation == True
+            then: call_book_appointment
+          - else:
+              - action: utter_cancelling
+                next: END
+      - id: call_book_appointment
+        call: book_appointment
+        mcp_server: appointment-booking
+        mapping:
+          input:
+            - param: appointment_slot
+              slot: selected_appointment_slot
+          output:
+            - slot: appointment_confirmed
+              result_key: result.structuredContent.appointment_confirmed
+        next: confirm_appointment
+      - id: confirm_appointment
+        action: utter_appointment_confirmed
+        next: END

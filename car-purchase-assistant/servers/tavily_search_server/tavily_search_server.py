@@ -36,12 +36,12 @@ def main():
         try:
             port = int(sys.argv[1])
         except ValueError:
-            print(f"Invalid port: {sys.argv[1]}, using default 8000", file=sys.stderr)
+            print(f"Invalid port: {sys.argv[1]}, using default 8001", file=sys.stderr)
 
     print(f"Starting Web Search MCP server on http://localhost:{port}", file=sys.stderr)
 
     # Run with streamable HTTP transport (newer, more reliable)
-    mcp.run(transport="http", host="0.0.0.0", port=8000, path="/mcp")
+    mcp.run(transport="http", host="0.0.0.0", port=8001, path="/mcp")
 
 
 if __name__ == "__main__":

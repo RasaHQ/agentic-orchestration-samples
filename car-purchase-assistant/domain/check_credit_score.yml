@@ -1,0 +1,46 @@
+actions:
+  - action_check_credit_score
+  - action_validate_credit_info
+  - action_ask_full_name
+  - action_ask_ssn_last_four
+  - action_ask_date_of_birth
+
+slots:
+  credit_score:
+    type: int
+    mappings:
+      - type: controlled
+  credit_rating:
+    type: text
+    mappings:
+      - type: controlled
+  full_name:
+    type: text
+    mappings:
+      - type: from_llm
+  ssn_last_four:
+    type: text
+    mappings:
+      - type: from_llm
+  date_of_birth:
+    type: text
+    mappings:
+      - type: from_llm
+  valid_credit_info:
+    type: bool
+    mappings:
+      - type: controlled
+
+responses:
+  utter_ask_full_name:
+    - text: "What is your full legal name?"
+  utter_ask_ssn_last_four:
+    - text: "What are the last 4 digits of your Social Security Number?"
+  utter_ask_date_of_birth:
+    - text: "What is your date of birth? Please use MM/DD/YYYY format."
+  utter_credit_score_intro:
+    - text: "I'll help you check your credit score for car financing. I'll need to collect some basic information to verify your identity."
+  utter_credit_score:
+    - text: "Your current credit score is {credit_score}. This is considered a {credit_rating} credit rating."
+  utter_credit_score_error:
+    - text: "I'm sorry, I was unable to validate your credit information. Please try again."

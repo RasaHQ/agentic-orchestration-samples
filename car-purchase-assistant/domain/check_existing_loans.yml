@@ -1,0 +1,20 @@
+actions:
+  - action_check_existing_loans
+
+slots:
+  existing_loans:
+    type: any
+    mappings:
+      - type: controlled
+  total_monthly_payments:
+    type: float
+    mappings:
+      - type: controlled
+  loan_count:
+    type: int
+    mappings:
+      - type: controlled
+
+responses:
+  utter_existing_loans:
+    - text: "You currently have {loan_count} active loan(s) with a total monthly payment of ${total_monthly_payments:,.2f}. Your existing loans are: {existing_loans}"

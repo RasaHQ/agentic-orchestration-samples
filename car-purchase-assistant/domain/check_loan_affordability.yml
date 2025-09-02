@@ -1,0 +1,45 @@
+actions:
+  - action_check_loan_affordability
+  - action_validate_financial_info
+  - action_calculate_affordability
+  - action_ask_monthly_income
+  - action_ask_monthly_expenses
+  - action_ask_desired_car_payment
+
+slots:
+  monthly_income:
+    type: float
+    mappings:
+      - type: controlled
+  monthly_expenses:
+    type: float
+    mappings:
+      - type: controlled
+  desired_car_payment:
+    type: float
+    mappings:
+      - type: controlled
+  debt_to_income_ratio:
+    type: float
+    mappings:
+      - type: controlled
+  affordability_status:
+    type: text
+    mappings:
+      - type: controlled
+  max_affordable_payment:
+    type: float
+    mappings:
+      - type: controlled
+
+responses:
+  utter_ask_monthly_income:
+    - text: "What is your monthly gross income before taxes?"
+  utter_ask_monthly_expenses:
+    - text: "What are your estimated monthly expenses excluding existing debt payments?"
+  utter_affordability_intro:
+    - text: "I'll help you determine if you can afford a new car loan. I need to collect some financial information to make an accurate assessment."
+  utter_loan_affordability:
+    - text: "Based on your monthly income of ${monthly_income:,.2f} and monthly expenses of ${monthly_expenses:,.2f}, your debt-to-income ratio is {debt_to_income_ratio:.1f}%. {affordability_status} The maximum car payment you can afford is approximately ${max_affordable_payment:,.2f} per month."
+  utter_financial_info_error:
+    - text: "I'm sorry, I was unable to validate your financial information. Please try again."

@@ -1,0 +1,19 @@
+flows:
+  check_credit_score:
+    name: "check credit score"
+    description: Check the user's credit score for car financing eligibility.
+    steps:
+      - collect: full_name
+        description: "The user's full legal name for identity verification"
+      - collect: ssn_last_four
+        description: "The last 4 digits of the user's Social Security Number"
+      - collect: date_of_birth
+        description: "The user's date of birth in MM/DD/YYYY format"
+      - action: action_validate_credit_info
+        next:
+          - if: slots.valid_credit_info
+            then:
+            - action: action_check_credit_score
+            - action: utter_credit_score
+          - else:
+            - action: utter_credit_score_error

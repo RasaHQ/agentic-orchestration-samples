@@ -11,21 +11,21 @@ from a2a.utils import (
     new_task,
 )
 from a2a.utils.errors import ServerError
-from agent import CarSearchAgent
+from agent import CarShoppingAgent
 
 
-class CarSearchAgentExecutor(AgentExecutor):
-    """Car Search AgentExecutor following A2A protocol with proper structured data support."""
+class CarShoppingAgentExecutor(AgentExecutor):
+    """Car Shopping AgentExecutor following A2A protocol with proper structured data support."""
 
     def __init__(self):
-        self.agent = CarSearchAgent()
+        self.agent = CarShoppingAgent()
 
     async def execute(
         self,
         context: RequestContext,
         event_queue: EventQueue,
     ) -> None:
-        """Execute the car search agent following A2A protocol."""
+        """Execute the car shopping agent following A2A protocol."""
         query = context.get_user_input()
 
         # Extract structured data from message parts
@@ -71,25 +71,45 @@ class CarSearchAgentExecutor(AgentExecutor):
                 car_data = (
                     session.state.get("current_car_recommendation") if session else None
                 )
+                similar_cars_data = (
+                    session.state.get("similar_cars_recommendations") if session else None
+                )
+                dealer_data = (
+                    session.state.get("dealer_recommendations") if session else None
+                )
+
+                # Determine if we have any useful data to provide
+                has_structured_data = (
+                    (car_data and car_data.get("has_recommendation")) or
+                    (similar_cars_data and similar_cars_data.get("has_alternatives")) or
+                    (dealer_data and dealer_data.get("has_dealer_recommendations"))
+                )
 
                 # Create proper A2A response with artifacts
-                if car_data and car_data.get("has_recommendation"):
+                if has_structured_data:
                     # Create artifact with both text and data parts using TaskUpdater.add_artifact()
                     from a2a.types import Part, TextPart, DataPart
+
+                    # Combine all relevant data
+                    combined_data = {
+                        "car_recommendation": car_data,
+                        "similar_cars": similar_cars_data,
+                        "dealer_recommendations": dealer_data,
+                    }
 
                     parts = [
                         # Conversational text part
                         Part(root=TextPart(text=str(content) if content else "")),
                         # Structured data part
-                        Part(root=DataPart(data=car_data)),
+                        Part(root=DataPart(data=combined_data)),
                     ]
 
                     # Use TaskUpdater.add_artifact() method with only documented parameters
                     await updater.add_artifact(
                         parts=parts,
-                        artifact_id=f"car_search_result_{task.id}",
-                        name="Car Search Result",
-                        metadata={"dataType": "car_recommendation"},
+                        artifact_id=f"car_shopping_result_{task.id}",
+                        name="Car Shopping Result",
+                        metadata={"dataType": "car_shopping_recommendation"},
                     )
 
                     # Update the status to completed
@@ -98,7 +118,7 @@ class CarSearchAgentExecutor(AgentExecutor):
                         final=True,
                     )
                 else:
-                    # Just text response if no car data
+                    # Agent is asking for more information or clarification
                     await updater.update_status(
                         TaskState.input_required,
                         new_agent_text_message(
@@ -112,7 +132,7 @@ class CarSearchAgentExecutor(AgentExecutor):
             await updater.update_status(
                 TaskState.failed,
                 new_agent_text_message(
-                    f"Car search failed: {str(e)}",
+                    f"Car shopping failed: {str(e)}",
                     task.context_id,
                     task.id,
                 ),
@@ -120,5 +140,5 @@ class CarSearchAgentExecutor(AgentExecutor):
             )
 
     async def cancel(self, request: RequestContext, event_queue: EventQueue) -> None:
-        """Cancel the current car search task."""
+        """Cancel the current car shopping task."""
         raise ServerError(error=UnsupportedOperationError())

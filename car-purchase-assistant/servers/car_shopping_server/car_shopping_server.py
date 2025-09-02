@@ -9,8 +9,8 @@ from a2a.types import (
     AgentCard,
     AgentSkill,
 )
-from agent import CarSearchAgent
-from agent_executor import CarSearchAgentExecutor
+from agent import CarShoppingAgent
+from agent_executor import CarShoppingAgentExecutor
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -38,33 +38,34 @@ def main(host, port):
 
         capabilities = AgentCapabilities(streaming=True)
 
-        # Car Search Agent Configuration
+        # Car Shopping Agent Configuration
         skill = AgentSkill(
-            id="search_cars",
-            name="Car Search Tool",
-            description="Helps users find cars based on their preferences including car type, price range, and new/used preference.",
-            tags=["car_search", "automotive", "shopping"],
+            id="car_shopping",
+            name="Car Shopping Tool",
+            description="Helps users check car availability at specific dealers, find similar cars when exact models aren't available, and get dealer recommendations.",
+            tags=["car_shopping", "automotive", "dealer", "availability"],
             examples=[
-                "I'm looking for a new compact SUV between $25,000 and $30,000",
-                "Find me a used sedan under $25,000",
-                "I want to buy a car",
-                "Show me electric vehicles in my price range",
+                "Do you have a 2024 Hyundai Tucson at Hyundai Motors?",
+                "I want a Honda CR-V - which dealers have it?",
+                "Is there a new Camry at Toyota Center?",
+                "I'm looking for a compact SUV at VW Autohaus",
+                "Find me a used BMW 3 Series",
             ],
         )
 
         agent_card = AgentCard(
-            name="Car Search Agent",
-            description="This agent helps users find cars based on their preferences including car type, price range, and whether they want new or used vehicles.",
+            name="Car Shopping Agent",
+            description="This agent helps users find specific cars at dealers, check availability, and provides recommendations for similar cars when the exact model isn't available.",
             url=f"http://{host}:{port}/",
             version="1.0.0",
-            defaultInputModes=CarSearchAgent.SUPPORTED_CONTENT_TYPES,
-            defaultOutputModes=CarSearchAgent.SUPPORTED_CONTENT_TYPES,
+            defaultInputModes=CarShoppingAgent.SUPPORTED_CONTENT_TYPES,
+            defaultOutputModes=CarShoppingAgent.SUPPORTED_CONTENT_TYPES,
             capabilities=capabilities,
             skills=[skill],
         )
 
         request_handler = DefaultRequestHandler(
-            agent_executor=CarSearchAgentExecutor(),
+            agent_executor=CarShoppingAgentExecutor(),
             task_store=InMemoryTaskStore(),
         )
 
@@ -83,9 +84,9 @@ def main(host, port):
         logger.error(f"Error: {e}")
         exit(1)
     except ImportError as e:
-        logger.error(f"Error importing car search modules: {e}")
+        logger.error(f"Error importing car shopping modules: {e}")
         logger.error(
-            "Make sure you have created the car_search_agent.py and car_search_executor.py files"
+            "Make sure you have created the agent.py and agent_executor.py files"
         )
         exit(1)
     except Exception as e:

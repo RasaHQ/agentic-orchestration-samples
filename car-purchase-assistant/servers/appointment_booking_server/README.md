@@ -48,7 +48,7 @@ source activate mcp-server-venv/bin/activate
 ### Install FastMCP
 
 ```bash
-pip install fastmcp==2.11.3
+pip install -r requirements.txt
 ```
 
 ### Start the server

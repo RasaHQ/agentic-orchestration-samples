@@ -42,7 +42,7 @@ Follow these steps to get the MCP server up and running:
 
 ```bash
 python -m venv mcp-server-venv
-source activate mcp-server-venv/bin/activate
+source mcp-server-venv/bin/activate
 ```
 
 ### Install FastMCP

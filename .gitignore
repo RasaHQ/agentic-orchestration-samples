@@ -10,3 +10,5 @@ actions/__pycache__/
 .venv
 .env
 tracker
+.cache
+.config

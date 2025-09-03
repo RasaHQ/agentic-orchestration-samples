@@ -2,9 +2,6 @@ actions:
   - action_car_research
 
 slots:
-  car_research_active:
-    type: bool
-    initial_value: false
   search_results:
     type: text
     mappings:
@@ -13,13 +10,7 @@ slots:
     type: any
     mappings:
       - type: controlled
-    initial_value: []
   recommended_car_details:
     type: any
     mappings:
       - type: controlled
-    initial_value: []
-  chosen_car_model:
-    type: text
-    mappings:
-      - type: from_llm

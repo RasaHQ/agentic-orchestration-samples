@@ -2,7 +2,12 @@
 agent:
   name: appointment_selector
   protocol: mcp
-  description: Helps users select an appointment slot for seeing a doctor.
+  description: Helps users select an appointment slot for seeing a car dealer.
+
+# Core agent configuration
+configuration:
+  module: custom.appointment_booking_agent.AppointmentBookingAgent
+  prompt_template: ./sub_agents/appointment_selector/prompt_template.jinja2
 
 # Integrations
 connections:

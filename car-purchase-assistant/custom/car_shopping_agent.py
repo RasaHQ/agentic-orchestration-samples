@@ -33,7 +33,7 @@ class CarShoppingAgent(A2AAgent):
                 'car_model': '2020 Audi Q3',
                 'dealer_name': 'Premium Auto Center',
                 'price': 23500
-              },
+            },
           }]
         ]
         """

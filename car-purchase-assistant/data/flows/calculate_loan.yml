@@ -5,7 +5,7 @@ flows:
     steps:
       - noop: true
         next:
-          - if: slots.dealer_found
+          - if: slots.dealer_name is not null and slots.car_model is not null
             then: calculate_loan_step
           - else:
             - action: utter_dealer_not_found

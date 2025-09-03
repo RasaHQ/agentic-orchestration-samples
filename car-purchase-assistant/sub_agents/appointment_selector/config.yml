@@ -13,3 +13,5 @@ configuration:
 connections:
   mcp_servers:
     - name: appointment_booking
+      exclude_tools:
+        - book_appointment

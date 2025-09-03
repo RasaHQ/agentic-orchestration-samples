@@ -1,0 +1,42 @@
+# This file contains the different endpoints your bot can use.
+
+# Server which runs your custom actions.
+# https://rasa.com/docs/rasa-pro/concepts/custom-actions
+action_endpoint:
+  actions_module: "actions"
+
+# The lines below activate contextual rephrasing, using the default OpenAI language model.
+# Ensure the OPENAI_API_KEY is set to prevent any missing API key errors.
+# For more details, refer to the documentation:
+# https://rasa.com/docs/rasa-pro/concepts/contextual-response-rephraser
+# To enable the rephraser, remove the comment symbols in the lines below.
+nlg:
+   type: rephrase
+   summarize_history: false
+   llm:
+     model_group: openai-gpt-4o
+
+# Model groups are used to define the LLM models that are used in this assistant.
+# For more details, refer to the documentation:
+# https://rasa.com/docs/reference/config/components/llm-configuration
+model_groups:
+  - id: openai-gpt-4o
+    models:
+      - provider: openai
+        model: gpt-4o-2024-11-20
+        request_timeout: 7
+        max_tokens: 256
+
+# MCP servers are used to define the MCP servers that are used in this assistant.
+mcp_servers:
+  - name: appointment-booking
+    url: http://mcp_server:8000/mcp
+    type: http
+
+tracker_store:
+    type: SQL
+    dialect: "postgresql" 
+    url: "tracker_store:5432"  
+    db: "rasa"  
+    username: "rasa" # Ensure this matches POSTGRES_USER in the docker compose file.
+    password: "rasa" # Ensure this matches POSTGRES_PASSWORD in the docker compose file.

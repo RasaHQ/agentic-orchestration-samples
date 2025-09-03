@@ -1,0 +1,48 @@
+services:
+
+  # Run Rasa Pro with the inspector.
+  assistant:
+    depends_on:
+      - tracker_store
+      - mcp_server
+    image: europe-west3-docker.pkg.dev/rasa-releases/rasa-pro/rasa-pro:3.14.0.dev6
+    volumes:
+      - .:/app
+    command:
+      - 'inspect'
+      - '--endpoints'
+      - 'docker-compose-endpoints.yml'
+      - '--debug'
+    ports:
+      - '5005:5005'
+    env_file:
+      - .env
+    environment:
+      - LLM_API_HEALTH_CHECK=true
+    user: root
+
+  tracker_store:
+    image: postgres:13-alpine
+    container_name: tracker_store
+    environment:
+      POSTGRES_DB: rasa
+      POSTGRES_USER: rasa
+      POSTGRES_PASSWORD: rasa
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  mcp_server:
+    container_name: mcp_server
+    build:
+      context: ./mcp_server
+      dockerfile: Dockerfile
+    command:
+      - 'appointment_server_http.py'
+    ports: 
+      - '8000:8000'
+
+volumes:
+  db:
+    driver: local

@@ -8,3 +8,5 @@ actions/__pycache__/
 .ruff_cache
 .python-version
 .venv
+.env
+tracker

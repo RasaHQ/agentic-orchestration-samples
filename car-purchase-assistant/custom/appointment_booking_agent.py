@@ -18,6 +18,8 @@ class AppointmentBookingAgent(MCPTaskAgent):
                 slots_to_keep.append(slot)
             if slot.name == "car_model":
                 slots_to_keep.append(slot)
+            if slot.name == "selected_appointment_slot":
+                slots_to_keep.append(slot)
         input.slots = slots_to_keep
 
         date_slot = AgentInputSlot(

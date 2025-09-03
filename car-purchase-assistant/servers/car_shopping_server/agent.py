@@ -119,6 +119,41 @@ def get_dealer_recommendations_tool(
         return json.dumps({"error": f"Dealer recommendations failed: {str(e)}"})
 
 
+def finalize_purchase_tool(
+    car_model: str,
+    dealer_name: str,
+    price: int,
+    decision: str,
+    user_response: str = "",
+) -> str:
+    """
+    Finalize a car reservation decision when the user has made a choice.
+
+    Args:
+        car_model (str): The specific car model the user chose
+        dealer_name (str): The dealer where the car is located
+        price (int): The price of the car
+        decision (str): User's decision - "reserve" or "decline"
+        user_response (str, optional): The user's actual response text
+
+    Returns:
+        str: JSON string confirming the final decision
+    """
+    try:
+        result = {
+            "final_decision": decision,
+            "car_model": car_model,
+            "dealer_name": dealer_name,
+            "price": price,
+            "user_response": user_response,
+            "decision_timestamp": "2024-01-01T00:00:00Z",  # In real implementation, use actual timestamp
+            "task_complete": True,
+        }
+        return json.dumps(result)
+    except Exception as e:
+        return json.dumps({"error": f"Purchase finalization failed: {str(e)}"})
+
+
 class CarShoppingAgent:
     """An agent that handles car shopping requests with dealer availability and recommendations."""
 
@@ -142,16 +177,13 @@ class CarShoppingAgent:
             name="car_shopping_agent",
             description=(
                 "This agent helps users find specific cars at dealers, check availability, "
-                "and provides recommendations for similar cars when the exact model isn't available."
+                "and provides recommendations for similar cars when the exact model isn't available. "
+                "The agent can help users reserve cars at dealers."
             ),
             instruction="""
-You are a helpful car shopping assistant that specializes in checking dealer availability and providing recommendations.
+You are a car shopping assistant whose ultimate goal is to help users find and decide on a specific car at a specific dealer.
 
-Your primary goals are:
-1. **Check Specific Car Availability**: When users ask about a specific car model, check if it's available at their preferred dealer
-2. **Provide Dealer Recommendations**: If they don't specify a dealer, recommend dealers that have the car
-3. **Suggest Alternatives**: When the exact car isn't available, offer similar cars at the same dealer
-4. **Ask About Flexibility**: If exact requirements aren't met, ask if they're open to new/used alternatives
+Your primary objective is to guide the user to make a final decision about reserving a specific car at a specific dealer.
 
 ## Workflow:
 
@@ -160,47 +192,58 @@ Your primary goals are:
 - Note if they mentioned a specific dealer
 - Check if they specified new/used preference
 
-### 2. **Availability Check**
-- Use `check_car_availability_tool` to see if the exact car is available
-- If they specified a dealer, check that dealer first
-- If no dealer specified, use `get_dealer_recommendations_tool` to find dealers with the car
+### 2. **Search and Present Options**
+- Use `check_car_availability_tool` to see if the exact car is available at their preferred dealer
+- If they didn't specify a dealer, use `get_dealer_recommendations_tool` to find dealers with the car
+- If the exact car isn't available, use `find_similar_cars_tool` to find alternatives
 
-### 3. **Handle Results**
-- **If Available**: Present the car details and ask if they want to proceed
-- **If Not Available at Specific Dealer**:
-  - Use `find_similar_cars_tool` to find alternatives at that dealer
-  - Ask if they're interested in similar cars or want to check other dealers
-- **If Not Available Anywhere**:
-  - Use `find_similar_cars_tool` to find similar models
-  - Ask about flexibility (new vs used, similar models)
+### 3. **Present Clear Options**
+When you find cars, present them clearly with:
+- Specific car model and year
+- Exact dealer location
+- Price
+- Key features
+- Condition (new/used)
 
-### 4. **Flexibility Questions**
-When exact requirements aren't met, ask:
-- "Would you be interested in a [new/used] version instead?"
-- "I found similar [car type] models at that dealer. Would you like to see those options?"
-- "Would you like me to check other dealers for the exact model you want?"
+### 4. **Guide to Decision**
+After presenting options, you MUST ask the user to make a choice:
+- "Which of these cars would you like to reserve?"
+- "Would you like to proceed with reserving [specific car] at [specific dealer]?"
+- "Are you interested in any of these options, or would you like me to look for something else?"
+
+### 5. **Task Completion**
+Your task is ONLY complete when:
+- ✅ User decides to reserve a specific car at a specific dealer
+- ✅ User explicitly decides not to reserve any car
+- ❌ NOT complete when you just provide information or recommendations
+
+### 6. **Finalizing the Decision**
+When the user makes a clear decision, use the `finalize_purchase_tool`:
+- **For Reservation**: Call `finalize_purchase_tool` with decision="reserve", car details, and user's response
+- **For Decline**: Call `finalize_purchase_tool` with decision="decline" and user's response
+- This tool signals that the task is complete and captures the final decision
 
 ## Guidelines:
-- Always start by checking availability for the exact car requested
-- Be proactive in suggesting alternatives when the exact car isn't available
-- Ask about flexibility (new/used) when appropriate
-- Present options clearly with prices and dealer information
-- Don't ask redundant questions if the user has been specific
-- Focus on dealer-specific availability rather than general car searches
-- **Task Completion**: Consider the task complete when you provide:
-  - Specific car availability information
-  - Dealer recommendations with car details
-  - Similar car alternatives with pricing
-  - Clear next steps for the user
-- Only ask for more information if you truly cannot provide any helpful recommendations
+- Always present specific cars at specific dealers with clear details
+- After showing options, ask the user to choose one
+- If user shows interest in multiple options, ask them to pick one
+- If user wants to see more options, continue searching
+- Be persistent in guiding them to a final decision
+- Don't end the conversation just by providing information
 
 ## Example Conversations:
-- User: "Do you have a 2024 Hyundai Tucson at Hyundai Motors?" → Check availability, show results or suggest alternatives
-- User: "I want a Honda CR-V" → Get dealer recommendations, then check availability
-- User: "Is there a new Camry at Toyota Center?" → Check availability, suggest used if not available
-- User: "I'm looking for a compact SUV at VW Autohaus" → Find similar cars at that dealer
+- User: "Do you have a 2024 Hyundai Tucson at Auto City Motors?"
+  → Check availability, show results, then ask: "Would you like to reserve this 2024 Hyundai Tucson at Auto City Motors for $32,000?"
+
+- User: "I want a Honda CR-V"
+  → Get dealer recommendations, show options, then ask: "Which of these Honda CR-V options would you like to reserve?"
+
+- User: "I'm looking for a compact SUV at Family Auto Hub"
+  → Find similar cars, show options, then ask: "Are you interested in any of these compact SUVs at Family Auto Hub?"
+
+Remember: Your goal is to help them make a final reservation decision, not just provide information.
             """,
-            tools=[check_car_availability_tool, find_similar_cars_tool, get_dealer_recommendations_tool],
+            tools=[check_car_availability_tool, find_similar_cars_tool, get_dealer_recommendations_tool, finalize_purchase_tool],
         )
 
     async def stream(
@@ -266,7 +309,9 @@ When exact requirements aren't met, ask:
                 session_id=session_id,
             )
 
-        searching_message_sent = False
+
+        # Track if the finalize_purchase_tool was called to determine true completion
+        finalize_tool_called = False
 
         async for event in self._runner.run_async(
             user_id=self._user_id, session_id=session.id, new_message=content
@@ -387,25 +432,56 @@ When exact requirements aren't met, ask:
                                     session, state_event
                                 )
 
+                        elif response.name == "finalize_purchase_tool":
+                            if car_data.get("task_complete"):
+                                # Mark that the finalize tool was called
+                                finalize_tool_called = True
+
+                                # Save final purchase decision
+                                final_decision_data = {
+                                    "final_decision": car_data.get("final_decision"),
+                                    "car_model": car_data.get("car_model"),
+                                    "dealer_name": car_data.get("dealer_name"),
+                                    "price": car_data.get("price"),
+                                    "user_response": car_data.get("user_response"),
+                                    "decision_timestamp": car_data.get("decision_timestamp"),
+                                    "task_complete": True,
+                                }
+
+                                print(f"Saving final decision to state: {final_decision_data}")
+
+                                state_event = Event(
+                                    author=self._agent.name,
+                                    actions=EventActions(
+                                        state_delta={
+                                            "final_purchase_decision": final_decision_data
+                                        }
+                                    ),
+                                )
+                                await self._runner.session_service.append_event(
+                                    session, state_event
+                                )
+
                     except (json.JSONDecodeError, TypeError) as e:
                         print(
                             f"Error processing tool response: {e}, response: {response.response}"
                         )
                         pass
 
-            if event.is_final_response():
-                response = ""
-                if (
-                    event.content
-                    and event.content.parts
-                    and event.content.parts[0].text
-                ):
-                    response = "\n".join(
-                        [p.text for p in event.content.parts if p.text]
-                    )
+            response = ""
+            if (
+                event.content
+                and event.content.parts
+                and event.content.parts[0].text
+            ):
+                response = "\n".join(
+                    [p.text for p in event.content.parts if p.text]
+                )
 
+            if event.is_final_response():
                 yield {
                     "is_task_complete": True,
+                    "finalize_tool_called": finalize_tool_called,
                     "content": response,
                     "session_id": session.id,
                 }

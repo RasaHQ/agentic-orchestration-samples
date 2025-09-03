@@ -1,7 +1,7 @@
 flows:
   calculate_loan:
     name: "calculate loan"
-    description: calculate loan details for a car purchase.
+    description: Calculate detailed loan payment amounts, terms, and financing options for a specific car purchase based on user inputs.
     steps:
       - noop: true
         next:

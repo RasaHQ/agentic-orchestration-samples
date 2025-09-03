@@ -42,20 +42,21 @@ def main(host, port):
         skill = AgentSkill(
             id="car_shopping",
             name="Car Shopping Tool",
-            description="Helps users check car availability at specific dealers, find similar cars when exact models aren't available, and get dealer recommendations.",
-            tags=["car_shopping", "automotive", "dealer", "availability"],
+            description="Helps users check car availability at specific dealers, find similar cars when exact models aren't available, get dealer recommendations, and reserve cars.",
+            tags=["car_shopping", "automotive", "dealer", "availability", "reservation"],
             examples=[
                 "Do you have a 2024 Hyundai Tucson at Hyundai Motors?",
                 "I want a Honda CR-V - which dealers have it?",
                 "Is there a new Camry at Toyota Center?",
                 "I'm looking for a compact SUV at VW Autohaus",
                 "Find me a used BMW 3 Series",
+                "I'd like to reserve the 2024 Toyota Camry at Auto City Motors",
             ],
         )
 
         agent_card = AgentCard(
             name="Car Shopping Agent",
-            description="This agent helps users find specific cars at dealers, check availability, and provides recommendations for similar cars when the exact model isn't available.",
+            description="This agent helps users find specific cars at dealers, check availability, provides recommendations for similar cars when the exact model isn't available, and helps users reserve cars.",
             url=f"http://{host}:{port}/",
             version="1.0.0",
             defaultInputModes=CarShoppingAgent.SUPPORTED_CONTENT_TYPES,

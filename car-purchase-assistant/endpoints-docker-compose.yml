@@ -29,8 +29,11 @@ model_groups:
 
 # MCP servers are used to define the MCP servers that are used in this assistant.
 mcp_servers:
-  - name: appointment-booking
-    url: http://mcp_server:8000/mcp
+  - name: tavily_search
+    url: http://tavily_search_mcp_server:8001/mcp
+    type: http
+  - name: appointment_booking
+    url: http://appointment_booking_mcp_server:8002/mcp
     type: http
 
 tracker_store:

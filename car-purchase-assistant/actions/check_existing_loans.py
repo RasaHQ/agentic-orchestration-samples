@@ -39,7 +39,7 @@ class ActionCheckExistingLoans(Action):
 
             for i in range(loan_count):
                 loan_type = random.choice(loan_types)
-                monthly_payment = random.randint(200, 2000)
+                monthly_payment = random.randint(200, 1200)
                 total_monthly_payments += monthly_payment
                 loans.append(f"{loan_type} (${monthly_payment:,.2f}/month)")
 

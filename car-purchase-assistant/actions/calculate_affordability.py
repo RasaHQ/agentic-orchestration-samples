@@ -57,6 +57,10 @@ class ActionCalculateAffordability(Action):
         # Ensure max_affordable_payment is not negative
         max_affordable_payment = max(0, max_affordable_payment)
 
+        # round values to 2 decimal places
+        debt_to_income_ratio = round(debt_to_income_ratio, 2)
+        max_affordable_payment = round(max_affordable_payment, 2)
+
         # Set the slots
         events = [
             SlotSet("debt_to_income_ratio", debt_to_income_ratio),

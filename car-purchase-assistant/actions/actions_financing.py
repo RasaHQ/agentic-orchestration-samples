@@ -79,11 +79,19 @@ class ActionProvideFinancingOptions(Action):
         )
         api_response = json.loads(api_response_str)
 
+
+
         # --- Process API Response and Set Slots ---
         if api_response.get("error"):
             # Set an error slot if the API returned an error
             events.append(SlotSet("loan_error", api_response["error"]))
         else:
+            # format the api response to be more readable
+            # round floats to 2 decimal places
+            api_response = {
+                k: round(v, 2) if isinstance(v, float) else v
+                for k, v in api_response.items()
+            }
             # Set all the relevant loan detail slots
             events.append(
                 SlotSet(

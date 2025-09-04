@@ -14,7 +14,7 @@ services:
       - 'docker-compose-endpoints.yml'
       - '--debug'
     ports:
-      - '5005:5005'
+      - '5006:5005'
     env_file:
       - .env
     environment:

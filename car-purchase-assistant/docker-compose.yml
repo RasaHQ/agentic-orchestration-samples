@@ -1,0 +1,95 @@
+services:
+
+  # Run Rasa Pro with the inspector.
+  agentic_assistant:
+    depends_on:
+      - tracker_store
+      - tavily_search_mcp_server
+      - appointment_booking_mcp_server
+      - car_shopping_a2a_agent_server
+    image: europe-west3-docker.pkg.dev/rasa-releases/rasa-pro/rasa-pro:3.14.0.dev7
+    volumes:
+      - .:/app
+    command:
+      - 'inspect'
+      - '--endpoints'
+      - 'endpoints-docker-compose.yml'
+      - '--debug'
+    ports:
+      - '5005:5005'
+    env_file:
+      - .env
+    environment:
+      - LLM_API_HEALTH_CHECK=true
+    user: root
+
+  # Rasa server, to enable API access to tracker etc for troubleshooting
+  rasa_server:
+    depends_on:
+      - agentic_assistant
+    image: europe-west3-docker.pkg.dev/rasa-releases/rasa-pro/rasa-pro:3.14.0.dev7
+    volumes:
+      - .:/app
+    command:
+      - 'run'
+      - '--enable-api'
+      - '--endpoints'
+      - 'endpoints-docker-compose.yml'
+      - '--debug'
+    ports:
+      - '5006:5005'
+    env_file:
+      - .env
+    environment:
+      - LLM_API_HEALTH_CHECK=true
+    user: root
+
+  tracker_store:
+    image: postgres:13-alpine
+    container_name: tracker_store
+    environment:
+      POSTGRES_DB: rasa
+      POSTGRES_USER: rasa
+      POSTGRES_PASSWORD: rasa
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  tavily_search_mcp_server:
+    container_name: tavily_search_mcp_server
+    build:
+      context: ./servers/tavily_search_server
+      dockerfile: Dockerfile
+    command:
+      - 'tavily_search_server.py'
+    ports: 
+      - '8001:8001'
+    environment:
+      - TAVILY_API_KEY=${TAVILY_API_KEY}
+
+  appointment_booking_mcp_server:
+    container_name: appointment_booking_mcp_server
+    build:
+      context: ./servers/appointment_booking_server
+      dockerfile: Dockerfile
+    command:
+      - 'appointment_server_http.py'
+    ports: 
+      - '8002:8002'
+
+  car_shopping_a2a_agent_server:
+    container_name: car_shopping_A2A_agent_server
+    build:
+      context: ./servers/car_shopping_server
+      dockerfile: Dockerfile
+    command:
+      - 'car_shopping_server.py'
+    ports: 
+      - '10002:10002'
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+
+volumes:
+  db:
+    driver: local

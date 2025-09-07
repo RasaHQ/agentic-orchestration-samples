@@ -32,6 +32,14 @@ slots:
     type: float
     mappings:
       - type: controlled
+  want_vendor_search:
+    type: bool
+    mappings:
+      - type: from_llm
+  does_user_know_price:
+    type: bool
+    mappings:
+      - type: from_llm
 
 responses:
   utter_ask_loan_term:
@@ -44,3 +52,19 @@ responses:
     - text: "Great! With a **${down_payment_amount} down payment** on the ${car_price} car ({loan_term}-month loan), your estimated **monthly payment drops to ${loan_monthly_payment}**."
   utter_dealer_not_found:
     - text: "I'm sorry, you have not found a dealer for the car you're interested in. Please find a dealer first."
+
+  utter_need_info_for_loan:
+    - text: "I'll need information about the car you are wanting to purchase."
+
+  utter_ask_want_vendor_search:
+    - text: Do you want to look for a vendor selling the car you are interested in?
+
+  utter_ask_car_price:
+    - text: "Can you tell the amount for which you need the auto loan?"
+
+  utter_ask_does_user_know_price:
+    - text: "Do you know the price of the car you want to take the loan against?"
+
+  utter_compulsory_info_not_found:
+    - text: "I'm sorry! Without knowing the price of the car or the vendor selling that car, I can't calculate the loan terms for you."
+

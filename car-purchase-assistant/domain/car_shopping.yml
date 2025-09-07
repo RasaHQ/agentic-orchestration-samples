@@ -15,4 +15,5 @@ slots:
   car_price:
     type: float
     mappings:
+      - type: from_llm
       - type: controlled

@@ -4,9 +4,6 @@ actions:
   - action_car_shopping
 
 slots:
-  dealer_found:
-    type: bool
-    initial_value: false
   dealer_name:
     type: text
     mappings:
@@ -18,4 +15,5 @@ slots:
   car_price:
     type: float
     mappings:
+      - type: from_llm
       - type: controlled

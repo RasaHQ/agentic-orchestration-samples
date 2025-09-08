@@ -28,15 +28,17 @@ class CarShoppingAgent(A2AAgent):
           [{
             'tool_name': 'shopping_agent_1',
             'result': {
-              'car_model': '2024 Honda CR-V',
-              'price': 33000,
-              'dealer': 'Honda Dealership',
-              'car_type': 'SUV'
-            }
+              'final_reservation_decision': {
+                'final_decision': 'reserve',
+                'car_model': '2020 Audi Q3',
+                'dealer_name': 'Premium Auto Center',
+                'price': 23500
+            },
           }]
         ]
         """
         tool_results = output.tool_results
+
         slot_events: List[SlotSet] = []
 
         if not tool_results:
@@ -45,15 +47,18 @@ class CarShoppingAgent(A2AAgent):
         for index in range(len(tool_results)):
             iteration_results = tool_results[index]
             for result in iteration_results:
-                if "result" in result:
-                    for key, value in result["result"].items():
+                if "result" in result and "final_reservation_decision" in result["result"]:
+
+                    if result["result"]["final_reservation_decision"]["final_decision"] != "reserve":
+                        break
+
+                    for key, value in result["result"]["final_reservation_decision"].items():
                         if key == "car_model":
                             slot_events.append(SlotSet("car_model", value))
                         elif key == "price":
                             slot_events.append(SlotSet("car_price", value))
-                        elif key == "dealer":
+                        elif key == "dealer_name":
                             slot_events.append(SlotSet("dealer_name", value))
-                            slot_events.append(SlotSet("dealer_found", True))
 
         # add the slot events to the output
         output.events = (

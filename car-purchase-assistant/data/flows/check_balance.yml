@@ -1,0 +1,7 @@
+flows:
+  check_balance:
+    name: "check balance"
+    description: Check the user's account balance.
+    steps:
+      - action: action_check_balance
+      - action: utter_balance

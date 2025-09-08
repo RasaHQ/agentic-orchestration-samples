@@ -1,6 +1,6 @@
 flows:
   car_shopping:
     name: "car shopping"
-    description: Find a specific car at a local dealer, once the user knows which model they want.
+    description: Find a specific car at a local dealer to get the exact price, once the user knows which model they want.
     steps:
       - call: shopping_agent

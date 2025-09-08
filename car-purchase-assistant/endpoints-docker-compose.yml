@@ -30,8 +30,16 @@ model_groups:
 # MCP servers are used to define the MCP servers that are used in this assistant.
 mcp_servers:
   - name: tavily_search
-    url: http://localhost:8001/mcp
+    url: http://tavily_search_mcp_server:8001/mcp
     type: http
   - name: appointment_booking
-    url: http://localhost:8002/mcp
+    url: http://appointment_booking_mcp_server:8002/mcp
     type: http
+
+tracker_store:
+    type: SQL
+    dialect: "postgresql" 
+    url: "tracker_store:5432"  
+    db: "rasa"  
+    username: "rasa" # Ensure this matches POSTGRES_USER in the docker compose file.
+    password: "rasa" # Ensure this matches POSTGRES_PASSWORD in the docker compose file.

@@ -1,0 +1,12 @@
+actions:
+  - action_check_balance
+
+slots:
+  balance:
+    type: float
+    mappings:
+      - type: controlled
+
+responses:
+  utter_balance:
+    - text: "Your current account balance is ${balance}."

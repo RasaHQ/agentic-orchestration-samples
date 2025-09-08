@@ -1,0 +1,7 @@
+flows:
+  check_existing_loans:
+    name: "check existing loans"
+    description: Check the user's existing loans and monthly payment obligations.
+    steps:
+      - action: action_check_existing_loans
+      - action: utter_existing_loans

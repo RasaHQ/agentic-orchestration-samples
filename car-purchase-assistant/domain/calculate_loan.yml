@@ -44,3 +44,12 @@ responses:
     - text: "Great! With a **${down_payment_amount} down payment** on the ${car_price} car ({loan_term}-month loan), your estimated **monthly payment drops to ${loan_monthly_payment}**."
   utter_dealer_not_found:
     - text: "I'm sorry, you have not found a dealer for the car you're interested in. Please find a dealer first."
+
+  utter_need_info_for_loan:
+    - text: "I'll need information about the car you are wanting to purchase."
+
+
+  utter_ask_car_price:
+    - text: "Can you tell the amount for which you need the auto loan?"
+
+

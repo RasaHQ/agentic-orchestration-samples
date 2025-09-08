@@ -5,11 +5,13 @@ flows:
     steps:
       - noop: true
         next:
-          - if: slots.dealer_name is not null and slots.car_model is not null
+          - if: slots.car_price is not null
             then: calculate_loan_step
           - else:
-            - action: utter_dealer_not_found
-              next: END
+            - action: utter_need_info_for_loan
+            - collect: car_price
+              utter: utter_ask_car_price
+              next: calculate_loan_step
       - id: calculate_loan_step
         collect: loan_term
         description: The desired loan term in months (e.g., 36, 48, 60).

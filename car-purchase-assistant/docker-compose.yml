@@ -14,6 +14,8 @@ services:
       - 'inspect'
       - '--endpoints'
       - 'endpoints-docker-compose.yml'
+      - '--sub-agents'
+      - 'sub_agents_docker_compose'
       - '--debug'
     ports:
       - '5005:5005'
@@ -35,6 +37,8 @@ services:
       - '--enable-api'
       - '--endpoints'
       - 'endpoints-docker-compose.yml'
+      - '--sub-agents'
+      - 'sub_agents_docker_compose'
       - '--debug'
     ports:
       - '5006:5005'
@@ -79,16 +83,29 @@ services:
       - '8002:8002'
 
   car_shopping_a2a_agent_server:
+    depends_on:
+      - car_shopping_a2a_agent_server_init_container
     container_name: car_shopping_A2A_agent_server
     build:
       context: ./servers/car_shopping_server
       dockerfile: Dockerfile
     command:
       - 'car_shopping_server.py'
+      - '--host'
+      - '0.0.0.0'
     ports: 
       - '10002:10002'
     environment:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+
+  # Workaround for bug ENG-2253, whereby custom `--sub-agent` directory not being used,
+  # so copying over directory (including required A2A agent card) via init container 
+  car_shopping_a2a_agent_server_init_container:
+    image: alpine@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
+    volumes:
+      - ./sub_agents:/app/sub_agents
+      - ./sub_agents_docker_compose:/app/sub_agents_docker_compose
+    command: "sh -c 'rm -rf /app/sub_agents/* && cp -r /app/sub_agents_docker_compose/* /app/sub_agents'"
 
 volumes:
   db:

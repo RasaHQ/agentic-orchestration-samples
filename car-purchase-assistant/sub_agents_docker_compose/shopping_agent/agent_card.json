@@ -1,7 +1,7 @@
 {
   "name": "Car Shopping Agent",
   "description": "This agent helps users shop for cars by connecting them with dealers and facilitating purchases",
-  "url": "http://car_shopping_A2A_agent_server:10002/",
+  "url": "http://car_shopping_A2A_agent_server:10002",
   "version": "1.0.0",
   "defaultInputModes": ["text", "text/plain"],
   "defaultOutputModes": ["text", "text/plain", "application/json"],

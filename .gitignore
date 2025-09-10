@@ -12,3 +12,4 @@ actions/__pycache__/
 tracker
 .cache
 .config
+*.DS_store*

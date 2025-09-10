@@ -104,6 +104,10 @@ directory.
 
 ### Running the Assistant
 
+#### Either, with `docker compose`
+ - Run `docker compose up`
+
+#### Or, *without* `docker compose`:
 To run the car purchase assistant, follow these steps in order:
 
 1. **Start the Web Search MCP server**

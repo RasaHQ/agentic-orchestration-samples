@@ -110,14 +110,14 @@ Extract recommendations based on what specific car models are mentioned, discuss
 
     async def process_output(self, output: AgentOutput) -> AgentOutput:
         """Post-process the output before returning it to Rasa."""
-        if not output.tool_results:
+        if not output.structured_results:
             return output
-        tool_results = output.tool_results
+        tool_results = output.structured_results
         slot_events = []
         for index in range(len(tool_results)):
             iteration_results = tool_results[index]
             for result in iteration_results:
-                if result["tool_name"] == "recommend_cars":
+                if result["name"] == "recommend_cars":
                     try:
                         recommendations_data = json.loads(result["result"])
                         recommendations = recommendations_data.get(
@@ -138,7 +138,7 @@ Extract recommendations based on what specific car models are mentioned, discuss
                             )
                     except json.JSONDecodeError:
                         pass
-                if result["tool_name"] == "tavily_search":
+                if result["name"] == "tavily_search":
                     slot_events.append(SlotSet("search_results", result["result"]))
         output.events = (
             slot_events if not output.events else output.events.extend(slot_events)

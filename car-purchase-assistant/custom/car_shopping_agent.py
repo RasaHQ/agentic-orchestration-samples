@@ -23,10 +23,10 @@ class CarShoppingAgent(A2AAgent):
     async def process_output(self, output: AgentOutput) -> AgentOutput:
         """Post-process the output before returning it to Rasa.
 
-        Example of tool_results:
-        tool_results=[
+        Example of structured_results:
+        structured_results=[
           [{
-            'tool_name': 'shopping_agent_1',
+            'name': 'shopping_agent_1',
             'result': {
               'final_reservation_decision': {
                 'final_decision': 'reserve',
@@ -37,7 +37,7 @@ class CarShoppingAgent(A2AAgent):
           }]
         ]
         """
-        tool_results = output.tool_results
+        tool_results = output.structured_results
 
         slot_events: List[SlotSet] = []
 

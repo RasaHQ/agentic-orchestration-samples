@@ -71,6 +71,7 @@ services:
       - '8001:8001'
     environment:
       - TAVILY_API_KEY=${TAVILY_API_KEY}
+      - MOCK_TAVILY_SEARCH=${MOCK_TAVILY_SEARCH}
 
   appointment_booking_mcp_server:
     container_name: appointment_booking_mcp_server

@@ -8,10 +8,12 @@ class TavilySearchTool:
     """Tavily web search tool for MCP server"""
 
     def __init__(self):
-        api_key = os.getenv("TAVILY_API_KEY")
-        if not api_key:
-            raise ValueError("TAVILY_API_KEY environment variable is required")
-        self.client = TavilyClient(api_key=api_key)
+        if os.getenv("MOCK_TAVILY_SEARCH", "").lower().strip() != "true":
+            print("No mocks")
+            api_key = os.getenv("TAVILY_API_KEY")
+            if not api_key:
+                raise ValueError("TAVILY_API_KEY environment variable is required")
+            self.client = TavilyClient(api_key=api_key)
 
     @property
     def name(self) -> str:
@@ -51,10 +53,14 @@ class TavilySearchTool:
             max_results = arguments.get("max_results", 3)
             include_answer = arguments.get("include_answer", True)
 
-            # Perform Tavily search
-            response = self.client.search(
-                query=query, max_results=max_results, include_answer=include_answer
-            )
+            if os.getenv("MOCK_TAVILY_SEARCH", "").lower().strip() != "true":
+                # Perform Tavily search
+                response = self.client.search(
+                    query=query, max_results=max_results, include_answer=include_answer
+                )
+            else:
+                with open("tools/mock_data.json", encoding="utf-8") as file:
+                    response = {"results": json.load(file)[:max_results]}
 
             # Format results for the LLM
             result = {"query": query, "results": []}

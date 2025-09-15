@@ -10,7 +10,6 @@ pipeline:
   - name: CompactLLMCommandGenerator
     llm:
       model_group: openai-gpt-4o
-    prompt_template: prompt_templates/command_generator_prompt.jinja2
     flow_retrieval:
       active: false
 

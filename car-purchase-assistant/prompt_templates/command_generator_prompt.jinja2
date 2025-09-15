@@ -16,6 +16,8 @@ Use the following structured data:
 * `set slot slot_name slot_value`: Slot setting. For example, `set slot transfer_money_recipient Freddy`. Can be used to correct and change previously set values. ONLY use slots that are explicitly defined in the flow's slot list.
 * `cancel flow`: Cancelling the current flow.
 * `disambiguate flows flow_name1 flow_name2 ... flow_name_n`: Disambiguate which flow should be started when user input is ambiguous by listing the potential flows as options. For example, `disambiguate flows list_contacts add_contact remove_contact ...` if the user just wrote "contacts".
+* `provide info`: Responding to the user's questions by supplying relevant information, such as answering FAQs or explaining services.
+* `offtopic reply`: Responding to casual or social user messages that are unrelated to any flows, engaging in friendly conversation and addressing off-topic remarks.
 * `hand over`: Handing over to a human, in case the user seems frustrated or explicitly asks to speak to one.
 * `repeat message`: Repeating the last bot message.
 {% if active_agent %} * `continue agent`: Continue the currently active agent {{ active_agent.name }}. This has HIGHEST PRIORITY when an agent is active and the user is responding to agent questions.{% endif %}

@@ -1,6 +1,5 @@
-# Basic multi-turn conversation with open agent.
 test_cases:
-  - test_case: car_research
+  - test_case: cancel_car_research
     steps:
       - user: Help me find cars that are eco-friendly and have good safety features.
         assertions:
@@ -8,12 +7,8 @@ test_cases:
           - action_executed: action_agent_request_user_input
           - bot_uttered:
               text_matches: "I need a bit more information"
-      - user: Show me any low-end cheap sedans with good fuel efficiency.
+      - user: Actually never mind, forget it. I'm no longer interested in searching for cars.
         assertions:
-          - slot_was_set:
-            - name: search_results
-            - name: recommended_car_models
-            - name: recommended_car_details
-          - flow_completed:
+          - flow_cancelled:
               flow_id: car_research
           - action_executed: utter_can_do_something_else

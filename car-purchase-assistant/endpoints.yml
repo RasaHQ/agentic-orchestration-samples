@@ -24,7 +24,7 @@ model_groups:
     models:
       - provider: openai
         model: gpt-4o-2024-11-20
-        request_timeout: 7
+        request_timeout: 30
         max_tokens: 256
 
 # MCP servers are used to define the MCP servers that are used in this assistant.

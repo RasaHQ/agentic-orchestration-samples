@@ -9,7 +9,6 @@ class TavilySearchTool:
 
     def __init__(self):
         if os.getenv("MOCK_TAVILY_SEARCH", "").lower().strip() != "true":
-            print("No mocks")
             api_key = os.getenv("TAVILY_API_KEY")
             if not api_key:
                 raise ValueError("TAVILY_API_KEY environment variable is required")

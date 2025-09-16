@@ -1,0 +1,22 @@
+# Basic multi-turn conversation with open agent.
+test_cases:
+  - test_case: car_research
+    steps:
+      - user: Help me find cheap budget cars that are also eco-friendly and have good safety features.
+        assertions:
+          - flow_started: car_research
+          - action_executed: action_agent_request_user_input
+          - bot_uttered:
+              text_matches: "I need a bit more information"
+      - user: |
+          my budget is max $20000 (can only do monthly payments over years, via car finance),
+          looking for fuel efficient (petrol, electric or hybrid), used/second-hand hatchbacks 
+          with good safety features and parking sensors. Open to all brands and models.
+        assertions:
+          - slot_was_set:
+            - name: search_results
+            - name: recommended_car_models
+            - name: recommended_car_details
+          - flow_completed:
+              flow_id: car_research
+          - action_executed: utter_can_do_something_else

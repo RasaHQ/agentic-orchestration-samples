@@ -7,7 +7,7 @@ services:
       - tavily_search_mcp_server
       - appointment_booking_mcp_server
       - car_shopping_a2a_agent_server
-    image: europe-west3-docker.pkg.dev/rasa-releases/rasa-pro/rasa-pro:3.14.0.dev7
+    image: europe-west3-docker.pkg.dev/rasa-releases/rasa-pro/rasa-pro:3.14.0.dev10
     volumes:
       - .:/app
     command:
@@ -29,7 +29,7 @@ services:
   rasa_server:
     depends_on:
       - agentic_assistant
-    image: europe-west3-docker.pkg.dev/rasa-releases/rasa-pro/rasa-pro:3.14.0.dev7
+    image: europe-west3-docker.pkg.dev/rasa-releases/rasa-pro/rasa-pro:3.14.0.dev10
     volumes:
       - .:/app
     command:
@@ -67,7 +67,7 @@ services:
       dockerfile: Dockerfile
     command:
       - 'tavily_search_server.py'
-    ports: 
+    ports:
       - '8001:8001'
     environment:
       - TAVILY_API_KEY=${TAVILY_API_KEY}
@@ -79,7 +79,7 @@ services:
       dockerfile: Dockerfile
     command:
       - 'appointment_server_http.py'
-    ports: 
+    ports:
       - '8002:8002'
 
   car_shopping_a2a_agent_server:
@@ -93,13 +93,13 @@ services:
       - 'car_shopping_server.py'
       - '--host'
       - '0.0.0.0'
-    ports: 
+    ports:
       - '10002:10002'
     environment:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
 
   # Workaround for bug ENG-2253, whereby custom `--sub-agent` directory not being used,
-  # so copying over directory (including required A2A agent card) via init container 
+  # so copying over directory (including required A2A agent card) via init container
   car_shopping_a2a_agent_server_init_container:
     image: alpine@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
     volumes:

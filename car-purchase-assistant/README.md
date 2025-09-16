@@ -17,7 +17,9 @@ The car purchase assistant uses multiple specialized servers and agents to provi
 
 ### MCP Servers
 
-**Web Search Server**: Provides real-time car research capabilities by connecting to external search APIs, allowing the assistant to retrieve up-to-date information for car research and decision-making.
+**Web Search Server**: Provides car research capabilities by: 
+- Either, connecting to external search APIs (API key required), allowing the assistant to retrieve up-to-date information for real-time car research and decision-making.
+- Or, using a static mock dataset.
 
 **Appointment Booking Server**: Handles appointment scheduling with dealers, providing flexible scheduling options and availability management.
 

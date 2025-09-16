@@ -60,7 +60,7 @@ class TavilySearchTool:
                 )
             else:
                 with open("tools/mock_data.json", encoding="utf-8") as file:
-                    response = {"results": json.load(file)[:max_results]}
+                    response = {"results": json.load(file)}
 
             # Format results for the LLM
             result = {"query": query, "results": []}

@@ -1,6 +1,6 @@
 agent:
   name: research_new_cars
-  protocol: mcp
+  protocol: rasa
   description: "Helps users research the web to find new cars according to their preferences"
 
 configuration:

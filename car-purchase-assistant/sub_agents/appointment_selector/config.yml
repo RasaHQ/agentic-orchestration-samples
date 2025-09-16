@@ -1,7 +1,7 @@
 # general info
 agent:
   name: appointment_selector
-  protocol: mcp
+  protocol: rasa
   description: Helps users select an appointment slot for seeing a car dealer.
 
 # Core agent configuration

@@ -32,7 +32,7 @@ on user preferences and constraints. This sample showcases:
 A demonstration of advanced agentic orchestration for complex, multi-phase workflows.
 This sample showcases:
 - **MCP-Powered Research**: Uses an agent that leverages an MCP server to perform
-  real-time car research and help users find suitable car models.
+  car research (either real-time or using a mock dataset) and help users find suitable car models.
 - **A2A-Powered Shopping**: Integrates an A2A (Agent-to-Agent) server to power a
   dedicated car shopping agent, enabling structured car searches, recommendations, and
   dealer connections.

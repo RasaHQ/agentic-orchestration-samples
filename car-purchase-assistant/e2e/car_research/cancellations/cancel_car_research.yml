@@ -1,0 +1,14 @@
+test_cases:
+  - test_case: cancel_car_research
+    steps:
+      - user: Help me find cars that are eco-friendly and have good safety features.
+        assertions:
+          - flow_started: car_research
+          - action_executed: action_agent_request_user_input
+          - bot_uttered:
+              text_matches: "I need a bit more information"
+      - user: Actually never mind, forget it. I'm no longer interested in searching for cars.
+        assertions:
+          - flow_cancelled:
+              flow_id: car_research
+          - action_executed: utter_can_do_something_else

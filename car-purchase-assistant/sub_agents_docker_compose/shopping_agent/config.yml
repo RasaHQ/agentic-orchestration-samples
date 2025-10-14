@@ -4,6 +4,6 @@ agent:
   description: "Helps users shop for cars by connecting them with dealers and facilitating purchases"
 
 configuration:
-  agent_card: ./sub_agents/shopping_agent/agent_card.json
+  agent_card: ./sub_agents_docker_compose/shopping_agent/agent_card.json
   module: custom.car_shopping_agent.CarShoppingAgent
 

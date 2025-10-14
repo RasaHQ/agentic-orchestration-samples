@@ -17,7 +17,9 @@ The car purchase assistant uses multiple specialized servers and agents to provi
 
 ### MCP Servers
 
-**Web Search Server**: Provides real-time car research capabilities by connecting to external search APIs, allowing the assistant to retrieve up-to-date information for car research and decision-making.
+**Web Search Server**: Provides car research capabilities by: 
+- Either, connecting to external search APIs (API key required), allowing the assistant to retrieve up-to-date information for real-time car research and decision-making.
+- Or, using a static mock dataset.
 
 **Appointment Booking Server**: Handles appointment scheduling with dealers, providing flexible scheduling options and availability management.
 
@@ -65,6 +67,35 @@ The car purchase assistant provides a comprehensive end-to-end car buying experi
 - **Flexible scheduling**: Books appointments with dealers based on user preferences
 - **Availability management**: Handles date and time constraints with intelligent defaults
 - **Confirmation workflow**: Provides confirmation and cancellation options
+
+## E2E Testing with Mock Web-Search MCP Server
+
+The car purchase assistant includes E2E testing capabilities using mock Web-Search MCP server.
+
+### Why we mock Web Search MCP Server
+
+- **Reduce External Dependencies**: No need for Tavily API key during testing.
+- **More consistent Results**: Mock data ensures more reproducible test outcomes across different environments
+- **Cost Effective**: Reduces API usage costs during development and testing cycles
+- **Faster Execution**: Mock responses are instant, significantly speeding up test runs
+
+### What We're Testing
+
+Our tests focus on the **assistant's orchestration capabilities** rather than external API functionality:
+
+- **Flow Management**: How the assistant guides users through complex multi-step workflows
+- **Conversation Patterns**: Context maintenance and natural conversation handling
+- **Agent Coordination**: How different specialized agents work together seamlessly
+- **Error Handling**: Graceful handling of user cancellations and digressions
+- **State Management**: Proper tracking of user preferences and conversation state
+
+**Important**: We are **not** testing the external search APIs themselves - we're testing how the assistant uses search results to provide intelligent responses and maintain conversation flow.
+
+### How It Works
+
+The mock system uses static dataset ([`mock_data.json`](./servers/tavily_search_server/tools/mock_data.json) for car research) that provides realistic responses when the `MOCK_TAVILY_SEARCH=true` environment variable is set. This allows the assistant to demonstrate its full capabilities using predetermined data.
+
+For technical implementation details, see the [Web Search MCP Server README](servers/tavily_search_server/README.md#testing-with-mock-data).
 
 ## Setup
 

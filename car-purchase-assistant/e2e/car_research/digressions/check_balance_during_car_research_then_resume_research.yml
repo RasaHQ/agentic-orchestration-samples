@@ -1,0 +1,32 @@
+test_cases:
+  - test_case: check_balance_during_car_research_then_resume_research
+    steps:
+      - user: Help me find cars that are eco-friendly and have good safety features.
+        assertions:
+          - flow_started: car_research
+          - action_executed: action_agent_request_user_input
+          - bot_uttered:
+              text_matches: "I need a bit more information"
+      - user: Show me my balance first, so I can ascertain my budget.
+        assertions:
+          - flow_started: check_balance
+          - bot_uttered:
+                utter_name: utter_balance
+          - flow_completed:
+              flow_id: check_balance
+          - flow_started: pattern_continue_interrupted
+          - action_executed: utter_ask_continue_interrupted_flow_confirmation
+      - user: yes
+        assertions:
+          - action_executed: action_agent_request_user_input
+          - bot_uttered: 
+              text_matches: "I need a bit more information"
+      - user: Show me any low-end cheap sedans with good fuel efficiency.
+        assertions:
+          - slot_was_set:
+            - name: search_results
+            - name: recommended_car_models
+            - name: recommended_car_details
+          - flow_completed:
+              flow_id: car_research
+          - action_executed: utter_can_do_something_else

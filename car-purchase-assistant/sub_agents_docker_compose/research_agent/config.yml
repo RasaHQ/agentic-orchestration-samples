@@ -4,7 +4,7 @@ agent:
   description: "Helps users research the web to find new cars according to their preferences"
 
 configuration:
-  prompt_template: ./sub_agents/research_agent/prompt_template.jinja2
+  prompt_template: ./sub_agents_docker_compose/research_agent/prompt_template.jinja2
   module: custom.car_research_agent.CarResearchAgent
 
 connections:

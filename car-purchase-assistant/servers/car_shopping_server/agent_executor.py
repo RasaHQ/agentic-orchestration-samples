@@ -114,7 +114,7 @@ class CarShoppingAgentExecutor(AgentExecutor):
                             "price": final_decision_data.get("price"),
                         },
                     )
-                    
+
                     # Task is complete with final decision
                     await updater.update_status(
                         TaskState.completed,

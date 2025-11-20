@@ -1,4 +1,3 @@
-import json
 from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.events import EventQueue
 from a2a.server.tasks import TaskUpdater
@@ -40,9 +39,9 @@ class CarShoppingAgentExecutor(AgentExecutor):
 
         if not task:
             task = new_task(context.message)
-            await event_queue.enqueue_event(task)
 
-        updater = TaskUpdater(event_queue, task.id, task.context_id)
+        updater = TaskUpdater(event_queue, context.task_id, context.context_id)
+        await updater.submit() # Send initial task submission event
 
         try:
             async for item in self.agent.stream(query, task.context_id, structured_data):
@@ -115,7 +114,7 @@ class CarShoppingAgentExecutor(AgentExecutor):
                             "price": final_decision_data.get("price"),
                         },
                     )
-
+                    
                     # Task is complete with final decision
                     await updater.update_status(
                         TaskState.completed,

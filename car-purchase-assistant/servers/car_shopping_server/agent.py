@@ -1,4 +1,5 @@
 import json
+import asyncio
 from typing import Any, AsyncIterable, Optional
 from google.adk.agents.llm_agent import LlmAgent
 from google.adk.artifacts import InMemoryArtifactService
@@ -11,6 +12,7 @@ from google.genai import types
 # Import the mock car search API
 from mock_car_api import MockCarSearchAPI
 
+SIMULATED_NETWORK_DELAY = 1.5  # seconds
 
 def check_car_availability_tool(
     model_name: str,
@@ -340,6 +342,14 @@ Remember: Your goal is to help them make a final reservation decision, not just 
 
                         # Handle different tool responses
                         if response.name == "check_car_availability_tool":
+                            # Emit an intermediate 'working' status update
+                            yield {
+                                "is_task_complete": False,
+                                "content": "Checking availability...",
+                                "session_id": session.id,
+                            }
+                            await asyncio.sleep(SIMULATED_NETWORK_DELAY)
+
                             if car_data.get("available") and car_data.get("cars"):
                                 # Save the first available car as the primary recommendation
                                 first_car = car_data["cars"][0]
@@ -387,6 +397,14 @@ Remember: Your goal is to help them make a final reservation decision, not just 
                                 )
 
                         elif response.name == "find_similar_cars_tool":
+                            # Emit an intermediate 'working' status update
+                            yield {
+                                "is_task_complete": False,
+                                "content": "Looking for similar cars...",
+                                "session_id": session.id,
+                            }
+                            await asyncio.sleep(SIMULATED_NETWORK_DELAY)
+
                             if car_data.get("similar_cars_available") and car_data.get("cars"):
                                 # Save similar cars as alternatives
                                 similar_cars_data = {
@@ -410,6 +428,14 @@ Remember: Your goal is to help them make a final reservation decision, not just 
                                 )
 
                         elif response.name == "get_dealer_recommendations_tool":
+                            # Emit an intermediate 'working' status update
+                            yield {
+                                "is_task_complete": False,
+                                "content": "Finding nearby dealers...",
+                                "session_id": session.id,
+                            }
+                            await asyncio.sleep(SIMULATED_NETWORK_DELAY)
+
                             if car_data.get("dealers_available") and car_data.get("dealers"):
                                 # Save dealer recommendations
                                 dealer_data = {

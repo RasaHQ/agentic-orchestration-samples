@@ -17,6 +17,16 @@ class MockCarSearchAPI:
         """
         self.cars_data = self._load_car_data(data_file)
 
+    def _normalize(self, s: str) -> str:
+        """
+        Normalize strings for robust matching:
+        - lowercase
+        - remove non-alphanumeric characters
+        """
+        if not s:
+            return ""
+        return "".join(ch.lower() for ch in s if ch.isalnum())
+
     def _load_car_data(self, data_file):
         """
         Loads car data from a JSON file.
@@ -60,8 +70,8 @@ class MockCarSearchAPI:
             matches = True
 
             # Check model name (partial matching for flexibility)
-            car_model_lower = car["model"].lower()
-            if model_name.lower() not in car_model_lower:
+            car_model_norm = self._normalize(car["model"])
+            if self._normalize(model_name) not in car_model_norm:
                 matches = False
 
             # Check dealer name if specified
@@ -137,14 +147,14 @@ class MockCarSearchAPI:
         # First, try to determine the car type from the model name if not provided
         if not car_type:
             for car in self.cars_data:
-                if model_name.lower() in car["model"].lower():
+                if self._normalize(model_name) in self._normalize(car["model"]):
                     car_type = car["type"]
                     break
 
         similar_cars = []
         for car in self.cars_data:
             # Skip the exact model
-            if model_name.lower() in car["model"].lower():
+            if self._normalize(model_name) in self._normalize(car["model"]):
                 continue
 
             matches = True
@@ -224,8 +234,8 @@ class MockCarSearchAPI:
             matches = True
 
             # Check model name (partial matching for flexibility)
-            car_model_lower = car["model"].lower()
-            if model_name.lower() not in car_model_lower:
+            car_model_norm = self._normalize(car["model"])
+            if self._normalize(model_name) not in car_model_norm:
                 matches = False
 
             # Check new_or_used if specified

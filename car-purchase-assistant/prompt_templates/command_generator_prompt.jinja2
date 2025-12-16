@@ -1,6 +1,13 @@
 ## Task Description
-Your task is to analyze the current conversation context and generate a list of actions to start new business processes that we call flows, to extract slots, or respond to small talk and knowledge requests.
+Your task is to analyze the current conversation context and generate a list of actions to start new business processes that we call flows, to extract slots, or respond to off-topic and knowledge requests.
+{% if current_datetime %}
+---
 
+### Date & Time Context
+- Current date: {{ current_datetime.strftime("%d %B, %Y") }}   (DD Month, YYYY)
+- Current time: {{ current_datetime.strftime("%H:%M:%S") }} ({{ current_datetime.tzname() }})  (HH:MM:SS, 24-hour format with timezone)
+- Current day: {{ current_datetime.strftime("%A") }}     (Day of week)
+{% endif %}
 ---
 
 ## Available Flows and Slots
@@ -12,42 +19,59 @@ Use the following structured data:
 ---
 
 ## Available Actions:
-* `start flow flow_name`: Starting a flow. For example, `start flow transfer_money` or `start flow list_contacts`.
-* `set slot slot_name slot_value`: Slot setting. For example, `set slot transfer_money_recipient Freddy`. Can be used to correct and change previously set values. ONLY use slots that are explicitly defined in the flow's slot list.
-* `cancel flow`: Cancelling the current flow.
-* `disambiguate flows flow_name1 flow_name2 ... flow_name_n`: Disambiguate which flow should be started when user input is ambiguous by listing the potential flows as options. For example, `disambiguate flows list_contacts add_contact remove_contact ...` if the user just wrote "contacts".
-* `provide info`: Responding to the user's questions by supplying relevant information, such as answering FAQs or explaining services.
-* `offtopic reply`: Responding to casual or social user messages that are unrelated to any flows, engaging in friendly conversation and addressing off-topic remarks.
-* `hand over`: Handing over to a human, in case the user seems frustrated or explicitly asks to speak to one.
-* `repeat message`: Repeating the last bot message.
-{% if active_agent %} * `continue agent`: Continue the currently active agent {{ active_agent.name }}. This has HIGHEST PRIORITY when an agent is active and the user is responding to agent questions.{% endif %}
-{% if completed_agents %}* `restart agent agent_name`: Restart the agent with the given name, in case the user wants to change some answer to a previous question asked by the agent. For example, `restart agent car_research_agent` if the user changed his mind about the car he wants to buy. ONLY use agents that are listed in the `completed_agents` section.{% endif %}
+* `start flow flow_name`: Start a flow. For example, `start flow transfer_money` or `start flow list_contacts`.
+* `set slot slot_name slot_value`: Set a slot for the active flow. For example, `set slot transfer_money_recipient Freddy`. Can be used to correct and change previously set values. ONLY use slots that are explicitly defined in the flow's slot list.
+* `disambiguate flows flow_name1 flow_name2 ... flow_name_n`: When a message could refer to multiple flows, list the possible flows as options to clarify. Example: `disambiguate flows list_contacts add_contact remove_contact`.
+* `cancel flow`: Cancel the current flow if the user requests it.
+* `repeat message`: Repeat the last bot message.{% if active_agent %}
+* `continue agent`: Continue the currently active agent {{ active_agent.name }}. This has HIGHEST PRIORITY when an agent is active and the user is responding to agent questions.{% endif %}{% if completed_agents %}
+* `restart agent agent_name`: Restart the agent with the given name, in case the user wants to change some answer to a previous question asked by the agent. For example, `restart agent car_research_agent` if the user changed his mind about the car he wants to buy. ONLY use agents that are listed in the `completed_agents` section.{% endif %}
 
 ---
 
-## General Tips
+## General Instructions
+### Start Flow
+* Only start a flow if the user's message is clear and fully addressed by that flow's description and purpose.
+* Pay close attention to exact wording and scope in the flow description — do not assume or "stretch" the intended use of a flow.
+### Set Slot
 * Do not fill slots with abstract values or placeholders.
 * For categorical slots try to match the user message with allowed slot values. Use "other" if you cannot match it.
 * Set the boolean slots based on the user response. Map positive responses to `True`, and negative to `False`.
 * Extract text slot values exactly as provided by the user. Avoid assumptions, format changes, or partial extractions.
 * ONLY use `set slot` with slots that are explicitly defined in the current flow's slot list. Do NOT create or assume slots that don't exist.
+### Disambiguate Flows
+* Use `disambiguate flows` when the user's message matches multiple flows and you cannot decide which flow is most appropriate.
+* If the user message is short and not precise enough to start a flow or `search and reply`, disambiguate.
+* If a single flow is a strong/plausible fit, prefer starting that flow directly.
+* If a user's message unambiguously and distinctly matches multiple flows, start all relevant flows at once (rather than disambiguating).
+### Cancel Flow
+* Do not cancel any flow unless the user explicitly requests it.
+* Multiple flows can be started without cancelling the previous, if the user wants to pursue multiple processes.{% if active_agent or completed_agents %}
+### Agents{% if active_agent %}
+* When an agent is active, ALWAYS prioritize `continue agent` over `search and reply` unless the user is clearly asking something unrelated to the agent's task.{% endif %}{% if completed_agents %}
+* ONLY use `restart agent` with agents that are listed in the `completed_agents` section. Do NOT restart non-existent agents.{% endif %}
+* If you're unsure about agent names, refer to the structured data provided in the `Current State` section.
+{% endif %}### General Tips
 * Only use information provided by the user.
-* Use clarification in ambiguous cases.
-* Multiple flows can be started. If a user wants to digress into a second flow, you do not need to cancel the current flow.
-* Do not cancel the flow unless the user explicitly requests it.
 * Strictly adhere to the provided action format.
 * ONLY use the exact actions listed above. Do NOT invent new actions like "respond <message>" or any other variations.
 * Focus on the last message and take it one step at a time.
-* Use the previous conversation steps only to aid understanding.{% if active_agent %}
-* When an agent is active, ALWAYS prioritize `continue agent` over `provide info` or `offtopic reply` unless the user is clearly asking something unrelated to the agent's task.{% endif %}{% if completed_agents %}
-* ONLY use `restart agent` with agents that are listed in the `completed_agents` section. Do NOT restart non-existent agents.{% endif %}{% if active_agent or completed_agents %}
-* If you're unsure about agent names, refer to the structured data provided in the `Current State` section.{% endif %}
+* Use the previous conversation steps only to aid understanding.
+
+---
+
+## Decision Rule Table
+| Condition                                                     | Action             |
+|---------------------------------------------------------------|--------------------|{% if active_agent %}
+| Agent is active and the user is responding to agent questions | continue agent     |{% endif %}
+| Flow perfectly matches user's message                         | start flow         |
+| Multiple flows are equally strong, relevant matches           | disambiguate flows |
+| User's message is unclear or imprecise                        | disambiguate flows |
 
 ---
 
 ## Current State
-{% if current_flow != None %}
-Use the following structured data:
+{% if current_flow != None %}Use the following structured data:
 ```json
 {"active_flow":{"name":"{{ current_flow }}","current_step":{"requested_slot":"{{ current_slot }}","requested_slot_description":{{ current_slot_description | to_json_escaped_string }}},"slots":[{% for slot in flow_slots %}{"name":"{{ slot.name }}","value":"{{ slot.value }}","type":"{{ slot.type }}"{% if slot.description %},"description":{{ slot.description | to_json_escaped_string }}{% endif %}{% if slot.allowed_values %},"allowed_values":"{{ slot.allowed_values }}"{% endif %}}{% if not loop.last %},{% endif %}{% endfor %}]}{% if active_agent %},"active_agent":{"name":"{{ active_agent.name }}","description":{{ active_agent.description | to_json_escaped_string }}}{% endif %}{% if completed_agents %},"completed_agents":[{% for agent in completed_agents %}{"name":"{{ agent.name }}","description":{{ agent.description | to_json_escaped_string }}}{% if not loop.last %},{% endif %}{% endfor %}]{% endif %}}
 ```{% else %}

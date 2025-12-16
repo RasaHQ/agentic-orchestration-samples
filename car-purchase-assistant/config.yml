@@ -12,6 +12,7 @@ pipeline:
       model_group: openai-gpt-4o
     flow_retrieval:
       active: false
+    prompt_template: prompt_templates/command_generator_prompt.jinja2
 
 # Configuration for Rasa Core.
 policies:

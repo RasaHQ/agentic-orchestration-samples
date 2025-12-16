@@ -32,7 +32,9 @@ TASK_COMPLETED_TOOL = {
         TOOL_NAME_KEY: KEY_TASK_COMPLETED,
         TOOL_DESCRIPTION_KEY: "Signal that the MCP agent has FULLY completed its "
         "primary task. Once you have presented your findings, follow-up with "
-        "a message that offers any other assistance that the user might want. ",
+        "a message that offers any other assistance that the user might want. "
+        "Ensure that this tool is called only when the findings have been presented. "
+        "Don't present your findings as part of this tool.",
         TOOL_PARAMETERS_KEY: {
             TOOL_TYPE_KEY: "object",
             TOOL_PROPERTIES_KEY: {

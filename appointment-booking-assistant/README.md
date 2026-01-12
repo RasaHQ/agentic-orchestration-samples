@@ -51,7 +51,7 @@ Copy the example environment file and fill in your API keys:
 
 The OPENAI_API_KEY is required as we are using `gpt-4o` as the default LLM within
 Rasa. If you switch to a different LLM (see
-[documentation](https://rasa.com/docs/reference/config/components/llm-configuratio)),
+[documentation](https://rasa.com/docs/reference/config/components/llm-configuration)),
 the key might not be needed.
 
 Make sure to save the `.env` file in the root of the `appointment-booking-assistant`

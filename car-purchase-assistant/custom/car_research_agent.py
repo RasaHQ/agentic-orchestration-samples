@@ -9,9 +9,54 @@ import json, os
 
 from typing import List, Dict, Any, Optional
 from rasa.shared.core.events import SlotSet
+from rasa.agents.constants import (
+    KEY_CONTENT,
+    KEY_ROLE,
+    KEY_TOOL_CALL_ID,
+    TOOL_ADDITIONAL_PROPERTIES_KEY,
+    TOOL_DESCRIPTION_KEY,
+    TOOL_NAME_KEY,
+    TOOL_PARAMETERS_KEY,
+    TOOL_PROPERTIES_KEY,
+    TOOL_REQUIRED_KEY,
+    TOOL_STRICT_KEY,
+    TOOL_TYPE_FUNCTION_KEY,
+    TOOL_TYPE_KEY,
+)
 
+KEY_TASK_COMPLETED = "task_completed"
+
+TASK_COMPLETED_TOOL = {
+    TOOL_TYPE_KEY: TOOL_TYPE_FUNCTION_KEY,
+    TOOL_TYPE_FUNCTION_KEY: {
+        TOOL_NAME_KEY: KEY_TASK_COMPLETED,
+        TOOL_DESCRIPTION_KEY: "Signal that the MCP agent has FULLY completed its "
+        "primary task. Once you have presented your findings, follow-up with "
+        "a message that offers any other assistance that the user might want. "
+        "Ensure that this tool is called only when the findings have been presented. "
+        "Don't present your findings as part of this tool.",
+        TOOL_PARAMETERS_KEY: {
+            TOOL_TYPE_KEY: "object",
+            TOOL_PROPERTIES_KEY: {
+                "message": {
+                    TOOL_TYPE_KEY: "string",
+                    TOOL_DESCRIPTION_KEY: "A follow up message that acknowledges user's last message and offers any further assistance. Do not add any of your internal thought process here.",
+                }
+            },
+            TOOL_REQUIRED_KEY: ["message"],
+            TOOL_ADDITIONAL_PROPERTIES_KEY: False,
+        },
+        TOOL_STRICT_KEY: True,
+    },
+}
 
 class CarResearchAgent(MCPOpenAgent):
+
+    @staticmethod
+    def get_task_completed_tool() -> Dict[str, Any]:
+        """Get the task completed tool for MCP. Override to customize/disable."""
+        return TASK_COMPLETED_TOOL
+
     def get_custom_tool_definitions(self) -> List[Dict[str, Any]]:
         car_recommend_tool = {
             "type": "function",

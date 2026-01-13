@@ -1,16 +1,3 @@
 actions:
   - action_car_research
 
-slots:
-  search_results:
-    type: text
-    mappings:
-      - type: controlled
-  recommended_car_models:
-    type: any
-    mappings:
-      - type: controlled
-  recommended_car_details:
-    type: any
-    mappings:
-      - type: controlled

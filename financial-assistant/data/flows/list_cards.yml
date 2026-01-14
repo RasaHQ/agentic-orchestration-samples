@@ -1,0 +1,8 @@
+flows:
+  list_cards:
+    name: list credit cards
+    description: List all credit cards
+    steps:
+      - action: action_list_cards
+      - action: utter_cards
+        next: END

@@ -1,0 +1,39 @@
+flows:
+  report_lost_card:
+    name: report lost card
+    description: Report a credit card as lost or stolen and optionally lock it
+    steps:
+      - collect: report_lost_card_last_four
+        description: The last 4 digits of the lost credit card
+      - action: action_report_lost_card
+        next:
+          - if: slots.return_value = 'not_found'
+            then:
+              - action: utter_card_not_found
+                next: END
+          - if: slots.return_value = 'already_reported'
+            then:
+              - action: utter_card_already_reported_lost
+                next: END
+          - else: ask_lock
+      - id: ask_lock
+        action: utter_card_reported_lost
+      - collect: report_lost_lock_confirmation
+        ask_before_filling: true
+        description: Whether the user wants to lock the card as well
+        next:
+          - if: slots.report_lost_lock_confirmation is true
+            then: lock_the_card
+          - else:
+              - action: utter_report_complete_no_lock
+                next: END
+      - id: lock_the_card
+        action: action_lock_reported_card
+        next:
+          - if: slots.return_value = 'success'
+            then:
+              - action: utter_card_reported_and_locked
+                next: END
+          - else:
+              - action: utter_lock_failed_after_report
+                next: END

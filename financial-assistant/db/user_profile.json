@@ -1,0 +1,23 @@
+{
+  "user_id": "user_001",
+  "name": "Alex Johnson",
+  "email": "alex.johnson@email.com",
+  "loyalty_memberships": [
+    {
+      "program": "Star Alliance",
+      "tier": "Gold",
+      "member_since": "2022-03-15"
+    },
+    {
+      "program": "Hilton Honors",
+      "tier": "Diamond",
+      "member_since": "2021-08-01"
+    }
+  ],
+  "preferences": {
+    "travel_heavy": true,
+    "preferred_airlines": ["United", "Lufthansa"],
+    "notification_method": "email"
+  },
+  "linked_cards": ["cc_001", "cc_002", "cc_003"]
+}

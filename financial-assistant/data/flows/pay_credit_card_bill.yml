@@ -1,0 +1,41 @@
+flows:
+  pay_credit_card_bill:
+    name: pay credit card bill
+    description: Pay towards a credit card balance
+    steps:
+      - collect: pay_bill_card_last_four
+        description: The last 4 digits of the credit card to pay
+      - action: action_get_card_balance
+        next:
+          - if: slots.return_value = 'not_found'
+            then:
+              - action: utter_card_not_found
+                next: END
+          - else: show_balance
+      - id: show_balance
+        action: utter_show_balance
+      - collect: pay_bill_amount
+        description: The amount to pay towards the credit card bill
+      - collect: pay_bill_confirmation
+        ask_before_filling: true
+        description: Confirmation from the user to process the payment
+        next:
+          - if: slots.pay_bill_confirmation is not true
+            then:
+              - action: utter_payment_cancelled
+                next: END
+          - else: process_payment
+      - id: process_payment
+        action: action_pay_bill
+        next:
+          - if: slots.return_value = 'success'
+            then:
+              - action: utter_payment_success
+                next: END
+          - if: slots.return_value = 'exceeds_balance'
+            then:
+              - action: utter_payment_exceeds_balance
+                next: END
+          - else:
+              - action: utter_action_failed
+                next: END

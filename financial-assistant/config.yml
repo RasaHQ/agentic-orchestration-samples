@@ -1,0 +1,11 @@
+recipe: default.v1
+assistant_id: financial-assistant
+language: en
+
+pipeline:
+  - name: CompactLLMCommandGenerator
+    llm:
+      model_group: openai-gpt-4o
+
+policies:
+  - name: FlowPolicy

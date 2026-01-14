@@ -1,0 +1,8 @@
+flows:
+  view_transactions:
+    name: view transactions
+    description: |
+      View credit card transactions. Handles contextual references like
+      "the one for coffee", "the one on 20th", "show me my last 5 transactions".
+    steps:
+      - call: transaction_agent

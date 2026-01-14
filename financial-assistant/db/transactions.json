@@ -1,0 +1,112 @@
+[
+  {
+    "id": "txn_001",
+    "card_id": "cc_001",
+    "merchant": "Starbucks",
+    "category": "Coffee",
+    "amount": 30.00,
+    "currency": "USD",
+    "timestamp": "2026-01-20T08:30:00Z",
+    "location": "Downtown Seattle",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_002",
+    "card_id": "cc_001",
+    "merchant": "Starbucks",
+    "category": "Coffee",
+    "amount": 12.50,
+    "currency": "USD",
+    "timestamp": "2026-01-18T14:15:00Z",
+    "location": "Pike Place",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_003",
+    "card_id": "cc_001",
+    "merchant": "Amazon",
+    "category": "Shopping",
+    "amount": 156.99,
+    "currency": "USD",
+    "timestamp": "2026-01-17T10:00:00Z",
+    "location": "Online",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_004",
+    "card_id": "cc_001",
+    "merchant": "Whole Foods",
+    "category": "Groceries",
+    "amount": 89.45,
+    "currency": "USD",
+    "timestamp": "2026-01-15T18:30:00Z",
+    "location": "Capitol Hill",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_005",
+    "card_id": "cc_001",
+    "merchant": "Shell Gas Station",
+    "category": "Gas",
+    "amount": 52.00,
+    "currency": "USD",
+    "timestamp": "2026-01-14T09:00:00Z",
+    "location": "I-5 North",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_006",
+    "card_id": "cc_003",
+    "merchant": "United Airlines",
+    "category": "Travel",
+    "amount": 1850.00,
+    "currency": "USD",
+    "timestamp": "2026-01-10T11:00:00Z",
+    "location": "Online",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_007",
+    "card_id": "cc_003",
+    "merchant": "Hilton Hotels",
+    "category": "Travel",
+    "amount": 425.00,
+    "currency": "USD",
+    "timestamp": "2026-01-08T16:00:00Z",
+    "location": "Chicago, IL",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_008",
+    "card_id": "cc_003",
+    "merchant": "Business Class Upgrade",
+    "category": "Travel",
+    "amount": 1200.00,
+    "currency": "USD",
+    "timestamp": "2026-01-05T09:30:00Z",
+    "location": "LAX Airport",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_009",
+    "card_id": "cc_002",
+    "merchant": "Netflix",
+    "category": "Entertainment",
+    "amount": 15.99,
+    "currency": "USD",
+    "timestamp": "2026-01-01T00:00:00Z",
+    "location": "Online",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_010",
+    "card_id": "cc_002",
+    "merchant": "Trader Joe's",
+    "category": "Groceries",
+    "amount": 67.30,
+    "currency": "USD",
+    "timestamp": "2026-01-12T17:45:00Z",
+    "location": "Queen Anne",
+    "is_disputed": false
+  }
+]

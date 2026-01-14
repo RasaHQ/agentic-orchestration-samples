@@ -1,0 +1,9 @@
+flows:
+  view_credit_card_offers:
+    name: view credit card offers
+    description: |
+      Browse and get personalized credit card recommendations. Leverages
+      cross-conversation memory to recall user preferences, loyalty memberships,
+      and past interactions for relevant suggestions.
+    steps:
+      - call: credit_card_offers_agent

@@ -1,0 +1,26 @@
+version: "3.1"
+
+slots:
+  # Slots for transaction agent context
+  viewed_transactions:
+    type: any
+    mappings:
+      - type: controlled
+
+  disputed_transaction_ids:
+    type: any
+    mappings:
+      - type: controlled
+
+responses:
+  utter_no_transactions_found:
+    - text: "I couldn't find any transactions matching your criteria."
+
+  utter_dispute_success:
+    - text: "I've successfully disputed the selected transaction(s). You'll receive a confirmation email shortly, and our fraud team will investigate within 2-3 business days."
+
+  utter_dispute_failed:
+    - text: "I'm sorry, I couldn't process the dispute. Please try again or contact customer support."
+
+  utter_suggest_lock_card:
+    - text: "For your security, would you also like me to lock your card to prevent any further unauthorized transactions?"

@@ -1,0 +1,58 @@
+version: "3.1"
+
+slots:
+  pay_bill_card_last_four:
+    type: text
+    mappings:
+      - type: from_llm
+
+  pay_bill_amount:
+    type: float
+    mappings:
+      - type: from_llm
+
+  pay_bill_confirmation:
+    type: bool
+    mappings:
+      - type: from_llm
+
+  card_balance_due:
+    type: float
+    mappings:
+      - type: controlled
+
+  card_due_date:
+    type: text
+    mappings:
+      - type: controlled
+
+  payment_new_balance:
+    type: float
+    mappings:
+      - type: controlled
+
+responses:
+  utter_show_balance:
+    - text: "Your card ending in {pay_bill_card_last_four} has a balance of ${card_balance_due} due by {card_due_date}."
+
+  utter_payment_cancelled:
+    - text: "No problem, I've cancelled the payment. Let me know if you need anything else."
+
+  utter_payment_success:
+    - text: "Payment successful! I've applied ${pay_bill_amount} to your card ending in {pay_bill_card_last_four}. Your new balance is ${payment_new_balance}."
+
+  utter_payment_exceeds_balance:
+    - text: "That amount exceeds your current balance due. Would you like to pay a different amount?"
+
+  utter_ask_pay_bill_card_last_four:
+    - text: "What is the last 4 digits of the credit card you would like to pay?"
+
+  utter_ask_pay_bill_amount:
+    - text: "How much would you like to pay towards the credit card bill?"
+
+  utter_ask_pay_bill_confirmation:
+    - text: "Are you sure you want to process this payment? This action cannot be undone."
+
+actions:
+  - action_get_card_balance
+  - action_pay_bill

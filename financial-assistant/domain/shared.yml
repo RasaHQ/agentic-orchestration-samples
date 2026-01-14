@@ -1,0 +1,77 @@
+version: "3.1"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+slots:
+  # Common return value slot for action results
+  return_value:
+    type: any
+    mappings:
+      - type: controlled
+
+  # Card selection slots
+  selected_card_last_four:
+    type: text
+    mappings:
+      - type: from_llm
+
+  selected_card_id:
+    type: text
+    mappings:
+      - type: controlled
+
+  # Transaction-related slots
+  transaction_list:
+    type: any
+    mappings:
+      - type: controlled
+
+  selected_transactions:
+    type: any
+    mappings:
+      - type: controlled
+
+  # Payment slots
+  payment_amount:
+    type: float
+    mappings:
+      - type: from_llm
+
+  # User profile slots (populated by action_session_start)
+  user_name:
+    type: text
+    mappings:
+      - type: controlled
+
+  user_loyalty_memberships:
+    type: any
+    mappings:
+      - type: controlled
+
+  user_is_travel_heavy:
+    type: bool
+    mappings:
+      - type: controlled
+
+  user_preferred_airlines:
+    type: any
+    mappings:
+      - type: controlled
+
+actions:
+  - action_session_start
+
+responses:
+  utter_greeting:
+    - text: "Hello! I'm your financial assistant. How can I help you today?"
+
+  utter_greeting_returning:
+    - text: "Welcome back! How can I assist you today?"
+
+  utter_action_failed:
+    - text: "I'm sorry, something went wrong. Please try again."
+
+  utter_card_not_found:
+    - text: "I couldn't find a card with those details. Please check and try again."

@@ -1,0 +1,23 @@
+version: "3.1"
+
+slots:
+  # Slots for credit card offers agent
+  recommended_offers:
+    type: any
+    mappings:
+      - type: controlled
+
+  selected_offer_id:
+    type: text
+    mappings:
+      - type: from_llm
+
+responses:
+  utter_no_offers_available:
+    - text: "I'm sorry, there are no special offers available at this time. Please check back later."
+
+  utter_offer_details:
+    - text: "Here are the details for that card. Would you like to apply?"
+
+  utter_application_started:
+    - text: "Great choice! I'm starting your application. You'll receive an email with next steps shortly."

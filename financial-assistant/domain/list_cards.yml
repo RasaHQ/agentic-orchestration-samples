@@ -1,0 +1,14 @@
+version: "3.1"
+
+slots:
+  cards_list:
+    type: text
+    mappings:
+      - type: from_llm
+
+responses:
+  utter_cards:
+    - text: "You currently have the following cards: {slots.cards_list}"
+
+actions:
+  - action_list_cards

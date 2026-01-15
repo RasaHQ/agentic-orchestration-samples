@@ -8,7 +8,7 @@ slots:
 
 responses:
   utter_cards:
-    - text: "You currently have the following cards: {slots.cards_list}"
+    - text: "You currently have the following cards: \n\n{cards_list}"
 
 actions:
   - action_list_cards

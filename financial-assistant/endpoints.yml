@@ -60,3 +60,12 @@ model_groups:
     models:
       - provider: openai
         model: text-embedding-3-large
+
+# MCP servers are used to define the MCP servers that are used in this assistant.
+mcp_servers:
+  - name: credit_card_offers
+    url: http://localhost:8001/mcp
+    type: http
+  - name: transactions
+    url: http://localhost:8002/mcp
+    type: http

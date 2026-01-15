@@ -9,3 +9,7 @@ agent:
 configuration:
   prompt_template: ./sub_agents/transaction_agent/prompt_template.jinja2
   module: custom.transaction_agent.TransactionAgent
+
+connections:
+  mcp_servers:
+    - name: transactions

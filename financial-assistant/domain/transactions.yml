@@ -23,4 +23,4 @@ responses:
     - text: "I'm sorry, I couldn't process the dispute. Please try again or contact customer support."
 
   utter_suggest_lock_card:
-    - text: "For your security, would you also like me to lock your card to prevent any further unauthorized transactions?"
+    - text: "For your security, would you also like me to lock your card ending in {viewed_transactions.card_last_four} to prevent any further unauthorized transactions?"

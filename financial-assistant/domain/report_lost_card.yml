@@ -13,7 +13,7 @@ slots:
 
 responses:
   utter_card_already_reported_lost:
-    - text: "This card has already been reported as lost. Would you like to do something else?"
+    - text: "This card has already been reported as lost."
 
   utter_card_reported_lost:
     - text: "I've recorded that your card ending in {report_lost_card_last_four} has been lost. For your security, would you like me to lock the card as well to prevent any unauthorized transactions?"
@@ -31,7 +31,7 @@ responses:
     - text: "What is the last 4 digits of the credit card you would like to report as lost?"
 
   utter_ask_report_lost_lock_confirmation:
-    - text: "Are you sure you want to report this card as lost and lock it? This action cannot be undone."
+    - text: "Are you sure you want to report your card ending in {report_lost_card_last_four} as lost and lock it? This action cannot be undone."
 
 actions:
   - action_report_lost_card

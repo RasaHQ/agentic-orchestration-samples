@@ -51,7 +51,7 @@ responses:
     - text: "How much would you like to pay towards the credit card bill?"
 
   utter_ask_pay_bill_confirmation:
-    - text: "Are you sure you want to process this payment? This action cannot be undone."
+      - text: "Are you sure you want to pay ${pay_bill_amount} to your card ending in {pay_bill_card_last_four}? This action cannot be undone."
 
 actions:
   - action_get_card_balance

@@ -1,3 +1,4 @@
+import json
 from typing import Any, Dict, List, Text
 
 from rasa_sdk import Action, Tracker
@@ -21,9 +22,15 @@ class ActionListCards(Action):
         cards = get_credit_cards(session_id)
 
         if not cards:
-            return [SlotSet("cards_list", "No credit cards found.")]
+            return [
+                SlotSet("cards_list", "No credit cards found."),
+                SlotSet("cards_raw", "[]"),
+            ]
 
-        # Format the cards list
+        # Store raw card data as JSON
+        cards_raw = [card.model_dump() for card in cards]
+
+        # Format the cards list for display
         card_descriptions = []
         for card in cards:
             status_parts = []
@@ -41,4 +48,7 @@ class ActionListCards(Action):
             card_descriptions.append(description)
 
         cards_list = "\n\n".join(card_descriptions)
-        return [SlotSet("cards_list", cards_list)]
+        return [
+            SlotSet("cards_list", cards_list),
+            SlotSet("cards_raw", json.dumps(cards_raw)),
+        ]

@@ -6,6 +6,11 @@ slots:
     mappings:
       - type: from_llm
 
+  cards_raw:
+    type: text
+    mappings:
+      - type: from_llm
+
 responses:
   utter_cards:
     - text: "You currently have the following cards: \n\n{cards_list}"

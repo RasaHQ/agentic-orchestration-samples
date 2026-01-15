@@ -2,9 +2,9 @@ agent:
   name: credit_card_offers_agent
   protocol: rasa
   description: |
-    Provides personalized credit card recommendations based on user profile and preferences.
-    Leverages cross-conversation memory to recall loyalty memberships, travel preferences,
-    and past interactions to make relevant suggestions.
+    Helps users find the best credit card for their needs by first collecting their preferences
+    (spending habits, rewards type, annual fee tolerance, travel frequency) and then recommending
+    suitable card options based on those preferences.
 
 configuration:
   prompt_template: ./sub_agents/credit_card_offers_agent/prompt_template.jinja2

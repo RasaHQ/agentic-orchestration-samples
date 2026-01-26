@@ -2,9 +2,9 @@ agent:
   name: transaction_agent
   protocol: rasa
   description: |
-    Handles viewing and disputing credit card transactions with contextual understanding.
-    Can interpret references like "the one for coffee", "the one on 20th", "the last 2 transactions".
-    Stores discovered context in memory for cross-skill sharing.
+    Handles disputing credit card transactions. Accepts transaction IDs from users
+    and marks them as disputed for fraud investigation. Stores disputed transaction
+    information in memory for cross-skill sharing.
 
 configuration:
   prompt_template: ./sub_agents/transaction_agent/prompt_template.jinja2

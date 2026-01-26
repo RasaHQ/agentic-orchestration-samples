@@ -2,8 +2,6 @@ flows:
   dispute_transactions:
     name: dispute transactions
     description: |
-      Dispute suspicious or fraudulent credit card transactions. Can handle
-      contextual references like "the last 2 transactions", "all those are fraudulent",
-      and integrates with transaction viewing for context-aware disputes.
+      Dispute suspicious or fraudulent credit card transactions by transaction ID.
     steps:
       - call: transaction_agent

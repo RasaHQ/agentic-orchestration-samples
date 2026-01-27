@@ -5,12 +5,14 @@ slots:
     type: text
     mappings:
       - type: from_llm
+    scope: lock_card
 
   lock_card_confirmation:
     type: bool
     mappings:
       - type: from_llm
-
+    scope: lock_card
+    
 responses:
   utter_ask_lock_card_last_four:
     - text: "What is the last 4 digits of the credit card you would like to lock?"

@@ -5,11 +5,13 @@ slots:
     type: text
     mappings:
       - type: from_llm
+    scope: report_lost_card
 
   report_lost_lock_confirmation:
     type: bool
     mappings:
       - type: from_llm
+    scope: report_lost_card
 
 responses:
   utter_card_already_reported_lost:

@@ -5,11 +5,13 @@ slots:
     type: text
     mappings:
       - type: from_llm
+    scope: list_cards
 
   cards_raw:
     type: text
     mappings:
       - type: from_llm
+    scope: list_cards
 
 responses:
   utter_cards:

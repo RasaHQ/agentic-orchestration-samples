@@ -1,33 +1,36 @@
 version: "3.1"
 
 slots:
-  # Slots for transaction agent context
   viewed_transactions:
     type: any
     mappings:
       - type: controlled
+    scope: view_transactions
 
-  disputed_transaction_ids:
-    type: any
-    mappings:
-      - type: controlled
-
-  # Slots for view transactions flow
   view_transactions_card_last_four:
     type: text
     mappings:
       - type: from_llm
+    scope: view_transactions
 
   view_transactions_limit:
     type: float
     mappings:
       - type: from_llm
+    scope: view_transactions
 
   transaction_count:
     type: float
     mappings:
       - type: controlled
+    scope: view_transactions
 
+  transaction_list:
+    type: any
+    mappings:
+      - type: controlled
+    scope: view_transactions
+  
 responses:
   utter_no_transactions_found:
     - text: "I couldn't find any transactions matching your criteria."

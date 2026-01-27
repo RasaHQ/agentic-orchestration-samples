@@ -26,7 +26,7 @@ class TransactionAgent(MCPOpenAgent):
                             "transaction_ids": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "List of transaction IDs to dispute",
+                                "description": "List of transaction IDs to dispute. Format: 'txn_XXX' where XXX is a zero-padded number (e.g., 'txn_001', 'txn_002')",
                             },
                         },
                         "required": ["transaction_ids"],

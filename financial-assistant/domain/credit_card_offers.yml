@@ -6,11 +6,13 @@ slots:
     type: any
     mappings:
       - type: controlled
+    scope: view_credit_card_offers
 
   selected_offer_id:
     type: text
     mappings:
       - type: from_llm
+    scope: view_credit_card_offers
 
 responses:
   utter_no_offers_available:

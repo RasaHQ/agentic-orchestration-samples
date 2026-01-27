@@ -3,9 +3,8 @@ agent:
   protocol: rasa
   description: |
     Handles disputing credit card transactions. Accepts transaction IDs from users
-    and marks them as disputed for fraud investigation. Stores disputed transaction
-    information in memory for cross-skill sharing.
-
+    and marks them as disputed for fraud investigation.
+  
 configuration:
   prompt_template: ./sub_agents/transaction_agent/prompt_template.jinja2
   module: custom.transaction_agent.TransactionAgent

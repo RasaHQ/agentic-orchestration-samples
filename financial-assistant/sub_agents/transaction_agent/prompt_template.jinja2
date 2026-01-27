@@ -24,19 +24,6 @@ Previously resolved information:
 {% endfor %}
 {% endif %}
 
-{% if resolved_context and resolved_context.found and resolved_context.extracted_values.get('viewed_transactions') %}
-## Available Transaction Information
-The following transactions were recently viewed and are available for disputing:
-{% set viewed = resolved_context.extracted_values.get('viewed_transactions') %}
-{% if viewed and viewed.transactions %}
-Card: ****{{ viewed.card_last_four }} ({{ viewed.card_type }})
-Transactions:
-{% for txn in viewed.transactions %}
-- ID: {{ txn.id }} | {{ txn.date }} {{ txn.time }} | {{ txn.merchant }} ({{ txn.category }}) | {{ txn.amount }} | {{ txn.location }}{% if txn.disputed %} (DISPUTED){% endif %}
-{% endfor %}
-{% endif %}
-{% endif %}
-
 {% if memory_context %}
 Current memory context:
 {% for key, value in memory_context.items() %}

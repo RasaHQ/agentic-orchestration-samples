@@ -21,11 +21,11 @@ class ActionSessionStart(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        session_id = tracker.sender_id
+        user_id = tracker.sender_id
         events = []
 
         try:
-            profile = get_user_profile(session_id)
+            profile = get_user_profile(user_id)
 
             # Store loyalty memberships in memory-ready format
             if profile.loyalty_memberships:

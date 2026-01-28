@@ -17,20 +17,20 @@ class ActionReportLostCard(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        session_id = tracker.sender_id
+        user_id = tracker.sender_id
         last_four = tracker.get_slot("report_lost_card_last_four")
 
         if not last_four:
             return [SlotSet("return_value", "not_found")]
 
-        card = get_card_by_last_four(session_id, last_four)
+        card = get_card_by_last_four(user_id, last_four)
         if not card:
             return [SlotSet("return_value", "not_found")]
 
         if card.is_lost:
             return [SlotSet("return_value", "already_reported")]
 
-        success = report_card_lost(session_id, card.id)
+        success = report_card_lost(user_id, card.id)
         if success:
             return [
                 SlotSet("return_value", "success"),
@@ -50,13 +50,13 @@ class ActionLockReportedCard(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        session_id = tracker.sender_id
+        user_id = tracker.sender_id
         card_id = tracker.get_slot("selected_card_id")
 
         if not card_id:
             return [SlotSet("return_value", "error")]
 
-        success = lock_card(session_id, card_id)
+        success = lock_card(user_id, card_id)
         if success:
             return [SlotSet("return_value", "success")]
         else:

@@ -17,7 +17,7 @@ class ActionViewTransactions(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        session_id = tracker.sender_id
+        user_id = tracker.sender_id
         card_last_four = tracker.get_slot("view_transactions_card_last_four")
         limit_slot = tracker.get_slot("view_transactions_limit")
         if limit_slot is not None and limit_slot > 0:
@@ -28,11 +28,11 @@ class ActionViewTransactions(Action):
         if not card_last_four:
             return [SlotSet("return_value", "no_card")]
 
-        card = get_card_by_last_four(session_id, card_last_four)
+        card = get_card_by_last_four(user_id, card_last_four)
         if not card:
             return [SlotSet("return_value", "card_not_found")]
 
-        transactions = get_transactions_by_card(session_id, card.id, limit=limit)
+        transactions = get_transactions_by_card(user_id, card.id, limit=limit)
 
         if not transactions:
             return [SlotSet("return_value", "no_transactions")]

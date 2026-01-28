@@ -6,7 +6,11 @@ from typing import Any, Dict, List
 from rasa.agents.protocol.mcp.mcp_open_agent import MCPOpenAgent
 from rasa.agents.schemas import AgentToolResult
 
-from actions.db import dispute_transactions
+from actions.db import (
+    dispute_transactions,
+    get_card_by_last_four,
+    get_transactions_by_card,
+)
 
 
 class TransactionAgent(MCPOpenAgent):
@@ -36,6 +40,30 @@ class TransactionAgent(MCPOpenAgent):
                 },
                 "tool_executor": self.dispute_txns,
             },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_transactions",
+                    "description": "Fetch credit card transactions for a specific card. Returns recent transactions with details like date, merchant, amount, and location.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "card_last_four": {
+                                "type": "string",
+                                "description": "The last 4 digits of the credit card to fetch transactions for",
+                            },
+                            "limit": {
+                                "type": "integer",
+                                "description": "Maximum number of transactions to return (default is 5)",
+                            },
+                        },
+                        "required": ["card_last_four"],
+                        "additionalProperties": False,
+                    },
+                    "strict": True,
+                },
+                "tool_executor": self.get_txns,
+            },
         ]
 
     def _get_session_id(self) -> str:
@@ -61,5 +89,73 @@ class TransactionAgent(MCPOpenAgent):
                 "message": f"Successfully disputed {result['disputed_count']} transaction(s)"
                 if result["success"]
                 else "No transactions were disputed",
+            }),
+        )
+
+    async def get_txns(self, arguments: Dict[str, Any]) -> AgentToolResult:
+        """Fetch transactions for a specific card."""
+        session_id = self._get_session_id()
+        card_last_four = arguments["card_last_four"]
+        limit = arguments.get("limit", 5)
+
+        card = get_card_by_last_four(session_id, card_last_four)
+        if not card:
+            return AgentToolResult(
+                tool_name="get_transactions",
+                result=json.dumps({
+                    "success": False,
+                    "error": "card_not_found",
+                    "message": f"Card ending in {card_last_four} not found",
+                }),
+            )
+
+        transactions = get_transactions_by_card(session_id, card.id, limit=limit)
+
+        if not transactions:
+            return AgentToolResult(
+                tool_name="get_transactions",
+                result=json.dumps({
+                    "success": False,
+                    "error": "no_transactions",
+                    "message": f"No transactions found for card ending in {card_last_four}",
+                }),
+            )
+
+        # Format transactions for display
+        formatted_transactions = []
+        for txn in transactions:
+            formatted_txn = {
+                "id": txn.id,
+                "date": txn.timestamp[:10],
+                "time": txn.timestamp[11:16],
+                "merchant": txn.merchant,
+                "category": txn.category,
+                "amount": f"${txn.amount:.2f}",
+                "location": txn.location,
+                "disputed": txn.is_disputed,
+            }
+            formatted_transactions.append(formatted_txn)
+
+        # Create a readable transaction list
+        transaction_lines = []
+        for txn in formatted_transactions:
+            disputed_text = " (DISPUTED)" if txn["disputed"] else ""
+            line = (
+                f"• {txn['date']} {txn['time']} - {txn['merchant']} "
+                f"({txn['category']}) - {txn['amount']} - {txn['location']}{disputed_text}"
+            )
+            transaction_lines.append(line)
+
+        transactions_text = "\n".join(transaction_lines)
+
+        return AgentToolResult(
+            tool_name="get_transactions",
+            result=json.dumps({
+                "success": True,
+                "card_last_four": card_last_four,
+                "card_type": card.type,
+                "transaction_count": len(formatted_transactions),
+                "transactions": formatted_transactions,
+                "transaction_list": transactions_text,
             }),
         )

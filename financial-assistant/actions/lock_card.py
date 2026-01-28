@@ -17,14 +17,14 @@ class ActionLockCard(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        session_id = tracker.sender_id
+        user_id = tracker.sender_id
         last_four = tracker.get_slot("lock_card_last_four")
 
         if not last_four:
             return [SlotSet("return_value", "not_found")]
 
         # Find the card
-        card = get_card_by_last_four(session_id, last_four)
+        card = get_card_by_last_four(user_id, last_four)
         if not card:
             return [SlotSet("return_value", "not_found")]
 
@@ -33,7 +33,7 @@ class ActionLockCard(Action):
             return [SlotSet("return_value", "already_locked")]
 
         # Lock the card
-        success = lock_card(session_id, card.id)
+        success = lock_card(user_id, card.id)
         if success:
             return [
                 SlotSet("return_value", "success"),

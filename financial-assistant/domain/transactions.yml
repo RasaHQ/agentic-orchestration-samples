@@ -1,49 +1,8 @@
 version: "3.1"
 
-slots:
-  viewed_transactions:
-    type: any
-    mappings:
-      - type: controlled
-    scope: view_transactions
-
-  view_transactions_card_last_four:
-    type: text
-    mappings:
-      - type: from_llm
-    scope: view_transactions
-
-  view_transactions_limit:
-    type: float
-    mappings:
-      - type: from_llm
-    scope: view_transactions
-
-  transaction_count:
-    type: float
-    mappings:
-      - type: controlled
-    scope: view_transactions
-
-  transaction_list:
-    type: any
-    mappings:
-      - type: controlled
-    scope: view_transactions
+slots: {}
   
 responses:
-  utter_no_transactions_found:
-    - text: "I couldn't find any transactions matching your criteria."
-
-  utter_show_transactions:
-    - text: "Here are the transactions for your card:\n\n{transaction_list}"
-
-  utter_ask_view_transactions_card_last_four:
-    - text: "Which card would you like to view transactions for? Please provide the last 4 digits."
-
-  utter_ask_view_transactions_limit:
-    - text: "How many transactions would you like to see? (default is 5)"
-
   utter_dispute_success:
     - text: "I've successfully disputed the selected transaction(s). You'll receive a confirmation email shortly, and our fraud team will investigate within 2-3 business days."
 
@@ -51,7 +10,6 @@ responses:
     - text: "I'm sorry, I couldn't process the dispute. Please try again or contact customer support."
 
   utter_suggest_lock_card:
-    - text: "For your security, would you also like me to lock your card ending in {viewed_transactions.card_last_four} to prevent any further unauthorized transactions?"
+    - text: "For your security, would you also like me to lock your card to prevent any further unauthorized transactions?"
 
-actions:
-  - action_view_transactions
+actions: []

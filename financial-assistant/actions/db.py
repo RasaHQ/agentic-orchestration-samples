@@ -69,14 +69,14 @@ class UserProfile(BaseModel):
 # =============================================================================
 
 
-def get_session_db_path(session_id: str) -> str:
+def get_session_db_path(user_id: str) -> str:
     tempdir = tempfile.gettempdir()
     project_name = "financial_assistant"
-    return os.path.join(tempdir, project_name, session_id)
+    return os.path.join(tempdir, project_name, user_id)
 
 
-def prepare_db_file(session_id: str, db: str) -> str:
-    session_db_path = get_session_db_path(session_id)
+def prepare_db_file(user_id: str, db: str) -> str:
+    session_db_path = get_session_db_path(user_id)
     os.makedirs(session_db_path, exist_ok=True)
     destination_file = os.path.join(session_db_path, db)
     if not os.path.exists(destination_file):
@@ -85,13 +85,13 @@ def prepare_db_file(session_id: str, db: str) -> str:
     return destination_file
 
 
-def read_db(session_id: str, db: str) -> Any:
-    db_file = prepare_db_file(session_id, db)
+def read_db(user_id: str, db: str) -> Any:
+    db_file = prepare_db_file(user_id, db)
     return read_json_file(db_file)
 
 
-def write_db(session_id: str, db: str, data: Any) -> None:
-    db_file = prepare_db_file(session_id, db)
+def write_db(user_id: str, db: str, data: Any) -> None:
+    db_file = prepare_db_file(user_id, db)
     write_json_to_file(db_file, data)
 
 
@@ -100,63 +100,63 @@ def write_db(session_id: str, db: str, data: Any) -> None:
 # =============================================================================
 
 
-def get_credit_cards(session_id: str) -> List[CreditCard]:
+def get_credit_cards(user_id: str) -> List[CreditCard]:
     """Get all credit cards for the user."""
-    return [CreditCard(**item) for item in read_db(session_id, CREDIT_CARDS)]
+    return [CreditCard(**item) for item in read_db(user_id, CREDIT_CARDS)]
 
 
-def get_card_by_last_four(session_id: str, last_four: str) -> Optional[CreditCard]:
+def get_card_by_last_four(user_id: str, last_four: str) -> Optional[CreditCard]:
     """Find a credit card by its last 4 digits."""
-    cards = get_credit_cards(session_id)
+    cards = get_credit_cards(user_id)
     for card in cards:
         if card.last_four == last_four:
             return card
     return None
 
 
-def get_card_by_id(session_id: str, card_id: str) -> Optional[CreditCard]:
+def get_card_by_id(user_id: str, card_id: str) -> Optional[CreditCard]:
     """Find a credit card by its ID."""
-    cards = get_credit_cards(session_id)
+    cards = get_credit_cards(user_id)
     for card in cards:
         if card.id == card_id:
             return card
     return None
 
 
-def update_card(session_id: str, updated_card: CreditCard) -> bool:
+def update_card(user_id: str, updated_card: CreditCard) -> bool:
     """Update a credit card in the database."""
-    cards = get_credit_cards(session_id)
+    cards = get_credit_cards(user_id)
     for i, card in enumerate(cards):
         if card.id == updated_card.id:
             cards[i] = updated_card
-            write_db(session_id, CREDIT_CARDS, [c.model_dump() for c in cards])
+            write_db(user_id, CREDIT_CARDS, [c.model_dump() for c in cards])
             return True
     return False
 
 
-def lock_card(session_id: str, card_id: str) -> bool:
+def lock_card(user_id: str, card_id: str) -> bool:
     """Lock a credit card."""
-    card = get_card_by_id(session_id, card_id)
+    card = get_card_by_id(user_id, card_id)
     if card:
         card.is_locked = True
-        return update_card(session_id, card)
+        return update_card(user_id, card)
     return False
 
 
-def report_card_lost(session_id: str, card_id: str) -> bool:
+def report_card_lost(user_id: str, card_id: str) -> bool:
     """Mark a card as lost."""
-    card = get_card_by_id(session_id, card_id)
+    card = get_card_by_id(user_id, card_id)
     if card:
         card.is_lost = True
-        return update_card(session_id, card)
+        return update_card(user_id, card)
     return False
 
 
 def pay_card_bill(
-    session_id: str, card_id: str, amount: float
+    user_id: str, card_id: str, amount: float
 ) -> Dict[str, Any]:
     """Pay towards a credit card bill."""
-    card = get_card_by_id(session_id, card_id)
+    card = get_card_by_id(user_id, card_id)
     if not card:
         return {"success": False, "error": "Card not found"}
 
@@ -167,7 +167,7 @@ def pay_card_bill(
         return {"success": False, "error": "Payment exceeds balance due"}
 
     card.balance_due = round(card.balance_due - amount, 2)
-    update_card(session_id, card)
+    update_card(user_id, card)
 
     return {
         "success": True,
@@ -182,16 +182,16 @@ def pay_card_bill(
 # =============================================================================
 
 
-def get_transactions(session_id: str) -> List[Transaction]:
+def get_transactions(user_id: str) -> List[Transaction]:
     """Get all transactions."""
-    return [Transaction(**item) for item in read_db(session_id, TRANSACTIONS)]
+    return [Transaction(**item) for item in read_db(user_id, TRANSACTIONS)]
 
 
 def get_transactions_by_card(
-    session_id: str, card_id: str, limit: Optional[int] = None
+    user_id: str, card_id: str, limit: Optional[int] = None
 ) -> List[Transaction]:
     """Get transactions for a specific card, sorted by most recent first."""
-    transactions = get_transactions(session_id)
+    transactions = get_transactions(user_id)
     card_transactions = [t for t in transactions if t.card_id == card_id]
     # Sort by timestamp descending
     card_transactions.sort(key=lambda t: t.timestamp, reverse=True)
@@ -200,29 +200,29 @@ def get_transactions_by_card(
     return card_transactions
 
 
-def get_transaction_by_id(session_id: str, txn_id: str) -> Optional[Transaction]:
+def get_transaction_by_id(user_id: str, txn_id: str) -> Optional[Transaction]:
     """Find a transaction by ID."""
-    transactions = get_transactions(session_id)
+    transactions = get_transactions(user_id)
     for txn in transactions:
         if txn.id == txn_id:
             return txn
     return None
 
 
-def dispute_transaction(session_id: str, txn_id: str) -> bool:
+def dispute_transaction(user_id: str, txn_id: str) -> bool:
     """Mark a transaction as disputed."""
-    transactions = get_transactions(session_id)
+    transactions = get_transactions(user_id)
     for i, txn in enumerate(transactions):
         if txn.id == txn_id:
             transactions[i].is_disputed = True
-            write_db(session_id, TRANSACTIONS, [t.model_dump() for t in transactions])
+            write_db(user_id, TRANSACTIONS, [t.model_dump() for t in transactions])
             return True
     return False
 
 
-def dispute_transactions(session_id: str, txn_ids: List[str]) -> Dict[str, Any]:
+def dispute_transactions(user_id: str, txn_ids: List[str]) -> Dict[str, Any]:
     """Dispute multiple transactions."""
-    transactions = get_transactions(session_id)
+    transactions = get_transactions(user_id)
     disputed_count = 0
 
     for i, txn in enumerate(transactions):
@@ -231,7 +231,7 @@ def dispute_transactions(session_id: str, txn_ids: List[str]) -> Dict[str, Any]:
             disputed_count += 1
 
     if disputed_count > 0:
-        write_db(session_id, TRANSACTIONS, [t.model_dump() for t in transactions])
+        write_db(user_id, TRANSACTIONS, [t.model_dump() for t in transactions])
 
     return {
         "success": disputed_count > 0,
@@ -241,10 +241,10 @@ def dispute_transactions(session_id: str, txn_ids: List[str]) -> Dict[str, Any]:
 
 
 def get_transactions_by_merchant(
-    session_id: str, merchant: str, card_id: Optional[str] = None
+    user_id: str, merchant: str, card_id: Optional[str] = None
 ) -> List[Transaction]:
     """Find transactions by merchant name (case-insensitive partial match)."""
-    transactions = get_transactions(session_id)
+    transactions = get_transactions(user_id)
     results = []
     merchant_lower = merchant.lower()
 
@@ -257,10 +257,10 @@ def get_transactions_by_merchant(
 
 
 def get_transactions_by_date(
-    session_id: str, date_str: str, card_id: Optional[str] = None
+    user_id: str, date_str: str, card_id: Optional[str] = None
 ) -> List[Transaction]:
     """Find transactions by date (YYYY-MM-DD format)."""
-    transactions = get_transactions(session_id)
+    transactions = get_transactions(user_id)
     results = []
 
     for txn in transactions:
@@ -277,9 +277,9 @@ def get_transactions_by_date(
 # =============================================================================
 
 
-def get_user_profile(session_id: str) -> UserProfile:
+def get_user_profile(user_id: str) -> UserProfile:
     """Get the user's profile."""
-    data = read_db(session_id, USER_PROFILE)
+    data = read_db(user_id, USER_PROFILE)
 
     # Handle nested models
     memberships = [
@@ -297,15 +297,15 @@ def get_user_profile(session_id: str) -> UserProfile:
     )
 
 
-def get_loyalty_memberships(session_id: str) -> List[LoyaltyMembership]:
+def get_loyalty_memberships(user_id: str) -> List[LoyaltyMembership]:
     """Get user's loyalty program memberships."""
-    profile = get_user_profile(session_id)
+    profile = get_user_profile(user_id)
     return profile.loyalty_memberships
 
 
-def has_loyalty_membership(session_id: str, program: str) -> Optional[LoyaltyMembership]:
+def has_loyalty_membership(user_id: str, program: str) -> Optional[LoyaltyMembership]:
     """Check if user has a specific loyalty membership."""
-    memberships = get_loyalty_memberships(session_id)
+    memberships = get_loyalty_memberships(user_id)
     program_lower = program.lower()
 
     for membership in memberships:

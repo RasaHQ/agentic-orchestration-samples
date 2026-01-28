@@ -18,8 +18,8 @@ class ActionListCards(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        session_id = tracker.sender_id
-        cards = get_credit_cards(session_id)
+        user_id = tracker.sender_id
+        cards = get_credit_cards(user_id)
 
         if not cards:
             return [

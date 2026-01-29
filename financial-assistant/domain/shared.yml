@@ -25,6 +25,26 @@ slots:
       - type: controlled
     scope: project
 
+  recent_transactions:
+    type: any
+    mappings:
+      - type: controlled
+    scope: project
+
+  # Raw list of transactions fetched by flows (list of dicts)
+  transaction_list:
+    type: any
+    mappings:
+      - type: controlled
+    scope: project
+
+  # Formatted transaction list for display in responses
+  transactions_display:
+    type: text
+    mappings:
+      - type: controlled
+    scope: project
+
   # User profile slots (populated by action_session_start)
   user_name:
     type: text
@@ -65,3 +85,6 @@ responses:
 
   utter_card_not_found:
     - text: "I couldn't find a card with those details. Please check and try again."
+
+  utter_no_transactions_for_card:
+    - text: "There are no transactions on file for that card. Try another card."

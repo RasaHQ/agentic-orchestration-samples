@@ -7,6 +7,7 @@ flows:
       "for" a merchant, "at" a place, or by any filter criterion.
     crucial_memory_items:
       - filter_transactions.transaction_list
+      - filter_transactions.filter_transactions_filters
     steps:
       - collect: filter_transactions_card_last_four
         description: The last 4 digits of the credit card to filter transactions for
@@ -30,5 +31,6 @@ flows:
           the date or range. Extract the exact word or phrase the user used for the filter.
       - collect: selected_transactions
         description: The transactions that match the filters
+      - action: action_format_transactions
       - id: show_transactions
         action: utter_selected_transactions

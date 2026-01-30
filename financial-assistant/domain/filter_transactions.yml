@@ -30,7 +30,8 @@ responses:
     - text: "What transactions would you like to see?"
 
   utter_selected_transactions:
-    - text: "Here are the transactions that match your filters for the card ending in {filter_transactions_card_last_four}:\n{selected_transactions}"
+    - text: "Here are the transactions that match your filters for the card ending in {filter_transactions_card_last_four}:\n\n{transactions_display}"
 
 actions:
   - action_list_transactions
+  - action_format_transactions

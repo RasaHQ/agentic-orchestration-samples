@@ -57,7 +57,7 @@ class TransactionAgent(MCPOpenAgent):
                                 "description": "Maximum number of transactions to return (default is 5)",
                             },
                         },
-                        "required": ["card_last_four"],
+                        "required": ["card_last_four", "limit"],
                         "additionalProperties": False,
                     },
                     "strict": True,

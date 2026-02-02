@@ -14,10 +14,5 @@
       "member_since": "2021-08-01"
     }
   ],
-  "preferences": {
-    "travel_heavy": true,
-    "preferred_airlines": ["United", "Lufthansa"],
-    "notification_method": "email"
-  },
   "linked_cards": ["cc_001", "cc_002", "cc_003"]
 }

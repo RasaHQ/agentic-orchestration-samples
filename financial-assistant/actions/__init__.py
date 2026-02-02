@@ -6,6 +6,7 @@ from actions.list_transactions import ActionListTransactions
 from actions.pay_bill import ActionGetCardBalance, ActionPayBill
 from actions.report_lost_card import ActionLockReportedCard, ActionReportLostCard
 from actions.session_start import ActionSessionStart
+from actions.set_payment_reminder import ActionSetPaymentReminder
 
 __all__ = [
     "ActionListCards",
@@ -16,4 +17,5 @@ __all__ = [
     "ActionLockReportedCard",
     "ActionSessionStart",
     "ActionListTransactions",
+    "ActionSetPaymentReminder",
 ]

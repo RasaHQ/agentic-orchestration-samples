@@ -49,18 +49,11 @@ class LoyaltyMembership(BaseModel):
     member_since: str
 
 
-class UserPreferences(BaseModel):
-    travel_heavy: bool = False
-    preferred_airlines: List[str] = []
-    notification_method: str = "email"
-
-
 class UserProfile(BaseModel):
     user_id: str
     name: str
     email: str
     loyalty_memberships: List[LoyaltyMembership] = []
-    preferences: UserPreferences = UserPreferences()
     linked_cards: List[str] = []
 
 
@@ -285,14 +278,12 @@ def get_user_profile(user_id: str) -> UserProfile:
     memberships = [
         LoyaltyMembership(**m) for m in data.get("loyalty_memberships", [])
     ]
-    preferences = UserPreferences(**data.get("preferences", {}))
 
     return UserProfile(
         user_id=data["user_id"],
         name=data["name"],
         email=data["email"],
         loyalty_memberships=memberships,
-        preferences=preferences,
         linked_cards=data.get("linked_cards", []),
     )
 

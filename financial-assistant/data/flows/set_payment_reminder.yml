@@ -1,0 +1,26 @@
+flows:
+  set_payment_reminder:
+    name: set payment reminder
+    description: |
+      Set when and how the user wants to be reminded to pay their credit card bill.
+      Use when the user asks to set a payment reminder, when to be reminded to pay,
+      or to change their reminder preference (e.g. 3 days before due date, via email or sms).
+    steps:
+      - collect: payment_reminder_timing
+        description: |
+          When the user wants to be reminded to pay. Examples: "3 days before due date",
+          "1 week before", "on the due date", "on the 1st of the month", "one day before".
+          Use the exact phrase or a short normal form (e.g. "3 days before", "on due date").
+      - collect: payment_reminder_notification_method
+        description: |
+          How the user wants to receive the reminder. One of: email, sms, or push.
+          Map user phrases like "by email", "text me", "on my phone" to email, sms, or push.
+      - action: action_set_payment_reminder
+        next:
+          - if: slots.return_value = 'success'
+            then:
+              - action: utter_payment_reminder_set
+                next: END
+          - else:
+              - action: utter_action_failed
+                next: END

@@ -54,7 +54,7 @@ class ActionGetCardBalance(Action):
             SlotSet("selected_card_id", card.id),
             SlotSet("card_balance_due", card.balance_due),
             SlotSet("card_due_date", card.due_date),
-            SlotSet("recent_transactions", formatted_transactions),
+            SlotSet("transaction_list", formatted_transactions),
         ]
 
 
@@ -99,7 +99,7 @@ class ActionPayBill(Action):
             return [
                 SlotSet("return_value", "success"),
                 SlotSet("payment_new_balance", result["new_balance"]),
-                SlotSet("recent_transactions", formatted_transactions),
+                SlotSet("transaction_list", formatted_transactions),
             ]
         elif result.get("error") == "Payment exceeds balance due":
             return [SlotSet("return_value", "exceeds_balance")]

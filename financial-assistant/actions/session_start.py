@@ -36,18 +36,7 @@ class ActionSessionStart(Action):
                     SlotSet("user_loyalty_memberships", memberships)
                 )
 
-            # Store user preferences
-            if profile.preferences.travel_heavy:
-                events.append(
-                    SlotSet("user_is_travel_heavy", True)
-                )
-
-            if profile.preferences.preferred_airlines:
-                events.append(
-                    SlotSet("user_preferred_airlines", profile.preferences.preferred_airlines)
-                )
-
-            # Store user name for personalization
+            # Store user name for personalization (preferences stay in discovered memory when mentioned)
             events.append(SlotSet("user_name", profile.name))
 
         except Exception:

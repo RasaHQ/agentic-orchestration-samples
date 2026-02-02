@@ -13,20 +13,8 @@ slots:
     scope: project
 
   # Card selection slots
-  selected_card_last_four:
-    type: text
-    mappings:
-      - type: from_llm
-    scope: project
-
   selected_card_id:
     type: text
-    mappings:
-      - type: controlled
-    scope: project
-
-  recent_transactions:
-    type: any
     mappings:
       - type: controlled
     scope: project
@@ -53,18 +41,6 @@ slots:
     scope: project
 
   user_loyalty_memberships:
-    type: any
-    mappings:
-      - type: controlled
-    scope: project
-
-  user_is_travel_heavy:
-    type: bool
-    mappings:
-      - type: controlled
-    scope: project
-
-  user_preferred_airlines:
     type: any
     mappings:
       - type: controlled

@@ -136,13 +136,16 @@ class TransactionAgent(MCPOpenAgent):
             }
             formatted_transactions.append(formatted_txn)
 
-        # Create a readable transaction list
+        # Create a readable transaction list with explicit dispute status so the
+        # agent does not confuse intent with current state (e.g. say "already
+        # disputed" when the tool says Not disputed).
         transaction_lines = []
         for txn in formatted_transactions:
-            disputed_text = " (DISPUTED)" if txn["disputed"] else ""
+            dispute_status = "DISPUTED" if txn["disputed"] else "Not disputed"
             line = (
                 f"• {txn['date']} {txn['time']} - {txn['merchant']} "
-                f"({txn['category']}) - {txn['amount']} - {txn['location']}{disputed_text}"
+                f"({txn['category']}) - {txn['amount']} - {txn['location']} "
+                f"[{dispute_status}]"
             )
             transaction_lines.append(line)
 

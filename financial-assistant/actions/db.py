@@ -1,6 +1,5 @@
 import os
 import shutil
-import tempfile
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
@@ -10,6 +9,7 @@ from rasa.nlu.utils import write_json_to_file
 from rasa.shared.utils.io import read_json_file
 
 ORIGIN_DB_PATH = "db"
+SESSION_DB_DIR = "sessions"
 CREDIT_CARDS = "credit_cards.json"
 TRANSACTIONS = "transactions.json"
 USER_PROFILE = "user_profile.json"
@@ -63,9 +63,8 @@ class UserProfile(BaseModel):
 
 
 def get_session_db_path(user_id: str) -> str:
-    tempdir = tempfile.gettempdir()
-    project_name = "financial_assistant"
-    return os.path.join(tempdir, project_name, user_id)
+    """Return path to per-user session DB folder under db/sessions for easy clearing."""
+    return os.path.join(ORIGIN_DB_PATH, SESSION_DB_DIR, user_id)
 
 
 def prepare_db_file(user_id: str, db: str) -> str:

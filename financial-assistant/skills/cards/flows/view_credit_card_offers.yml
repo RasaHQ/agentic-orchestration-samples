@@ -1,0 +1,19 @@
+flows:
+  view_credit_card_offers:
+    name: view credit card offers
+    description: |
+      Browse and get personalized credit card recommendations. Leverages
+      cross-conversation memory to recall user preferences, loyalty memberships,
+      and past interactions for relevant suggestions.
+    steps:
+      - call: credit_card_offers_agent
+
+  credit_card_offers_agent:
+    description: |
+      Helps users find the best credit card for their needs by first collecting their preferences
+      (spending habits, rewards type, annual fee tolerance, travel frequency) and then recommending
+      suitable card options based on those preferences.
+    agent:
+      protocol: rasa
+      business_logic_prompt: ./skills/cards/prompts/prompt_template.jinja2
+      module: project.custom_components.credit_card_offers_agent.CreditCardOffersAgent

@@ -1,0 +1,49 @@
+memory:
+  private:
+    recommended_offers:
+      type: any
+      mappings:
+        - type: controlled
+      scope: view_credit_card_offers
+
+    selected_offer_id:
+      type: text
+      mappings:
+        - type: from_llm
+      scope: view_credit_card_offers
+
+    cards_list:
+      type: text
+      mappings:
+        - type: from_llm
+      scope: list_cards
+
+    cards_raw:
+      type: text
+      mappings:
+        - type: from_llm
+      scope: list_cards
+
+    lock_card_last_four:
+      type: text
+      mappings:
+        - type: from_llm
+      scope: lock_card
+
+    lock_card_confirmation:
+      type: bool
+      mappings:
+        - type: from_llm
+      scope: lock_card
+
+    report_lost_card_last_four:
+      type: text
+      mappings:
+        - type: from_llm
+      scope: report_lost_card
+
+    report_lost_lock_confirmation:
+      type: bool
+      mappings:
+        - type: from_llm
+      scope: report_lost_card

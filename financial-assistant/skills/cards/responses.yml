@@ -1,0 +1,48 @@
+responses:
+  utter_no_offers_available:
+    - text: "I'm sorry, there are no special offers available at this time. Please check back later."
+
+  utter_offer_details:
+    - text: "Here are the details for that card. Would you like to apply?"
+
+  utter_application_started:
+    - text: "Great choice! I'm starting your application. You'll receive an email with next steps shortly."
+
+  utter_cards:
+    - text: "You currently have the following cards: \n\n{cards_list}"
+
+  utter_ask_lock_card_last_four:
+    - text: "What is the last 4 digits of the credit card you would like to lock?"
+
+  utter_ask_lock_card_confirmation:
+    - text: "Are you sure you want to lock the card ending in {lock_card_last_four}? This action cannot be undone."
+
+  utter_lock_card_cancelled:
+    - text: "No problem, I won't lock your card. Let me know if you need anything else."
+
+  utter_card_locked:
+    - text: "Done! Your card ending in {lock_card_last_four} has been locked. No new transactions will be authorized until you unlock it."
+
+  utter_card_already_locked:
+    - text: "That card is already locked."
+
+  utter_card_already_reported_lost:
+    - text: "This card has already been reported as lost."
+
+  utter_card_reported_lost:
+    - text: "I've recorded that your card ending in {report_lost_card_last_four} has been lost. For your security, would you like me to lock the card as well to prevent any unauthorized transactions?"
+
+  utter_report_complete_no_lock:
+    - text: "Understood. Your card has been reported as lost but remains active. Please let me know if you'd like to lock it later."
+
+  utter_card_reported_and_locked:
+    - text: "Done! Your card ending in {report_lost_card_last_four} has been reported as lost and locked. No new transactions will be authorized. A replacement card will be mailed to your address on file."
+
+  utter_lock_failed_after_report:
+    - text: "I've reported your card as lost, but encountered an issue locking it. Please contact customer support for assistance."
+
+  utter_ask_report_lost_card_last_four:
+    - text: "What is the last 4 digits of the credit card you would like to report as lost?"
+
+  utter_ask_report_lost_lock_confirmation:
+    - text: "Are you sure you want to report your card ending in {report_lost_card_last_four} as lost and lock it? This action cannot be undone."

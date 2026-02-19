@@ -1,0 +1,15 @@
+responses:
+  utter_greeting:
+    - text: "Hello! I'm your financial assistant. How can I help you today?"
+
+  utter_greeting_returning:
+    - text: "Welcome back! How can I assist you today?"
+
+  utter_action_failed:
+    - text: "I'm sorry, something went wrong. Please try again."
+
+  utter_card_not_found:
+    - text: "I couldn't find a card with those details. Please check and try again."
+
+  utter_no_transactions_for_card:
+    - text: "There are no transactions on file for that card. Try another card."

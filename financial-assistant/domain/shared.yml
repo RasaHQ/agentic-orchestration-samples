@@ -33,21 +33,8 @@ slots:
       - type: controlled
     scope: project
 
-  # User profile slots (populated by action_session_start)
-  user_name:
-    type: text
-    mappings:
-      - type: controlled
-    scope: project
-
-  user_loyalty_memberships:
-    type: any
-    mappings:
-      - type: controlled
-    scope: project
-
 actions:
-  - action_session_start
+  - action_load_conversation_context
 
 responses:
   utter_greeting:

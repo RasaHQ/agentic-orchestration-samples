@@ -46,8 +46,8 @@ action_endpoint:
 # For more details, refer to the documentation:
 # https://rasa.com/docs/rasa-pro/concepts/contextual-response-rephraser
 # To enable the rephraser, remove the comment symbols in the lines below.
-#nlg:
-#   type: rephrase
+nlg:
+    type: rephrase
 
 model_groups:
   - id: openai-gpt-4o

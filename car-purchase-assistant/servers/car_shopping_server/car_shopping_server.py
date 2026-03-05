@@ -17,6 +17,19 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+class AccessLogNoiseFilter(logging.Filter):
+    """Filter high-frequency access logs that add little operational value."""
+
+    EXCLUDED_PATHS = (
+        "/health",
+        "/favicon.ico",
+        "/.well-known/agent-card.json",
+    )
+
+    def filter(self, record):
+        message = record.getMessage()
+        return not any(path in message for path in self.EXCLUDED_PATHS)
+
 
 class MissingAPIKeyError(Exception):
     """Exception for missing API key."""
@@ -25,9 +38,11 @@ class MissingAPIKeyError(Exception):
 
 
 @click.command()
-@click.option("--host", default="localhost")
+@click.option("--host", default="0.0.0.0")
 @click.option("--port", default=10002)
 def main(host, port):
+    port = int(os.environ.get("PORT", port))
+    logging.getLogger("uvicorn.access").addFilter(AccessLogNoiseFilter())
     try:
         # Check for API key only if Vertex AI is not configured
         if not os.getenv("GOOGLE_GENAI_USE_VERTEXAI") == "TRUE":

@@ -2,6 +2,9 @@
 import sys
 from fastmcp import FastMCP
 from tools.tavily import TavilySearchTool
+import logging
+from starlette.requests import Request
+from starlette.responses import PlainTextResponse
 
 # Create FastMCP server as global variable for CLI discovery
 mcp = FastMCP("Web Search Server")
@@ -9,6 +12,9 @@ mcp = FastMCP("Web Search Server")
 # Initialize tools
 tavily_tool = TavilySearchTool()
 
+class HealthCheckFilter(logging.Filter):
+    def filter(self, record):
+        return "/health" not in record.getMessage()
 
 @mcp.tool()
 async def tavily_search(
@@ -28,10 +34,13 @@ async def tavily_search(
     }
     return await tavily_tool.execute(arguments)
 
+@mcp.custom_route("/health", methods=["GET"])
+async def health_check(request: Request) -> PlainTextResponse:
+    return PlainTextResponse("OK")
 
 def main():
     # Parse port from command line args
-    port = 8000
+    port = 8001
     if len(sys.argv) > 1:
         try:
             port = int(sys.argv[1])
@@ -40,8 +49,10 @@ def main():
 
     print(f"Starting Web Search MCP server on http://localhost:{port}", file=sys.stderr)
 
+    logging.getLogger("uvicorn.access").addFilter(HealthCheckFilter())
+
     # Run with streamable HTTP transport (newer, more reliable)
-    mcp.run(transport="http", host="0.0.0.0", port=8001, path="/mcp")
+    mcp.run(transport="http", host="0.0.0.0", port=port, path="/mcp")
 
 
 if __name__ == "__main__":

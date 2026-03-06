@@ -11,10 +11,17 @@ import random
 from typing import Any, Dict, List, Optional, Union
 
 from fastmcp import FastMCP
+import logging
+from starlette.requests import Request
+from starlette.responses import PlainTextResponse
 
 
 # Create FastMCP server
 mcp = FastMCP("Appointment Booking Server")
+
+class HealthCheckFilter(logging.Filter):
+    def filter(self, record):
+        return "/health" not in record.getMessage()
 
 
 def generate_appointment_slots(
@@ -293,6 +300,10 @@ def book_appointment(appointment_slot: str) -> Dict[str, Any]:
 
     return result
 
+@mcp.custom_route("/health", methods=["GET"])
+async def health_check(request: Request) -> PlainTextResponse:
+    return PlainTextResponse("OK")
+
 
 if __name__ == "__main__":
     print("🚀 Starting FastMCP Appointment Server with HTTP Transport")
@@ -302,6 +313,8 @@ if __name__ == "__main__":
     print("🔗 Using Streamable HTTP transport")
     print("📋 MCP endpoint: http://localhost:8002/mcp")
     print("📋 Connect MCP clients to: http://localhost:8002/mcp")
+
+    logging.getLogger("uvicorn.access").addFilter(HealthCheckFilter())
 
     # Run with streamable HTTP transport (newer, more reliable)
     mcp.run(transport="http", host="0.0.0.0", port=8002, path="/mcp")

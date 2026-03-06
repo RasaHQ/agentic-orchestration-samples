@@ -1,11 +1,10 @@
-from ast import List
+from typing import List
 from rasa.agents.protocol.mcp.mcp_task_agent import MCPTaskAgent
 from rasa.agents.schemas import (
     AgentInput,
 )
 from rasa.agents.schemas.agent_input import AgentInputSlot
 from datetime import datetime
-from rasa.shared.core.events import SlotSet
 
 
 class AppointmentBookingAgent(MCPTaskAgent):

@@ -165,7 +165,9 @@ Extract recommendations based on what specific car models are mentioned, discuss
                         "recommendations", []
                     )
                     if recommendations:
-                        car_models = [rec["model"] for rec in recommendations]
+                        car_models = [
+                            rec["model"] for rec in recommendations if "model" in rec
+                        ]
                         car_details = {
                             rec["model"]: rec
                             for rec in recommendations

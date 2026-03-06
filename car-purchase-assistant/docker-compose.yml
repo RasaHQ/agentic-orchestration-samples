@@ -89,7 +89,6 @@ services:
       context: ./servers/car_shopping_server
       dockerfile: Dockerfile
     command:
-      - 'car_shopping_server.py'
       - '--host'
       - '0.0.0.0'
     ports:

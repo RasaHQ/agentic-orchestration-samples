@@ -1,18 +1,13 @@
 from rasa.agents.protocol.mcp.mcp_open_agent import MCPOpenAgent
 from rasa.agents.schemas import (
-    AgentInput,
-    AgentOutput,
     AgentToolResult,
-    AgentToolSchema,
 )
 import json, os
 
 from typing import List, Dict, Any, Optional
-from rasa.shared.core.events import SlotSet
+from rasa.shared.core.events import Event, SlotSet
+from rasa.core.channels.channel import OutputChannel
 from rasa.agents.constants import (
-    KEY_CONTENT,
-    KEY_ROLE,
-    KEY_TOOL_CALL_ID,
     TOOL_ADDITIONAL_PROPERTIES_KEY,
     TOOL_DESCRIPTION_KEY,
     TOOL_NAME_KEY,
@@ -153,39 +148,38 @@ Extract recommendations based on what specific car models are mentioned, discuss
                 ),
             )
 
-    async def process_output(self, output: AgentOutput) -> AgentOutput:
-        """Post-process the output before returning it to Rasa."""
-        if not output.structured_results:
-            return output
-        tool_results = output.structured_results
-        slot_events = []
-        for index in range(len(tool_results)):
-            iteration_results = tool_results[index]
-            for result in iteration_results:
-                if result["name"] == "recommend_cars":
-                    try:
-                        recommendations_data = json.loads(result["result"])
-                        recommendations = recommendations_data.get(
-                            "recommendations", []
+    async def process_tool_output(
+        self,
+        current_iteration_tool_results: Dict[str, AgentToolResult],
+        cumulative_tool_results: Dict[str, AgentToolResult],
+        output_channel: Optional[OutputChannel] = None,
+    ) -> List[Event]:
+        """Post-process MCP tool results for the current LLM iteration."""
+        slot_events: List[Event] = []
+
+        for tool_result in current_iteration_tool_results.values():
+            if tool_result.tool_name == "recommend_cars":
+                try:
+                    recommendations_data = json.loads(tool_result.result)
+                    recommendations = recommendations_data.get(
+                        "recommendations", []
+                    )
+                    if recommendations:
+                        car_models = [rec["model"] for rec in recommendations]
+                        car_details = {
+                            rec["model"]: rec
+                            for rec in recommendations
+                            if "model" in rec
+                        }
+                        slot_events.append(
+                            SlotSet("recommended_car_models", car_models)
                         )
-                        if recommendations:
-                            car_models = [rec["model"] for rec in recommendations]
-                            car_details = {
-                                rec["model"]: rec
-                                for rec in recommendations
-                                if "model" in rec
-                            }
-                            slot_events.append(
-                                SlotSet("recommended_car_models", car_models)
-                            )
-                            slot_events.append(
-                                SlotSet("recommended_car_details", car_details)
-                            )
-                    except json.JSONDecodeError:
-                        pass
-                if result["name"] == "tavily_search":
-                    slot_events.append(SlotSet("search_results", result["result"]))
-        output.events = (
-            slot_events if not output.events else output.events.extend(slot_events)
-        )
-        return output
+                        slot_events.append(
+                            SlotSet("recommended_car_details", car_details)
+                        )
+                except json.JSONDecodeError:
+                    pass
+            if tool_result.tool_name == "tavily_search":
+                slot_events.append(SlotSet("search_results", tool_result.result))
+
+        return slot_events

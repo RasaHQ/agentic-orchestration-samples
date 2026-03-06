@@ -20,7 +20,7 @@ class CarShoppingAgent(A2AAgent):
         input.slots = slots_to_keep
         return input
 
-    async def process_output(self, output: AgentOutput) -> AgentOutput:
+    async def process_agent_output(self, output: AgentOutput) -> AgentOutput:
         """Post-process the output before returning it to Rasa.
 
         Example of structured_results:

@@ -1,9 +1,11 @@
+import uuid
+
 from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.events import EventQueue
 from a2a.server.tasks import TaskUpdater
 from a2a.types import (
     TaskState,
-    UnsupportedOperationError,
+    UnsupportedOperationError, Message, Role, Part, TextPart, DataPart
 )
 from a2a.utils import (
     new_agent_text_message,
@@ -41,7 +43,14 @@ class CarShoppingAgentExecutor(AgentExecutor):
             task = new_task(context.message)
 
         updater = TaskUpdater(event_queue, context.task_id, context.context_id)
-        await updater.submit() # Send initial task submission event
+        await updater.submit(
+            Message(
+                message_id=uuid.uuid4().hex,
+                parts=[Part(root=TextPart(text="Let me look up for a car deal for you"))],
+                role=Role.agent,
+                metadata=context.metadata
+            )
+        ) # Send initial task submission event
 
         try:
             async for item in self.agent.stream(query, task.context_id, structured_data):
@@ -84,7 +93,6 @@ class CarShoppingAgentExecutor(AgentExecutor):
                 # Create proper A2A response with artifacts
                 if is_finalize_tool_called:
                     # Final decision made - task is complete
-                    from a2a.types import Part, TextPart, DataPart
 
                     # Create artifact with final decision data
                     parts = [

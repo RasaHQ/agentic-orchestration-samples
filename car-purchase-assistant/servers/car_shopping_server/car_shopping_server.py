@@ -1,9 +1,14 @@
 import logging
 import os
 import click
+import httpx
 from a2a.server.apps import A2AStarletteApplication
 from a2a.server.request_handlers import DefaultRequestHandler
 from a2a.server.tasks import InMemoryTaskStore
+from a2a.server.tasks.inmemory_push_notification_config_store import (
+    InMemoryPushNotificationConfigStore,
+)
+from a2a.server.tasks.base_push_notification_sender import BasePushNotificationSender
 from a2a.types import (
     AgentCapabilities,
     AgentCard,
@@ -36,7 +41,7 @@ def main(host, port):
                     "GOOGLE_API_KEY environment variable not set and GOOGLE_GENAI_USE_VERTEXAI is not TRUE."
                 )
 
-        capabilities = AgentCapabilities(streaming=True)
+        capabilities = AgentCapabilities(streaming=True, pushNotifications=True)
 
         # Car Shopping Agent Configuration
         skill = AgentSkill(
@@ -65,9 +70,17 @@ def main(host, port):
             skills=[skill],
         )
 
+        push_config_store = InMemoryPushNotificationConfigStore()
+        push_sender = BasePushNotificationSender(
+            httpx_client=httpx.AsyncClient(),
+            config_store=push_config_store,
+        )
+
         request_handler = DefaultRequestHandler(
             agent_executor=CarShoppingAgentExecutor(),
             task_store=InMemoryTaskStore(),
+            push_config_store=push_config_store,
+            push_sender=push_sender,
         )
 
         server = A2AStarletteApplication(

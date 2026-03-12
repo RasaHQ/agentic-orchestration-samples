@@ -1,3 +1,13 @@
+responses:
+  utter_ask_payment_reminder_timing:
+    - text: "When would you like to be reminded to pay your credit card bill? For example, 3 days before the due date, on the due date, or on the 1st of the month."
+
+  utter_ask_payment_reminder_notification_method:
+    - text: "How would you like to receive the reminder? For example, by email, SMS, or push notification."
+
+  utter_payment_reminder_set:
+    - text: "Got it. I'll remind you to pay your bill {payment_reminder_timing} via {payment_reminder_notification_method}."
+
 flows:
   set_payment_reminder:
     name: set payment reminder

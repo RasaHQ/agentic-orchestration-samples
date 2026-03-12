@@ -4,16 +4,13 @@ memory:
       type: text
       mappings:
         - type: from_llm
-      scope: filter_transactions
 
     filter_transactions_filters:
       type: text
       mappings:
         - type: from_llm
-      scope: filter_transactions
 
     selected_transactions:
       type: any
       mappings:
         - type: from_llm
-      scope: filter_transactions

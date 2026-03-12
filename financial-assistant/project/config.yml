@@ -3,7 +3,7 @@ assistant_id: financial-assistant
 language: en
 
 pipeline:
-  - name: SearchReadyLLMCommandGenerator
+  - name: CompactLLMCommandGenerator
     llm:
       model_group: openai-gpt-4o
     flow_retrieval:

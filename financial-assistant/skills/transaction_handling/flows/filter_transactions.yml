@@ -1,3 +1,16 @@
+responses:
+  utter_ask_filter_transactions_card_last_four:
+    - text: "What is the last 4 digits of the credit card you would like to filter transactions for?"
+
+  utter_ask_filter_transactions_filters:
+    - text: "What filters would you like to apply to the transactions?"
+
+  utter_ask_selected_transactions:
+    - text: "What transactions would you like to see?"
+
+  utter_selected_transactions:
+    - text: "Here are the transactions that match your filters for the card ending in {filter_transactions_card_last_four}:\n\n{transactions_display}"
+
 flows:
   filter_transactions:
     name: filter transactions

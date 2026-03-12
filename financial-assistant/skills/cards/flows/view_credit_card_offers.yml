@@ -17,3 +17,13 @@ flows:
       protocol: rasa
       business_logic_prompt: ./skills/cards/prompts/prompt_template.jinja2
       module: project.custom_components.credit_card_offers_agent.CreditCardOffersAgent
+
+responses:
+  utter_no_offers_available:
+    - text: "I'm sorry, there are no special offers available at this time. Please check back later."
+
+  utter_offer_details:
+    - text: "Here are the details for that card. Would you like to apply?"
+
+  utter_application_started:
+    - text: "Great choice! I'm starting your application. You'll receive an email with next steps shortly."

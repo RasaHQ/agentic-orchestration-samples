@@ -4,44 +4,37 @@ memory:
       type: text
       mappings:
         - type: from_llm
-      scope: pay_credit_card_bill
 
     pay_bill_amount:
       type: float
       mappings:
         - type: from_llm
-      scope: pay_credit_card_bill
 
     pay_bill_confirmation:
       type: bool
       mappings:
         - type: from_llm
-      scope: pay_credit_card_bill
 
     card_balance_due:
       type: float
       mappings:
         - type: controlled
-      scope: pay_credit_card_bill
 
     card_due_date:
       type: text
       mappings:
         - type: controlled
-      scope: pay_credit_card_bill
 
     payment_new_balance:
       type: float
       mappings:
         - type: controlled
-      scope: pay_credit_card_bill
 
   public:
     payment_reminder_timing:
       type: text
       mappings:
         - type: from_llm
-      scope: set_payment_reminder
 
     payment_reminder_notification_method:
       type: categorical
@@ -51,4 +44,3 @@ memory:
         - push
       mappings:
         - type: from_llm
-      scope: set_payment_reminder

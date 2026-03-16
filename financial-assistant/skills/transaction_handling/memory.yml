@@ -1,0 +1,16 @@
+memory:
+  private:
+    filter_transactions_card_last_four:
+      type: text
+      mappings:
+        - type: from_llm
+
+    filter_transactions_filters:
+      type: text
+      mappings:
+        - type: from_llm
+
+    selected_transactions:
+      type: any
+      mappings:
+        - type: from_llm

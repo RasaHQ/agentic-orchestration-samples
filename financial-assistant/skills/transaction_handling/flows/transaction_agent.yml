@@ -1,0 +1,19 @@
+flows:
+  transaction_agent:
+    description: |
+      Handles disputing credit card transactions. Accepts transaction IDs from users
+      and marks them as disputed for fraud investigation.
+    agent:
+      protocol: rasa
+      business_logic_prompt: ./skills/transaction_handling/prompts/prompt_template.jinja2
+      module: project.custom_components.transaction_agent.TransactionAgent
+
+responses:
+  utter_dispute_success:
+    - text: "I've successfully disputed the selected transaction(s). You'll receive a confirmation email shortly, and our fraud team will investigate within 2-3 business days."
+
+  utter_dispute_failed:
+    - text: "I'm sorry, I couldn't process the dispute. Please try again or contact customer support."
+
+  utter_suggest_lock_card:
+    - text: "For your security, would you also like me to lock your card to prevent any further unauthorized transactions?"

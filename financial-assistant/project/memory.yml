@@ -1,0 +1,35 @@
+memory:
+  # Common return value slot for action results
+  return_value:
+    type: any
+    mappings:
+      - type: controlled
+
+  # Card selection slots
+  selected_card_id:
+    type: text
+    mappings:
+      - type: controlled
+
+  # Raw list of transactions fetched by flows (list of dicts)
+  transaction_list:
+    type: any
+    mappings:
+      - type: controlled
+
+  # Formatted transaction list for display in responses
+  transactions_display:
+    type: text
+    mappings:
+      - type: controlled
+
+  # User profile slots (populated by action_session_start)
+  user_name:
+    type: text
+    mappings:
+      - type: controlled
+
+  user_loyalty_memberships:
+    type: any
+    mappings:
+      - type: controlled

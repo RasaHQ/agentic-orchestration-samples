@@ -1,0 +1,41 @@
+memory:
+  private:
+    recommended_offers:
+      type: any
+      mappings:
+        - type: controlled
+
+    selected_offer_id:
+      type: text
+      mappings:
+        - type: from_llm
+
+    cards_list:
+      type: text
+      mappings:
+        - type: from_llm
+
+    cards_raw:
+      type: text
+      mappings:
+        - type: from_llm
+
+    lock_card_last_four:
+      type: text
+      mappings:
+        - type: from_llm
+
+    lock_card_confirmation:
+      type: bool
+      mappings:
+        - type: from_llm
+
+    report_lost_card_last_four:
+      type: text
+      mappings:
+        - type: from_llm
+
+    report_lost_lock_confirmation:
+      type: bool
+      mappings:
+        - type: from_llm

@@ -1,0 +1,17 @@
+recipe: default.v1
+assistant_id: financial-assistant
+language: en
+
+pipeline:
+  - name: CompactLLMCommandGenerator
+    llm:
+      model_group: openai-gpt-4o
+    flow_retrieval:
+      active: false
+
+policies:
+  - name: FlowPolicy
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

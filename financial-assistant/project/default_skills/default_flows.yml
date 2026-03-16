@@ -1,0 +1,421 @@
+responses:
+  utter_human_handoff:
+    - text: "Ok, I will connect you to a human agent. Please wait a moment."
+      metadata:
+        rephrase: True
+
+  utter_ask_confirm_discovered_value:
+    - text: "You mentioned '{{context.discovered_value}}' earlier - should I use that?"
+      metadata:
+        rephrase: True
+        template: jinja
+      buttons:
+        - payload: /SetSlots(confirm_discovered_value=true)
+          title: "Yes, use that"
+        - payload: /SetSlots(confirm_discovered_value=false)
+          title: "No, let me specify"
+
+  utter_ask_continue_conversation:
+    - text: "Is there anything else I can help you with?"
+      metadata:
+        rephrase: True
+
+  utter_ask_continue_interrupted_flow_confirmation:
+    - text: "Would you like to continue with {{context.interrupted_flow_options}}?"
+      metadata:
+        rephrase: True
+        template: jinja
+
+  utter_ask_interrupted_flow_to_continue:
+    - text: "Would you like to resume {{context.interrupted_flow_options}}?"
+      metadata:
+        rephrase: True
+        template: jinja
+
+  utter_ask_rephrase:
+    - text: I’m sorry I am unable to understand you, could you please rephrase?
+
+  utter_ask_still_there:
+    - text: "Hello, are you still there?"
+      metadata:
+        rephrase: True
+
+  utter_boolean_slot_rejection:
+    - text: "Sorry, the value you provided, `{{value}}`, is not valid. Please respond with a valid value."
+      metadata:
+        rephrase: True
+        template: jinja
+
+  utter_can_do_something_else:
+    - text: "What exactly can I help you with?"
+      metadata:
+        rephrase: True
+
+  utter_cannot_handle:
+    - text: I'm sorry, I'm not trained to help with that.
+
+  utter_categorical_slot_rejection:
+    - text: "Sorry, you responded with an invalid value - `{{value}}`. Please select one of the available options."
+      metadata:
+        rephrase: True
+        template: jinja
+
+  utter_clarification_no_options_rasa:
+    - text: "I can help, but I need more information. Please tell me a bit more about what you would like to do."
+      metadata:
+        rephrase: True
+        template: jinja
+
+  utter_clarification_options_rasa:
+    - text: "I can help, but I need more information. Which of these would you like to do: {{context.clarification_options}}?"
+      metadata:
+        rephrase: True
+        template: jinja
+
+  utter_closing_words:
+    - text: "Okay, I'll be around in case you need further help."
+      metadata:
+        rephrase: True
+
+  utter_corrected_previous_input:
+    - text: "Ok, I am updating {{ context.corrected_slots.keys()|join(', ') }} to {{ context.new_slot_values | join(', ') }} respectively."
+      metadata:
+        rephrase: True
+        template: jinja
+
+  utter_float_slot_rejection:
+    - text: "Sorry, it seems the value you provided `{{value}}` is not a valid number. Please provide a valid number in your response."
+      metadata:
+        rephrase: True
+        template: jinja
+
+  utter_flow_cancelled_rasa:
+    - text: "Okay, stopping {{ context.canceled_name }}."
+      metadata:
+        rephrase: True
+        template: jinja
+
+  utter_free_chitchat_response:
+    - text: "Sorry, I'm not able to answer that right now."
+      metadata:
+        rephrase: True
+        rephrase_prompt: |
+          You are an incredibly friendly assistant. Generate a short
+          response to the user's comment in simple english.
+
+          User: {{current_input}}
+          Response:
+
+  utter_human_handoff_not_available:
+    - text: I understand you want to be connected to a human agent, but that's something I cannot help you with at the moment. Is there something else I can help you with?
+      metadata:
+        rephrase: True
+
+  utter_inform_code_change:
+    - text: There has been an update to my code. I need to wrap up our running dialogue and start from scratch.
+      metadata:
+        rephrase: True
+
+  utter_inform_hangup:
+    - text: I haven’t heard from you, so I’ll end our conversation shortly.
+      metadata:
+        rephrase: True
+
+  utter_internal_error_rasa:
+    - text: Sorry, I am having trouble with that. Please try again in a few minutes.
+
+  utter_no_knowledge_base:
+    - text: I am afraid, I don't know the answer. At this point, I don't have access to a knowledge base.
+      metadata:
+        rephrase: True
+
+  utter_no_relevant_answer_found:
+    - text: I’m sorry, I can’t help with that.
+      metadata:
+        rephrase: True
+
+  utter_skip_question_answer:
+    - text: I'm here to provide you with the best assistance, and in order to do so, I kindly request that we complete this step together. Your input is essential for a seamless experience!
+      metadata:
+        rephrase: True
+
+  utter_user_input_empty_error_rasa:
+    - text: I see an empty message. What can I assist you with?
+
+  utter_user_input_too_long_error_rasa:
+    - text: I'm sorry, but your message is too long for me to process. Please keep your message concise and within {% if context.info.max_characters %}{{context.info.max_characters}} characters.{% else %}a reasonable length.{% endif %}
+      metadata:
+        template: jinja
+
+flows:
+  pattern_cancel_flow:
+    description: Conversation repair flow that starts when a flow is cancelled
+    name: pattern_cancel_flow
+    steps:
+      - action: action_cancel_flow
+      - action: utter_flow_cancelled_rasa
+
+  pattern_cannot_handle:
+    description: Conversation repair flow for addressing failed command generation scenarios
+    name: pattern_cannot_handle
+    steps:
+      - noop: true
+        next:
+          # Fallback for ChitChat command when IntentlessPolicy isn't set, but
+          # pattern_chitchat invokes action_trigger_chitchat
+          - if: context.reason is "cannot_handle_chitchat"
+            then:
+              - action: utter_cannot_handle
+                next: "END"
+          # Fallback for things that are not supported
+          - if: context.reason is "cannot_handle_not_supported"
+            then:
+              - action: utter_cannot_handle
+                next: END
+          # Fallback when no relevant answer to the user query has been found.
+          # This is used by the EnterpriseSearchPolicy.
+          - if: context.reason is "cannot_handle_no_relevant_answer"
+            then:
+              - action: utter_no_relevant_answer_found
+                next: END
+          # Default
+          - else:
+              - action: utter_ask_rephrase
+                next: END
+
+  pattern_chitchat:
+    description: Conversation repair flow for off-topic interactions that won't disrupt the main conversation
+    name: pattern chitchat
+    steps:
+      #- action: utter_cannot_handle
+      # To enable free-form response use:
+       - action: utter_free_chitchat_response
+
+  pattern_clarification:
+    description: Conversation repair flow for handling ambiguous requests that could match multiple flows
+    name: pattern clarification
+    steps:
+      - noop: true
+        next:
+          - if: context.names
+            then: action_clarify_flows
+          - else:
+            - action: utter_clarification_no_options_rasa
+              next: END
+      - id: action_clarify_flows
+        action: action_clarify_flows
+      - action: utter_clarification_options_rasa
+
+  pattern_code_change: # shouldn't be customized
+    description: Conversation repair flow for cleaning the stack after an assistant update
+    name: pattern code change
+    steps:
+      - action: utter_inform_code_change
+      - action: action_clean_stack
+
+  pattern_collect_information: # shouldn't be customized
+    description: Flow for collecting information from users
+    name: pattern collect information
+    steps:
+      - id: start
+        action: action_run_slot_rejections
+      - action: validate_{{context.collect}}
+        next:
+          - if: "slots.{{context.collect}} is not null"
+            then: END
+          - else: ask_collect
+      - id: ask_collect
+        action: "{{context.utter}}"
+      - action: "{{context.collect_action}}"
+      - action: action_listen
+        next: start
+
+  pattern_completed:
+    description: Flow that asks if the user needs more help after completing their initiated use cases
+    name: pattern completed
+    steps:
+      - collect: continue_conversation
+        description: Set this slot to `True` if the user needs further help and wants to continue the conversation. Set it to `False` otherwise.
+        ask_before_filling: true
+        next:
+          - if: slots.continue_conversation
+            then:
+            - action: utter_can_do_something_else
+              next: END
+          - else:
+            - action: utter_closing_words
+              next: END
+
+  pattern_continue_interrupted:
+    description: Conversation repair flow for managing when users switch between different flows
+    name: pattern continue interrupted
+    steps:
+      - noop: true
+        next:
+          - if: context.multiple_flows_interrupted
+            then: collect_interrupted_flow_to_continue
+          - else: collect_continue_interrupted_flow_confirmation
+      - id: collect_interrupted_flow_to_continue
+        collect: interrupted_flow_to_continue
+        description: "Fill this slot with the name of the flow the user wants to continue. If the user does not want to continue any of the interrupted flows, fill this slot with 'none'."
+        next:
+          - if: slots.interrupted_flow_to_continue is not "none"
+            then:
+              - action: action_continue_interrupted_flow
+                next: END
+          - else:
+              - action: action_cancel_interrupted_flows
+                next: END
+      - id: collect_continue_interrupted_flow_confirmation
+        collect: continue_interrupted_flow_confirmation
+        description: "If the user wants to continue the interrupted flow, fill this slot with true. If the user does not want to continue the interrupted flow, fill this slot with false."
+        next:
+          - if: slots.continue_interrupted_flow_confirmation
+            then:
+              - action: action_continue_interrupted_flow
+                next: END
+          - else:
+              - action: action_cancel_interrupted_flows
+                next: END
+
+  pattern_correction:
+    description: Conversation repair flow for managing user input changes or error corrections
+    name: pattern correction
+    steps:
+      - action: action_correct_flow_slot
+        next:
+          - if: not context.is_reset_only
+            then:
+              - action: utter_corrected_previous_input
+                next: END
+          - else: END
+
+  pattern_human_handoff:
+    description: Conversation repair flow for switching users to a human agent if their request can't be handled
+    name: pattern human handoff
+    steps:
+      - action: utter_human_handoff
+
+  pattern_internal_error:
+    description: Conversation repair flow for informing users about internal errors
+    name: pattern_internal_error
+    steps:
+      - noop: true
+        next:
+          - if: context.error_type is "rasa_internal_error_user_input_too_long"
+            then:
+              - action: utter_user_input_too_long_error_rasa
+                next: END
+          - if: context.error_type is "rasa_internal_error_user_input_empty"
+            then:
+              - action: utter_user_input_empty_error_rasa
+                next: END
+          - else:
+              - action: utter_internal_error_rasa
+                next: END
+
+  pattern_repeat_bot_messages:
+    description: Conversation repair flow for repeating previous messages
+    name: pattern repeat bot messages
+    steps:
+      - action: action_repeat_bot_messages
+
+  pattern_reply_from_context:
+    description: Flow for replying from recent context (action results, slots)
+    name: pattern reply from context
+    steps:
+      - action: action_reply_from_context
+
+  pattern_restart:
+    description: Flow for restarting the conversation
+    name: pattern restart
+    nlu_trigger:
+      - intent: restart
+    steps:
+      - action: action_restart
+
+  pattern_search:
+    description: Flow for handling knowledge-based questions
+    name: pattern search
+    steps:
+      - action: utter_no_knowledge_base
+      # - action: action_trigger_search to use doc search policy if present
+
+  pattern_session_start:
+    description: Flow for starting the conversation
+    name: pattern session start
+    nlu_trigger:
+      - intent: session_start
+    steps:
+      - action: action_session_start
+
+  pattern_skip_question:
+    description: Conversation repair flow for managing user intents to skip questions (steps)
+    name: pattern skip question
+    steps:
+      - action: utter_skip_question_answer
+
+  pattern_user_silence:
+    description: Reacting to user silence in voice bots
+    name: pattern react to silence
+    nlu_trigger:
+      - intent: silence_timeout
+    persisted_slots:
+      - consecutive_silence_timeouts
+    steps:
+      - noop: true
+        next:
+          - if: "slots.consecutive_silence_timeouts = 0.0"
+            then: set_slots_consecutive_silence_timeouts
+          - if: "slots.consecutive_silence_timeouts = 1.0"
+            then: set_slots_consecutive_silence_timeouts_2
+          - if: "slots.consecutive_silence_timeouts > 1.0"
+            then: message_utter_inform_hangup
+          - else: END
+      - id: set_slots_consecutive_silence_timeouts
+        set_slots:
+          - consecutive_silence_timeouts: 1.0
+      - action: action_repeat_bot_messages
+        next: END
+      - id: set_slots_consecutive_silence_timeouts_2
+        set_slots:
+          - consecutive_silence_timeouts: 2.0
+      - action: utter_ask_still_there
+        next: END
+      - id: message_utter_inform_hangup
+        action: utter_inform_hangup
+      - action: action_hangup
+
+  pattern_validate_slot: # shouldn't be customized
+    description: Flow for running validations on slots
+    name: pattern validate slot
+    steps:
+      - id: start
+        action: action_run_slot_rejections
+        next:
+          - if: "slots.{{context.validate}} is not null"
+            then: END
+          - else: ask_refill
+      - id: ask_refill
+        action: "{{context.refill_utter}}"
+      - action: "{{context.refill_action}}"
+      - action: action_listen
+        next: start
+
+  pattern_verify_discovered_value:
+    description: Flow for confirming a discovered memory value before using it
+    name: pattern verify discovered value
+    steps:
+      - collect: confirm_discovered_value
+        description: "True if user confirms using the discovered value, False otherwise"
+        ask_before_filling: true
+        next:
+          - if: slots.confirm_discovered_value
+            then: apply_value
+          - else: fallback_to_collect
+      - id: apply_value
+        action: action_apply_discovered_value
+        next: END
+      - id: fallback_to_collect
+        action: action_trigger_collect_information
+        next: END

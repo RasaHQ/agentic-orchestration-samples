@@ -1,0 +1,46 @@
+memory:
+  private:
+    pay_bill_card_last_four:
+      type: text
+      mappings:
+        - type: from_llm
+
+    pay_bill_amount:
+      type: float
+      mappings:
+        - type: from_llm
+
+    pay_bill_confirmation:
+      type: bool
+      mappings:
+        - type: from_llm
+
+    card_balance_due:
+      type: float
+      mappings:
+        - type: controlled
+
+    card_due_date:
+      type: text
+      mappings:
+        - type: controlled
+
+    payment_new_balance:
+      type: float
+      mappings:
+        - type: controlled
+
+  public:
+    payment_reminder_timing:
+      type: text
+      mappings:
+        - type: from_llm
+
+    payment_reminder_notification_method:
+      type: categorical
+      values:
+        - email
+        - sms
+        - push
+      mappings:
+        - type: from_llm

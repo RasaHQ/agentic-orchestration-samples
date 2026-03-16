@@ -1,0 +1,12 @@
+responses:
+  utter_cards:
+    - text: "You currently have the following cards: \n\n{cards_list}"
+
+flows:
+  list_cards:
+    name: list credit cards
+    description: List all credit cards
+    steps:
+      - action: action_list_cards
+      - action: utter_cards
+        next: END

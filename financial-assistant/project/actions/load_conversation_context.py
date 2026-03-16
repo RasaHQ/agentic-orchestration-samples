@@ -12,7 +12,7 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
-from actions.db import get_user_profile, UserProfile
+from project.actions.db import get_user_profile, UserProfile
 
 
 def _profile_to_context_dict(profile: UserProfile) -> Dict[str, Any]:

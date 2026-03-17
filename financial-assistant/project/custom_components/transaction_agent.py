@@ -4,7 +4,7 @@ import json
 from typing import Any, Dict, List
 
 from rasa.agents.protocol.mcp.mcp_open_agent import MCPOpenAgent
-from rasa.agents.schemas import AgentToolResult
+from rasa.agents.schemas import AgentToolResult, AgentToolContext
 
 from project.actions.db import (
     dispute_transactions,
@@ -74,7 +74,7 @@ class TransactionAgent(MCPOpenAgent):
             return metadata.get("sender_id", "default_session")
         return "default_session"
 
-    async def dispute_txns(self, arguments: Dict[str, Any]) -> AgentToolResult:
+    async def dispute_txns(self, arguments: Dict[str, Any], context: AgentToolContext) -> AgentToolResult:
         """Dispute specified transactions."""
         session_id = self._get_session_id()
         txn_ids = arguments["transaction_ids"]
@@ -92,7 +92,7 @@ class TransactionAgent(MCPOpenAgent):
             }),
         )
 
-    async def get_txns(self, arguments: Dict[str, Any]) -> AgentToolResult:
+    async def get_txns(self, arguments: Dict[str, Any], context: AgentToolContext) -> AgentToolResult:
         """Fetch transactions for a specific card."""
         session_id = self._get_session_id()
         card_last_four = arguments["card_last_four"]

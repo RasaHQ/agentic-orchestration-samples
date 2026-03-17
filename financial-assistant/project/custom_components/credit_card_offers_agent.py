@@ -4,7 +4,7 @@ import json
 from typing import Any, Dict, List
 
 from rasa.agents.protocol.mcp.mcp_open_agent import MCPOpenAgent
-from rasa.agents.schemas import AgentToolResult
+from rasa.agents.schemas import AgentToolResult, AgentToolContext
 
 from project.actions.db import get_loyalty_memberships, get_user_profile, has_loyalty_membership
 
@@ -167,7 +167,7 @@ class CreditCardOffersAgent(MCPOpenAgent):
             return metadata.get("sender_id", "default_session")
         return "default_session"
 
-    async def fetch_user_profile(self, arguments: Dict[str, Any]) -> AgentToolResult:
+    async def fetch_user_profile(self, arguments: Dict[str, Any], context: AgentToolContext) -> AgentToolResult:
         """Fetch the user's profile."""
         session_id = self._get_session_id()
 
@@ -194,7 +194,7 @@ class CreditCardOffersAgent(MCPOpenAgent):
             )
 
     async def fetch_loyalty_memberships(
-        self, arguments: Dict[str, Any]
+        self, arguments: Dict[str, Any], context: AgentToolContext
     ) -> AgentToolResult:
         """Fetch the user's loyalty memberships."""
         session_id = self._get_session_id()
@@ -220,7 +220,7 @@ class CreditCardOffersAgent(MCPOpenAgent):
                 result=json.dumps({"error": str(e)}),
             )
 
-    async def get_all_offers(self, arguments: Dict[str, Any]) -> AgentToolResult:
+    async def get_all_offers(self, arguments: Dict[str, Any], context: AgentToolContext) -> AgentToolResult:
         """Get all available credit card offers."""
         offers = [
             {
@@ -238,7 +238,7 @@ class CreditCardOffersAgent(MCPOpenAgent):
         )
 
     async def get_personalized_recommendations(
-        self, arguments: Dict[str, Any]
+        self, arguments: Dict[str, Any], context: AgentToolContext
     ) -> AgentToolResult:
         """Get personalized credit card recommendations."""
         session_id = self._get_session_id()
@@ -301,7 +301,7 @@ class CreditCardOffersAgent(MCPOpenAgent):
                 result=json.dumps({"error": str(e)}),
             )
 
-    async def check_eligibility(self, arguments: Dict[str, Any]) -> AgentToolResult:
+    async def check_eligibility(self, arguments: Dict[str, Any], context: AgentToolContext) -> AgentToolResult:
         """Check if user is eligible for a specific offer."""
         session_id = self._get_session_id()
         offer_id = arguments["offer_id"]

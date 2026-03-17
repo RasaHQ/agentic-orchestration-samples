@@ -347,7 +347,8 @@ flows:
     nlu_trigger:
       - intent: session_start
     steps:
-      - action: action_session_start
+      - action: action_load_conversation_context
+      - action: action_generate_and_utter_greeting
 
   pattern_skip_question:
     description: Conversation repair flow for managing user intents to skip questions (steps)

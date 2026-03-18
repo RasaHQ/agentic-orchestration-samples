@@ -2,6 +2,11 @@
 
 A conversational financial assistant built with Rasa that helps users manage credit cards, view transactions, pay bills, set reminders, and handle disputes.
 
+## Highlights
+
+- **Composable Agents**: The assistant showcases modular, composable skills that can independently handle specialized tasks (e.g. disputes, recommendations), and can be dynamically invoked or switched between during a conversation.
+- **Memory**: The assistant leverages persistent memory to track user information, preferences, context, and recent conversation details, enabling contextual follow-ups and more personalized, natural interactions.
+
 ## Capabilities
 
 The assistant supports the following flows and agents:

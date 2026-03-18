@@ -4,6 +4,7 @@ language: en
 
 pipeline:
   - name: CompactLLMCommandGenerator
+    prompt_template: project/prompts/command_generator_prompt_template.jinja2
     llm:
       model_group: openai-gpt-4o
     flow_retrieval:

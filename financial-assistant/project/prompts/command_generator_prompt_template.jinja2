@@ -20,7 +20,7 @@ Use the following structured data:
 
 ## Available Actions:
 * `start flow flow_name`: Starting a flow. For example, `start flow transfer_money` or `start flow list_contacts`.
-* `set slot slot_name slot_value`: Slot setting. For example, `set slot transfer_money_recipient Freddy`. Can be used to correct and change previously set values. ONLY use slots that are explicitly defined in the flow's slot list.
+* `set slot slot_name slot_value`: Slot setting. For example, `set slot transfer_money_recipient Freddy`. Can be used to correct and change previously set values. Only use slots that belong to the flow you are starting or the active flow—check the Available Flows and Slots data: each flow lists its own slots; do not set a slot that is defined on a different flow.
 * `remember fact fact_name fact_value`: Store a long-term user preference or fact for later use (e.g. `remember fact dietary_preference vegetarian`). Use only for general, durable preferences—not for criteria that apply only to the current flow. See "Remember fact" rules below.
 * `cancel flow`: Cancelling the current flow.
 * `disambiguate flows flow_name1 flow_name2 ... flow_name_n`: Disambiguate which flow should be started when user input is ambiguous by listing the potential flows as options. For example, `disambiguate flows list_contacts add_contact remove_contact ...` if the user just wrote "contacts".
@@ -34,11 +34,11 @@ Use the following structured data:
 ---
 
 ## General Tips
-* Do not fill slots with abstract values or placeholders.
+* Do not fill slots with abstract values or placeholders. Each slot has a description and possibly allowed_values in the structured data: the value you set must match that meaning (e.g. a timing slot expects a time expression; a method slot expects one of its allowed values). Do not use vague or unrelated words as slot values. If the user did not provide a value that fits the slot's description and allowed_values, do not output `set slot` for that slot—the flow will prompt for it.
 * For categorical slots try to match the user message with allowed slot values. Use "other" if you cannot match it.
 * Set the boolean slots based on the user response. Map positive responses to `True`, and negative to `False`.
 * Extract text slot values exactly as provided by the user. Avoid assumptions, format changes, or partial extractions.
-* ONLY use `set slot` with slots that are explicitly defined in the current flow's slot list. Do NOT create or assume slots that don't exist.
+* Only use `set slot` for slots that belong to the flow you are starting or that are already active. When you `start flow X`, only set slots that appear in flow X's slot list in the Available Flows and Slots data. Do not set slots that are defined on a different flow. Do not create or assume slots that don't exist.
 * Only use information provided by the user.
 * Use clarification in ambiguous cases.
 * Multiple flows can be started. If a user wants to digress into a second flow, you do not need to cancel the current flow.
@@ -52,7 +52,7 @@ Use the following structured data:
 * If you're unsure about agent names, refer to the structured data provided in the `Current State` section.{% endif %}
 * **Remember fact — source**: ONLY extract facts from the **current (last) user message**. Do NOT extract facts from earlier turns in the conversation; that leads to duplicates and re-storing already captured information.
 * **Remember fact — flow vs long-term**: Use `remember fact` only for **general, long-term user preferences** that are useful across conversations (e.g. "I'm vegetarian", "I prefer premium services", "I travel frequently"). Do NOT use `remember fact` for **criteria or filters that apply only to the flow the user is starting** (e.g. "good cashback", "low annual fees" when they ask for credit card offers). For flow-specific criteria, use `set slot` with the flow's slots, or rely on the flow context; reserve `remember fact` for preferences that would still matter in future, unrelated flows.
-* **Remember fact — what to store**: Prefer storing broad, durable preferences: explicit lifestyle choices, interests, behavior patterns, or self-described habits. Use a **descriptive fact_value** that clearly states what the user prefers (e.g. `remember fact dietary_preference vegetarian` or `remember fact service_tier_preference premium services`), so the stored fact is self-explanatory.
+* **Remember fact — what to store**: Prefer storing broad, durable preferences: explicit lifestyle choices, interests, behavior patterns, or self-described habits. Use a **descriptive fact_value** that clearly states what the user prefers (e.g. `remember fact dietary_preference vegetarian` or `remember fact service_tier_preference premium services`), so the stored fact is self-explanatory. When the user states a preference about an entity (e.g. "my preferred X is Y", "I usually use Y for Z") and that entity is not a slot of the flow they are starting, store it with `remember fact` instead of setting a slot from another flow. Only set slots that are actually defined on the flow you are starting.
 * You can generate `remember fact` alongside other actions (e.g. start flow, set slot) when the **last** message contains both a flow request and a general preference worth storing long-term.{% if has_followup_context %}
 * **Reply from context vs provide info**: When the user asks about information that was JUST shown in the conversation (e.g. in action results or in the last bot message), use `reply from context`, NOT `provide info`. Use `provide info` only for general knowledge/FAQs that are not about just-displayed data.
 * Examples for `reply from context`: "can you break that down?" after a list or result was shown; "what was the total?" or "how many were there?" after a summary was shown; "which one was that?" after options or details were shown. Output on one line: `reply from context ` followed by the response text.{% endif %}

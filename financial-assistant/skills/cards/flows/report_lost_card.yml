@@ -2,9 +2,6 @@ responses:
   utter_card_already_reported_lost:
     - text: "This card has already been reported as lost."
 
-  utter_card_reported_lost:
-    - text: "I've recorded that your card ending in {report_lost_card_last_four} has been lost. For your security, would you like me to lock the card as well to prevent any unauthorized transactions?"
-
   utter_report_complete_no_lock:
     - text: "Understood. Your card has been reported as lost but remains active. Please let me know if you'd like to lock it later."
 
@@ -39,8 +36,7 @@ flows:
                 next: END
           - else: ask_lock
       - id: ask_lock
-        action: utter_card_reported_lost
-      - collect: report_lost_lock_confirmation
+        collect: report_lost_lock_confirmation
         ask_before_filling: true
         description: Whether the user wants to lock the card as well
         next:

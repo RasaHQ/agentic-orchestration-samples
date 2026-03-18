@@ -48,6 +48,8 @@
 # To enable the rephraser, remove the comment symbols in the lines below.
 nlg:
     type: rephrase
+    rephrase_all: true
+    summarize_history: false
 
 model_groups:
   - id: openai-gpt-4o

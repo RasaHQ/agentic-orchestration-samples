@@ -14,7 +14,6 @@ responses:
 flows:
   filter_transactions:
     name: filter transactions
-    if: false
     description: |
       Show or filter transactions on a card by merchant (e.g. Amazon, Café Nero),
       date, amount, category, or location. Use when the user asks to see transactions

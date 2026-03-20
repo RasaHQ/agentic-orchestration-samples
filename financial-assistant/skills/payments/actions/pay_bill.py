@@ -9,6 +9,7 @@ from project.actions.db import (
     get_transactions_by_card,
     pay_card_bill,
 )
+from project.actions.slot_memory import SKILL_PAYMENTS, skill_scoped_slot
 
 
 class ActionGetCardBalance(Action):
@@ -52,9 +53,11 @@ class ActionGetCardBalance(Action):
         return [
             SlotSet("return_value", "success"),
             SlotSet("selected_card_id", card.id),
-            SlotSet("card_balance_due", card.balance_due),
-            SlotSet("card_due_date", card.due_date),
-            SlotSet("transaction_list", formatted_transactions),
+            skill_scoped_slot("card_balance_due", card.balance_due, SKILL_PAYMENTS),
+            skill_scoped_slot("card_due_date", card.due_date, SKILL_PAYMENTS),
+            skill_scoped_slot(
+                "transaction_list", formatted_transactions, SKILL_PAYMENTS
+            ),
         ]
 
 
@@ -98,8 +101,12 @@ class ActionPayBill(Action):
 
             return [
                 SlotSet("return_value", "success"),
-                SlotSet("payment_new_balance", result["new_balance"]),
-                SlotSet("transaction_list", formatted_transactions),
+                skill_scoped_slot(
+                    "payment_new_balance", result["new_balance"], SKILL_PAYMENTS
+                ),
+                skill_scoped_slot(
+                    "transaction_list", formatted_transactions, SKILL_PAYMENTS
+                ),
             ]
         elif result.get("error") == "Payment exceeds balance due":
             return [SlotSet("return_value", "exceeds_balance")]

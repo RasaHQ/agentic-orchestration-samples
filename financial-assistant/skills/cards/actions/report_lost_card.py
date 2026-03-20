@@ -5,6 +5,7 @@ from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
 from project.actions.db import get_card_by_last_four, lock_card, report_card_lost
+from project.actions.slot_memory import SKILL_CARDS, skill_scoped_slot
 
 
 class ActionReportLostCard(Action):
@@ -34,7 +35,7 @@ class ActionReportLostCard(Action):
         if success:
             return [
                 SlotSet("return_value", "success"),
-                SlotSet("selected_card_id", card.id),
+                skill_scoped_slot("selected_card_id", card.id, SKILL_CARDS),
             ]
         else:
             return [SlotSet("return_value", "error")]

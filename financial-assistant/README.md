@@ -29,7 +29,7 @@ financial-assistant/
 ├── project/                    # Project-wide config and shared assets
 │   ├── config.yml              # Rasa config (pipeline, policies, command generator)
 │   ├── integrations.yml        # Endpoints (tracker, actions, etc.)
-│   ├── memory.yml              # Shared slots (e.g. return_value, transaction_list)
+│   ├── memory.yml              # Shared slots (e.g. return_value)
 │   ├── responses.yml           # (if present) project-level responses
 │   ├── default_skills/
 │   │   └── default_flows.yml   # Default flows & patterns (e.g. continue conversation, cancel)

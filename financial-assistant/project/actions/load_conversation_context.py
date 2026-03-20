@@ -13,6 +13,7 @@ from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
 from project.actions.db import get_user_profile, UserProfile
+from project.actions.slot_memory import system_scoped_slot
 
 
 def _profile_to_context_dict(profile: UserProfile) -> Dict[str, Any]:
@@ -58,10 +59,22 @@ class ActionLoadConversationContext(Action):
         try:
             profile = get_user_profile(user_id)
             user_profile_dict = _profile_to_context_dict(profile)
-            events.append(SlotSet("user_profile", user_profile_dict))
+            events.append(
+                system_scoped_slot(
+                    "user_profile",
+                    user_profile_dict,
+                    description="User profile at session start",
+                )
+            )
         except Exception:
             # No profile or DB error: leave slot unset or clear
-            events.append(SlotSet("user_profile", None))
+            events.append(
+                system_scoped_slot(
+                    "user_profile",
+                    None,
+                    description="User profile at session start",
+                )
+            )
 
         # Action context from session-start metadata if present
         metadata = tracker.get_slot("session_started_metadata") or {}
@@ -72,6 +85,12 @@ class ActionLoadConversationContext(Action):
             else:
                 action_context = metadata.get("action_context")
             if action_context is not None and isinstance(action_context, dict):
-                events.append(SlotSet("action_context", action_context))
+                events.append(
+                    system_scoped_slot(
+                        "action_context",
+                        action_context,
+                        description="Action context at session start",
+                    )
+                )
 
         return events

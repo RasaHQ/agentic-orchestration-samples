@@ -5,6 +5,9 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
+from project.actions.slot_memory import SKILL_TRANSACTION_HANDLING, skill_scoped_slot
+
+
 class ActionFormatTransactions(Action):
     def name(self) -> Text:
         return "action_format_transactions"
@@ -52,5 +55,7 @@ class ActionFormatTransactions(Action):
 
         return [
             SlotSet("return_value", "success"),
-            SlotSet("transactions_display", displayed_transactions),
+            skill_scoped_slot(
+                "transactions_display", displayed_transactions, SKILL_TRANSACTION_HANDLING
+            ),
         ]

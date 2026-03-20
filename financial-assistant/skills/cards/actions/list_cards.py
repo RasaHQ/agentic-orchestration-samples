@@ -6,6 +6,7 @@ from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
 from project.actions.db import get_credit_cards
+from project.actions.slot_memory import SKILL_CARDS, skill_scoped_slot
 
 
 class ActionListCards(Action):
@@ -23,8 +24,8 @@ class ActionListCards(Action):
 
         if not cards:
             return [
-                SlotSet("cards_list", "No credit cards found."),
-                SlotSet("cards_raw", "[]"),
+                skill_scoped_slot("cards_list", "No credit cards found.", SKILL_CARDS),
+                skill_scoped_slot("cards_raw", "[]", SKILL_CARDS),
             ]
 
         # Store raw card data as JSON
@@ -49,6 +50,6 @@ class ActionListCards(Action):
 
         cards_list = "\n\n".join(card_descriptions)
         return [
-            SlotSet("cards_list", cards_list),
-            SlotSet("cards_raw", json.dumps(cards_raw)),
+            skill_scoped_slot("cards_list", cards_list, SKILL_CARDS),
+            skill_scoped_slot("cards_raw", json.dumps(cards_raw), SKILL_CARDS),
         ]

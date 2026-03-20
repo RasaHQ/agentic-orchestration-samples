@@ -1,4 +1,10 @@
 memory:
+  public:
+    selected_card_id:
+      type: text
+      mappings:
+        - type: controlled
+
   private:
     recommended_offers:
       type: any

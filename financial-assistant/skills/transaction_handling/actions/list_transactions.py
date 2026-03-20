@@ -5,6 +5,7 @@ from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
 from project.actions.db import get_card_by_last_four, get_transactions_by_card
+from project.actions.slot_memory import SKILL_TRANSACTION_HANDLING, skill_scoped_slot
 
 
 class ActionListTransactions(Action):
@@ -18,7 +19,7 @@ class ActionListTransactions(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         user_id = tracker.sender_id
-        card_last_four = tracker.get_slot("filter_transactions_card_last_four")
+        card_last_four = tracker.get_slot("txn_list_card_last_four")
         limit = 10
 
         if not card_last_four:
@@ -51,5 +52,5 @@ class ActionListTransactions(Action):
         return [
             SlotSet("return_value", "success"),
             SlotSet("selected_card_id", card.id),
-            SlotSet("transaction_list", raw_list),
+            skill_scoped_slot("transaction_list", raw_list, SKILL_TRANSACTION_HANDLING),
         ]

@@ -30,7 +30,6 @@ memory:
       mappings:
         - type: controlled
 
-  public:
     payment_reminder_timing:
       type: text
       mappings:

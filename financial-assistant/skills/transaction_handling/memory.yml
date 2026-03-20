@@ -1,11 +1,21 @@
 memory:
   private:
-    filter_transactions_card_last_four:
+    transaction_list:
+      type: any
+      mappings:
+        - type: controlled
+
+    transactions_display:
+      type: text
+      mappings:
+        - type: controlled
+
+    txn_list_card_last_four:
       type: text
       mappings:
         - type: from_llm
 
-    filter_transactions_filters:
+    txn_list_filters:
       type: text
       mappings:
         - type: from_llm

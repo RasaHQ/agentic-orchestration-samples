@@ -1,0 +1,23 @@
+### Primary task
+{{ description }}
+
+### Context from the offers agent
+In **Available Context (from memory)**, look for keys under `discovered.credit_card_offers_agent.*`, especially:
+- `recommended_offer_id` — internal offer id (e.g. `travel_elite`)
+- `recommended_offer_name` — display name
+- `recommended_annual_fee_summary` — fees / waivers / loyalty benefits in one short phrase
+- `offers_session_preferences_summary` — what the user said they wanted (spend, rewards type, fee tolerance)
+
+If those are missing, briefly explain that you need a recommendation first and end with `task_completed` (do not call `start_application`).
+
+### Workflow
+1. **Summarize** the remembered card and fee situation in plain language (use memory; do not invent offers).
+2. Ask **one** confirmation question that includes both the **product name** and the **annual fee / waiver nuance** (e.g. “Still the Travel Elite at $95 with the first year waived?” or special loyalty pricing if memory says so).
+3. **Wait** for the user’s reply in a subsequent turn when needed. If the user’s latest message already clearly confirms (e.g. “yes”, “that’s right”, “go ahead”), treat that as confirmation.
+4. Only after explicit confirmation, call **`start_application`** with `offer_id`, `offer_name`, and `annual_fee_summary` aligned with memory.
+5. Call **`task_completed`** once with a short, warm closing that mentions the application reference from the tool result—no long recap.
+
+### Rules
+- Do not ask for data already present in memory unless the user wants to change it.
+- Never collect full card numbers or SSNs.
+- If the user switches to a different card than the one in memory, say you’ll need to go back to offers or restate which product they want.

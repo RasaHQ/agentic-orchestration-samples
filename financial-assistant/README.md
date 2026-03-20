@@ -12,7 +12,8 @@ The agent supports the following flows:
 | **Set payment reminder** | Set when and how to be reminded to pay (e.g. 3 days before due date, via email, SMS, or push). |
 | **Lock credit card** | Lock a card to prevent new transactions; requires confirmation. |
 | **Report lost card** | Report a card as lost or stolen and optionally lock it; replacement can be mailed. |
-| **Credit card offers (agentic)** | Get personalized card recommendations based on spending habits, rewards preference, annual fee tolerance, and travel frequency. |
+| **Credit card offers (agentic)** | Get personalized card recommendations based on spending habits, rewards preference, annual fee tolerance, and travel frequency. Persists the chosen recommendation to memory for follow-up. |
+| **Card application (agentic)** | After offers, start a demo application: reads `store_memory` data from the offers agent, asks one confirmation (product + fee nuance), then calls a stub `start_application` tool. |
 | **Dispute transaction (agentic)** | Dispute one or more transactions for fraud investigation; can reference transactions from a list (e.g. by date, merchant, or "the second one"). |
 
 ## Highlights
@@ -36,13 +37,14 @@ financial-assistant/
 │   ├── prompts/
 │   │   └── command_generator_prompt_template.jinja2   # LLM prompt for command generation
 │   └── custom_components/      # Python implementations for agent flows
+│       ├── card_application_agent.py
 │       ├── credit_card_offers_agent.py
 │       └── transaction_agent.py
 ├── skills/                     # Domain skills (cards, payments, transactions)
 │   ├── cards/
 │   │   ├── memory.yml          # Slots used by card flows
-│   │   ├── flows/              # list_cards, lock_card, report_lost_card, credit_card_offers_agent
-│   │   └── prompts/            # Agent prompt for credit card offers
+│   │   ├── flows/              # list_cards, lock_card, report_lost_card, credit_card_offers_agent, card_application_agent
+│   │   └── prompts/            # credit_card_offers_prompt_template.jinja2, card_application_prompt_template.jinja2
 │   ├── payments/
 │   │   ├── memory.yml
 │   │   └── flows/              # pay_credit_card_bill, set_payment_reminder

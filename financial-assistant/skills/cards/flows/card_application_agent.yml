@@ -1,0 +1,11 @@
+flows:
+  card_application_agent:
+    description: |
+      After the user explored credit card offers, they want to proceed with a specific
+      product ("apply", "go ahead with that card", "start the application"). Reuses
+      stored recommendation and preferences from the offers agent; asks one
+      confirmation before starting a demo application.
+    agent:
+      protocol: rasa
+      business_logic_prompt: ./skills/cards/prompts/card_application_prompt_template.jinja2
+      module: project.custom_components.card_application_agent.CardApplicationAgent

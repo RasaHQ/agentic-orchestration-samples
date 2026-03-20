@@ -6,7 +6,7 @@ flows:
       suitable card options based on those preferences.
     agent:
       protocol: rasa
-      business_logic_prompt: ./skills/cards/prompts/prompt_template.jinja2
+      business_logic_prompt: ./skills/cards/prompts/credit_card_offers_prompt_template.jinja2
       module: project.custom_components.credit_card_offers_agent.CreditCardOffersAgent
 
 responses:

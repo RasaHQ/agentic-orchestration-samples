@@ -8,12 +8,10 @@ merged in when present.
 
 from typing import Any, Dict, List, Text
 
-from rasa_sdk import Action, Tracker
-from rasa_sdk.events import SlotSet
-from rasa_sdk.executor import CollectingDispatcher
-
-from project.actions.db import get_user_profile, UserProfile
+from project.actions.db import UserProfile, get_user_profile
 from project.actions.slot_memory import system_scoped_slot
+from rasa_sdk import Action, Tracker
+from rasa_sdk.executor import CollectingDispatcher
 
 
 def _profile_to_context_dict(profile: UserProfile) -> Dict[str, Any]:

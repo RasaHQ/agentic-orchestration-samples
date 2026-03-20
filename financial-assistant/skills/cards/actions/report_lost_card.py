@@ -1,11 +1,10 @@
 from typing import Any, Dict, List, Text
 
+from project.actions.db import get_card_by_last_four, lock_card, report_card_lost
+from project.actions.slot_memory import SKILL_CARDS, skill_scoped_slot
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
-
-from project.actions.db import get_card_by_last_four, lock_card, report_card_lost
-from project.actions.slot_memory import SKILL_CARDS, skill_scoped_slot
 
 
 class ActionReportLostCard(Action):

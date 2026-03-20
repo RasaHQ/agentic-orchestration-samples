@@ -1,11 +1,10 @@
 from typing import Any, Dict, List, Text
 
+from project.actions.db import get_card_by_last_four, get_transactions_by_card
+from project.actions.slot_memory import SKILL_TRANSACTION_HANDLING, skill_scoped_slot
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
-
-from project.actions.db import get_card_by_last_four, get_transactions_by_card
-from project.actions.slot_memory import SKILL_TRANSACTION_HANDLING, skill_scoped_slot
 
 
 class ActionListTransactions(Action):
@@ -34,7 +33,8 @@ class ActionListTransactions(Action):
         if not transactions:
             return [SlotSet("return_value", "no_transactions")]
 
-        # Raw list for transaction_list (same shape as lookup flow: id, timestamp, amount float, etc.)
+        # Raw list for transaction_list (same shape as lookup flow: id,
+        # timestamp, amount float, etc.)
         raw_list = [
             {
                 "id": txn.id,
@@ -47,7 +47,6 @@ class ActionListTransactions(Action):
             }
             for txn in transactions
         ]
-
 
         return [
             SlotSet("return_value", "success"),

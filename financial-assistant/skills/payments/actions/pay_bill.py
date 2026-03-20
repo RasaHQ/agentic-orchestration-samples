@@ -1,15 +1,14 @@
 from typing import Any, Dict, List, Text
 
-from rasa_sdk import Action, Tracker
-from rasa_sdk.events import SlotSet
-from rasa_sdk.executor import CollectingDispatcher
-
 from project.actions.db import (
     get_card_by_last_four,
     get_transactions_by_card,
     pay_card_bill,
 )
 from project.actions.slot_memory import SKILL_PAYMENTS, skill_scoped_slot
+from rasa_sdk import Action, Tracker
+from rasa_sdk.events import SlotSet
+from rasa_sdk.executor import CollectingDispatcher
 
 
 class ActionGetCardBalance(Action):

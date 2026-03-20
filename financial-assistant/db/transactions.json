@@ -6,7 +6,7 @@
     "category": "Coffee",
     "amount": 30.00,
     "currency": "USD",
-    "timestamp": "2026-01-20T08:30:00Z",
+    "timestamp": "2026-02-20T08:30:00Z",
     "location": "Downtown Seattle",
     "is_disputed": false
   },
@@ -17,7 +17,7 @@
     "category": "Coffee",
     "amount": 12.50,
     "currency": "USD",
-    "timestamp": "2026-01-18T14:15:00Z",
+    "timestamp": "2026-02-18T14:15:00Z",
     "location": "Pike Place",
     "is_disputed": false
   },
@@ -28,7 +28,7 @@
     "category": "Shopping",
     "amount": 156.99,
     "currency": "USD",
-    "timestamp": "2026-01-17T10:00:00Z",
+    "timestamp": "2026-02-17T10:00:00Z",
     "location": "Online",
     "is_disputed": false
   },
@@ -39,7 +39,7 @@
     "category": "Groceries",
     "amount": 89.45,
     "currency": "USD",
-    "timestamp": "2026-01-15T18:30:00Z",
+    "timestamp": "2026-02-15T18:30:00Z",
     "location": "Capitol Hill",
     "is_disputed": false
   },
@@ -50,7 +50,7 @@
     "category": "Gas",
     "amount": 52.00,
     "currency": "USD",
-    "timestamp": "2026-01-14T09:00:00Z",
+    "timestamp": "2026-02-14T09:00:00Z",
     "location": "I-5 North",
     "is_disputed": false
   },
@@ -61,7 +61,7 @@
     "category": "Travel",
     "amount": 1850.00,
     "currency": "USD",
-    "timestamp": "2026-01-10T11:00:00Z",
+    "timestamp": "2026-02-10T11:00:00Z",
     "location": "Online",
     "is_disputed": false
   },
@@ -72,7 +72,7 @@
     "category": "Travel",
     "amount": 425.00,
     "currency": "USD",
-    "timestamp": "2026-01-08T16:00:00Z",
+    "timestamp": "2026-02-08T16:00:00Z",
     "location": "Chicago, IL",
     "is_disputed": false
   },
@@ -83,7 +83,7 @@
     "category": "Travel",
     "amount": 1200.00,
     "currency": "USD",
-    "timestamp": "2026-01-05T09:30:00Z",
+    "timestamp": "2026-02-05T09:30:00Z",
     "location": "LAX Airport",
     "is_disputed": false
   },
@@ -94,7 +94,7 @@
     "category": "Entertainment",
     "amount": 15.99,
     "currency": "USD",
-    "timestamp": "2026-01-01T00:00:00Z",
+    "timestamp": "2026-02-01T00:00:00Z",
     "location": "Online",
     "is_disputed": false
   },
@@ -105,8 +105,118 @@
     "category": "Groceries",
     "amount": 67.30,
     "currency": "USD",
-    "timestamp": "2026-01-12T17:45:00Z",
+    "timestamp": "2026-02-12T17:45:00Z",
     "location": "Queen Anne",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_011",
+    "card_id": "cc_001",
+    "merchant": "REI",
+    "category": "Shopping",
+    "amount": 214.80,
+    "currency": "USD",
+    "timestamp": "2026-03-02T11:20:00Z",
+    "location": "Seattle Flagship",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_012",
+    "card_id": "cc_001",
+    "merchant": "Cafe Allegro",
+    "category": "Coffee",
+    "amount": 8.75,
+    "currency": "USD",
+    "timestamp": "2026-03-05T15:40:00Z",
+    "location": "University District",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_013",
+    "card_id": "cc_002",
+    "merchant": "Target",
+    "category": "Shopping",
+    "amount": 43.12,
+    "currency": "USD",
+    "timestamp": "2026-03-07T19:05:00Z",
+    "location": "Ballard",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_014",
+    "card_id": "cc_002",
+    "merchant": "Spotify",
+    "category": "Entertainment",
+    "amount": 10.99,
+    "currency": "USD",
+    "timestamp": "2026-03-08T00:00:01Z",
+    "location": "Online",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_015",
+    "card_id": "cc_003",
+    "merchant": "Delta Air Lines",
+    "category": "Travel",
+    "amount": 612.40,
+    "currency": "USD",
+    "timestamp": "2026-03-10T09:15:00Z",
+    "location": "Online",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_016",
+    "card_id": "cc_003",
+    "merchant": "Marriott",
+    "category": "Travel",
+    "amount": 289.00,
+    "currency": "USD",
+    "timestamp": "2026-03-12T22:30:00Z",
+    "location": "San Francisco, CA",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_017",
+    "card_id": "cc_001",
+    "merchant": "Safeway",
+    "category": "Groceries",
+    "amount": 76.54,
+    "currency": "USD",
+    "timestamp": "2026-03-15T18:00:00Z",
+    "location": "West Seattle",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_018",
+    "card_id": "cc_002",
+    "merchant": "Uber",
+    "category": "Transportation",
+    "amount": 24.60,
+    "currency": "USD",
+    "timestamp": "2026-03-18T07:45:00Z",
+    "location": "Seattle",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_019",
+    "card_id": "cc_003",
+    "merchant": "Enterprise Rent-A-Car",
+    "category": "Travel",
+    "amount": 198.75,
+    "currency": "USD",
+    "timestamp": "2026-03-22T13:10:00Z",
+    "location": "SEA Airport",
+    "is_disputed": false
+  },
+  {
+    "id": "txn_020",
+    "card_id": "cc_001",
+    "merchant": "Pho Bac",
+    "category": "Dining",
+    "amount": 31.25,
+    "currency": "USD",
+    "timestamp": "2026-03-28T20:15:00Z",
+    "location": "Little Saigon",
     "is_disputed": false
   }
 ]

@@ -5,7 +5,7 @@
     "type": "Platinum Rewards",
     "balance_due": 1200.00,
     "credit_limit": 10000.00,
-    "due_date": "2026-02-01",
+    "due_date": "2026-10-01",
     "is_locked": false,
     "is_lost": false
   },
@@ -15,7 +15,7 @@
     "type": "Cash Back",
     "balance_due": 450.75,
     "credit_limit": 5000.00,
-    "due_date": "2026-01-25",
+    "due_date": "2026-11-25",
     "is_locked": false,
     "is_lost": false
   },
@@ -25,7 +25,7 @@
     "type": "Travel Elite",
     "balance_due": 4500.00,
     "credit_limit": 15000.00,
-    "due_date": "2026-02-15",
+    "due_date": "2026-07-15",
     "is_locked": false,
     "is_lost": false
   }

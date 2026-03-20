@@ -13,7 +13,7 @@ The agent supports the following flows:
 | **Lock credit card** | Lock a card to prevent new transactions; requires confirmation. |
 | **Report lost card** | Report a card as lost or stolen and optionally lock it; replacement can be mailed. |
 | **Credit card offers (agentic)** | Get personalized card recommendations based on spending habits, rewards preference, annual fee tolerance, and travel frequency. Persists the chosen recommendation to memory for follow-up. |
-| **Card application (agentic)** | After offers, start a demo application: reads `store_memory` data from the offers agent, asks one confirmation (product + fee nuance), then calls a stub `start_application` tool. |
+| **Card application (agentic)** | Confirms product and main terms, then demo-starts an application (`start_application` stub). Reuses offers context from memory when present; does not recommend or compare cards—users need a chosen product or a prior offers session. |
 | **Dispute transaction (agentic)** | Dispute one or more transactions for fraud investigation; can reference transactions from a list (e.g. by date, merchant, or "the second one"). |
 
 ## Highlights

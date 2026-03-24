@@ -125,8 +125,8 @@ Copy the example environment file and fill in your API keys:
    - `TAVILY_API_KEY`: Your Tavily API key for web search functionality
    - `GOOGLE_API_KEY`: Your Google API key for Gemini integration
 
-The OPENAI_API_KEY is required as we are using `gpt-4o` as the default LLM within
-Rasa. If you switch to a different LLM (see
+The OPENAI_API_KEY is required as we are using the default OpenAI chat model
+(`gpt-5.1-2025-11-13` via the `openai-gpt-5-1` model group) within Rasa. If you switch to a different LLM (see
 [documentation](https://rasa.com/docs/reference/config/components/llm-configuratio)),
 the key might not be needed.
 

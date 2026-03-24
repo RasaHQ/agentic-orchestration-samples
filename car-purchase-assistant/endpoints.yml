@@ -14,18 +14,18 @@ nlg:
    type: rephrase
    summarize_history: false
    llm:
-     model_group: openai-gpt-4o
+     model_group: openai-gpt-5-1
 
 # Model groups are used to define the LLM models that are used in this assistant.
 # For more details, refer to the documentation:
 # https://rasa.com/docs/reference/config/components/llm-configuration
 model_groups:
-  - id: openai-gpt-4o
+  - id: openai-gpt-5-1
     models:
       - provider: openai
-        model: gpt-4o-2024-11-20
-        request_timeout: 30
-        max_tokens: 1024
+        model: gpt-5.1-2025-11-13
+        reasoning_effort: "none"
+        timeout: 15
 
 # MCP servers are used to define the MCP servers that are used in this assistant.
 mcp_servers:

@@ -12,7 +12,7 @@ from google.genai import types
 # Import the mock car search API
 from mock_car_api import MockCarSearchAPI
 
-SIMULATED_NETWORK_DELAY = 4.5  # seconds
+SIMULATED_NETWORK_DELAY = 10  # seconds
 
 def check_car_availability_tool(
     model_name: str,

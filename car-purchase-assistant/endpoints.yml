@@ -10,11 +10,11 @@ action_endpoint:
 # For more details, refer to the documentation:
 # https://rasa.com/docs/rasa-pro/concepts/contextual-response-rephraser
 # To enable the rephraser, remove the comment symbols in the lines below.
-nlg:
-   type: rephrase
-   summarize_history: false
-   llm:
-     model_group: openai-gpt-4o
+#nlg:
+#   type: rephrase
+#   summarize_history: false
+#   llm:
+#     model_group: openai-gpt-4o
 
 # Model groups are used to define the LLM models that are used in this assistant.
 # For more details, refer to the documentation:

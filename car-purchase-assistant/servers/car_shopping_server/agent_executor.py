@@ -1,3 +1,4 @@
+import asyncio
 import uuid
 
 from a2a.server.agent_execution import AgentExecutor, RequestContext
@@ -14,6 +15,8 @@ from a2a.utils import (
 from a2a.utils.errors import ServerError
 from agent import CarShoppingAgent
 
+
+NETWORK_LATENCY = 10
 
 class CarShoppingAgentExecutor(AgentExecutor):
     """Car Shopping AgentExecutor following A2A protocol with proper structured data support."""
@@ -43,7 +46,7 @@ class CarShoppingAgentExecutor(AgentExecutor):
             task = new_task(context.message)
 
         updater = TaskUpdater(event_queue, context.task_id, context.context_id)
-        await updater.submit(
+        await updater.update_status(
             Message(
                 message_id=uuid.uuid4().hex,
                 parts=[Part(root=TextPart(text="Let me look up for a car deal for you"))],
@@ -51,6 +54,26 @@ class CarShoppingAgentExecutor(AgentExecutor):
                 metadata=context.metadata
             )
         ) # Send initial task submission event
+
+        await asyncio.sleep(NETWORK_LATENCY)
+
+        await updater.update_status(
+            TaskState.working, Message(
+                message_id=uuid.uuid4().hex,
+                parts=[Part(root=TextPart(text="I am expanding the search"))],
+                role=Role.agent,
+                metadata=context.metadata
+            ))
+
+        await asyncio.sleep(NETWORK_LATENCY)
+
+        await updater.update_status(
+            TaskState.working, Message(
+                message_id=uuid.uuid4().hex,
+                parts=[Part(root=TextPart(text="Fetching data from car dealers"))],
+                role=Role.agent,
+                metadata=context.metadata
+            ))
 
         try:
             async for item in self.agent.stream(query, task.context_id, structured_data):

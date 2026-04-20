@@ -49,7 +49,7 @@ Copy the example environment file and fill in your API keys:
    - `OPENAI_API_KEY`: Your OpenAI API key
    - `RASA_PRO_LICENSE`: Your Rasa Pro license key
 
-The OPENAI_API_KEY is required as we are using `gpt-4o` as the default LLM within
+The OPENAI_API_KEY is required as we are using `gpt-5.1` as the default LLM within
 Rasa. If you switch to a different LLM (see
 [documentation](https://rasa.com/docs/reference/config/components/llm-configuration)),
 the key might not be needed.

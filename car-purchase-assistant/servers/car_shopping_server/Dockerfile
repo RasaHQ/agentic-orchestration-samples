@@ -1,5 +1,8 @@
-FROM --platform=$BUILDPLATFORM python:3.11@sha256:6f4ad35576ea868518b5621c31595bf5a56b9b0c333f18118c868543c7f7cf40
+FROM python:3.11-slim@sha256:0b23cfb7425d065008b778022a17b1551c82f8b4866ee5a7a200084b7e2eafbf
 WORKDIR /app
-COPY . /app/
+COPY requirements.txt /app/
 RUN pip install -r requirements.txt
-ENTRYPOINT [ "python" ]
+COPY . /app/
+EXPOSE 10002
+ENTRYPOINT [ "python", "car_shopping_server.py" ]
+CMD [ "--host", "0.0.0.0" ]

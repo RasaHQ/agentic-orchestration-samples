@@ -9,6 +9,8 @@ from a2a.types import (
     AgentCard,
     AgentSkill,
 )
+from starlette.requests import Request
+from starlette.responses import PlainTextResponse
 from agent import CarShoppingAgent
 from agent_executor import CarShoppingAgentExecutor
 from dotenv import load_dotenv
@@ -16,6 +18,19 @@ from dotenv import load_dotenv
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+class AccessLogNoiseFilter(logging.Filter):
+    """Filter high-frequency access logs that add little operational value."""
+
+    EXCLUDED_PATHS = (
+        "/health",
+        "/favicon.ico",
+        "/.well-known/agent-card.json",
+    )
+
+    def filter(self, record):
+        message = record.getMessage()
+        return not any(path in message for path in self.EXCLUDED_PATHS)
 
 
 class MissingAPIKeyError(Exception):
@@ -25,9 +40,11 @@ class MissingAPIKeyError(Exception):
 
 
 @click.command()
-@click.option("--host", default="localhost")
+@click.option("--host", default="0.0.0.0")
 @click.option("--port", default=10002)
 def main(host, port):
+    port = int(os.environ.get("PORT", port))
+    logging.getLogger("uvicorn.access").addFilter(AccessLogNoiseFilter())
     try:
         # Check for API key only if Vertex AI is not configured
         if not os.getenv("GOOGLE_GENAI_USE_VERTEXAI") == "TRUE":
@@ -73,13 +90,19 @@ def main(host, port):
         server = A2AStarletteApplication(
             agent_card=agent_card, http_handler=request_handler
         )
+        app = server.build()
+
+        async def health_check(request: Request) -> PlainTextResponse:
+            return PlainTextResponse("OK")
+
+        app.add_route("/health", health_check, methods=["GET"])
 
         logger.info(f"Agent: {agent_card.name}")
         logger.info(f"Server starting on http://{host}:{port}")
 
         import uvicorn
 
-        uvicorn.run(server.build(), host=host, port=port)
+        uvicorn.run(app, host=host, port=port)
 
     except MissingAPIKeyError as e:
         logger.error(f"Error: {e}")

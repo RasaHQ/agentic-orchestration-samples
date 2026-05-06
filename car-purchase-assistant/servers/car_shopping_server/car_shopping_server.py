@@ -9,6 +9,8 @@ from a2a.types import (
     AgentCard,
     AgentSkill,
 )
+from starlette.requests import Request
+from starlette.responses import PlainTextResponse
 from agent import CarShoppingAgent
 from agent_executor import CarShoppingAgentExecutor
 from dotenv import load_dotenv
@@ -88,13 +90,19 @@ def main(host, port):
         server = A2AStarletteApplication(
             agent_card=agent_card, http_handler=request_handler
         )
+        app = server.build()
+
+        async def health_check(request: Request) -> PlainTextResponse:
+            return PlainTextResponse("OK")
+
+        app.add_route("/health", health_check, methods=["GET"])
 
         logger.info(f"Agent: {agent_card.name}")
         logger.info(f"Server starting on http://{host}:{port}")
 
         import uvicorn
 
-        uvicorn.run(server.build(), host=host, port=port)
+        uvicorn.run(app, host=host, port=port)
 
     except MissingAPIKeyError as e:
         logger.error(f"Error: {e}")

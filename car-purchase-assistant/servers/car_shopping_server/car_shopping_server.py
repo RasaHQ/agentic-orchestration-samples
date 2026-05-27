@@ -72,7 +72,7 @@ def main(host, port):
 
         push_config_store = InMemoryPushNotificationConfigStore()
         push_sender = BasePushNotificationSender(
-            httpx_client=httpx.AsyncClient(),
+            httpx_client=httpx.AsyncClient(timeout=30),
             config_store=push_config_store,
         )
 

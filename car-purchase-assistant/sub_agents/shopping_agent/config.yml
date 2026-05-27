@@ -5,6 +5,9 @@ agent:
 
 configuration:
   agent_card: ./sub_agents/shopping_agent/agent_card.json
-  module: custom.car_shopping_agent.CarShoppingAgent
-  use_streaming: False
-
+#  module: custom.car_shopping_agent.CarShoppingAgent
+#  use_streaming: False
+  push_notification_url: http://localhost:5005
+  timeout: 120          # seconds — must exceed total executor latency
+  max_retries: 1
+  max_polling_time: 120

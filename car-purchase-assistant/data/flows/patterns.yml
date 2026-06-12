@@ -5,3 +5,9 @@
       - intent: session_start
     steps:
       - action: utter_greet
+
+  pattern_external_agent_processing:
+    description: Flow which is triggered when user utters while A2A agent is still processing
+    name: pattern_external_agent_processing
+    steps:
+      - action: utter_agent_busy

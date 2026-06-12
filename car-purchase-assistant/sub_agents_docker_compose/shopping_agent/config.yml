@@ -5,5 +5,9 @@ agent:
 
 configuration:
   agent_card: ./sub_agents_docker_compose/shopping_agent/agent_card.json
-  module: custom.car_shopping_agent.CarShoppingAgent
+#  module: custom.car_shopping_agent.CarShoppingAgent
+  push_notification_url: http://rasa_server:5005
+  timeout: 120          # seconds — must exceed total executor latency
+  max_retries: 1
+  max_polling_time: 120
 

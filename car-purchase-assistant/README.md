@@ -147,6 +147,19 @@ Open http://127.0.0.1:8282/ and talk to the assistant. The chat client supports
 both REST and callback channels. Callback is preconfigured for Docker Compose in
 [`credentials-docker-compose.yml`](credentials-docker-compose.yml).
 
+
+#### Or, with vscode `launch.json`
+
+Intended for development, requires a one-time setup. I use `uv venv` to create the virtual environments, they're named `.venv` -- that's the path the launch.json files also use.
+
+1. Create a virtual environment in `car-purchase-assistant` directory and install Rasa.
+2. Create a virtual environment in `car-purchase-assistant/servers/appointment_booking_server` and install dependencies.
+3. Create a venv in car_shopping_server, install dependencies.
+4. Create a venv in tavily_search_server, install dependencies.
+5. From "Run & Debug" VS Code or Cursor menu, start "Car Purchase: Rasa run + background servers". This will start all background servers and Rasa server along with the chat frontend.
+
+You can also run "Rasa Inspect" instead. The chat frontend is available at, https://localhost:8282
+
 #### Or, *without* `docker compose`:
 To run the car purchase assistant, follow these steps in order:
 
@@ -181,3 +194,17 @@ Make sure your `.env` file is set up with the required API keys before starting.
 - `GOOGLE_API_KEY` for the car shopping A2A server
 - `OPENAI_API_KEY` for the main Rasa assistant
 - `RASA_PRO_LICENSE` for Rasa Pro
+
+### Say you're testing A2A Async Clients
+
+[Usage Reference](https://app.notion.com/p/rasa/Usage-A2A-Push-Notifications-on-Long-Running-Tasks-37db9c0d544a80d4b828d1b89183bdc2)
+
+This branch modifies the Car Shopping Assistant to send multiple conversation updates. You can trigger the car shopping assistant by saying "lets do car shopping". Or any utterance that triggers the flow `car-purchase-assistant/data/flows/car_shopping.yml`
+
+The flow triggers `shopping_agent` whose agent card and config are mentioend in the directory `car-purchase-assistant/sub_agents/shopping_agent`. Note that both files have the required properties, agent card lists `pushNotification` capability and config contains a `push_notification_url`.
+
+Once you trigger this agent, `car-purchase-assistant/servers/car_shopping_server/agent_executor.py` sends all the updates listed in `conversations` with a sleep time of 3, 10, 10, 10... seconds.
+
+During this time, the agent **should** stay responsive. If you send it a message. It triggers `pattern_external_agent_processing` and responds with the appropriate bot utterance.
+
+Once the A2A task is finished, the assistant can do anything else too.

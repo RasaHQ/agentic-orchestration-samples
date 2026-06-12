@@ -1,0 +1,141 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Car Purchase: Tavily MCP server",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/car-purchase-assistant/servers/tavily_search_server/tavily_search_server.py",
+      "python": "${workspaceFolder}/car-purchase-assistant/servers/tavily_search_server/.venv/bin/python",
+      "cwd": "${workspaceFolder}/car-purchase-assistant/servers/tavily_search_server",
+      "envFile": "${workspaceFolder}/car-purchase-assistant/.env",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Car Purchase: Appointment MCP server",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/car-purchase-assistant/servers/appointment_booking_server/appointment_server_http.py",
+      "python": "${workspaceFolder}/car-purchase-assistant/servers/appointment_booking_server/.venv/bin/python",
+      "cwd": "${workspaceFolder}/car-purchase-assistant/servers/appointment_booking_server",
+      "envFile": "${workspaceFolder}/car-purchase-assistant/.env",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Car Purchase: Shopping A2A server",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/car-purchase-assistant/servers/car_shopping_server/car_shopping_server.py",
+      "python": "${workspaceFolder}/car-purchase-assistant/servers/car_shopping_server/.venv/bin/python",
+      "args": ["--host", "localhost", "--port", "10002"],
+      "cwd": "${workspaceFolder}/car-purchase-assistant/servers/car_shopping_server",
+      "envFile": "${workspaceFolder}/car-purchase-assistant/.env",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Car Purchase: Rasa run",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "rasa",
+      "python": "${workspaceFolder}/car-purchase-assistant/.venv/bin/python",
+      "args": [
+        "run",
+        "--enable-api",
+        "--endpoints",
+        "endpoints.yml",
+        "--credentials",
+        "credentials.yml",
+        "--sub-agents",
+        "sub_agents",
+        "--debug"
+      ],
+      "cwd": "${workspaceFolder}/car-purchase-assistant",
+      "envFile": "${workspaceFolder}/car-purchase-assistant/.env",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Car Purchase: Rasa inspect",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "rasa",
+      "python": "${workspaceFolder}/car-purchase-assistant/.venv/bin/python",
+      "args": [
+        "inspect",
+        "--endpoints",
+        "endpoints.yml",
+        "--credentials",
+        "credentials.yml",
+        "--sub-agents",
+        "sub_agents",
+        "--debug"
+      ],
+      "cwd": "${workspaceFolder}/car-purchase-assistant",
+      "envFile": "${workspaceFolder}/car-purchase-assistant/.env",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Car Purchase: Chat client",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/chat-client/server.py",
+      "python": "${workspaceFolder}/car-purchase-assistant/.venv/bin/python",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "CHAT_CLIENT_HOST": "127.0.0.1",
+        "CHAT_CLIENT_PORT": "8282",
+        "CHAT_CLIENT_PUBLIC_URL": "http://127.0.0.1:8282",
+        "RASA_REST_URL": "http://localhost:5005/webhooks/rest/webhook",
+        "RASA_CALLBACK_URL": "http://localhost:5005/webhooks/callback/webhook",
+        "RASA_API_URL": "http://localhost:5005"
+      },
+      "envFile": "${workspaceFolder}/car-purchase-assistant/.env",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Car Purchase: Background servers only",
+      "configurations": [
+        "Car Purchase: Tavily MCP server",
+        "Car Purchase: Appointment MCP server",
+        "Car Purchase: Shopping A2A server"
+      ],
+      "stopAll": true
+    },
+    {
+      "name": "Car Purchase: Rasa run + background servers",
+      "configurations": [
+        "Car Purchase: Tavily MCP server",
+        "Car Purchase: Appointment MCP server",
+        "Car Purchase: Shopping A2A server",
+        "Car Purchase: Rasa run",
+        "Car Purchase: Chat client"
+      ],
+      "stopAll": true
+    },
+    {
+      "name": "Car Purchase: Rasa inspect + background servers",
+      "configurations": [
+        "Car Purchase: Tavily MCP server",
+        "Car Purchase: Appointment MCP server",
+        "Car Purchase: Shopping A2A server",
+        "Car Purchase: Rasa inspect",
+        "Car Purchase: Chat client"
+      ],
+      "stopAll": true
+    },
+    {
+      "name": "Car Purchase: Chat client only",
+      "configurations": [
+        "Car Purchase: Chat client"
+      ],
+      "stopAll": true
+    }
+  ]
+}

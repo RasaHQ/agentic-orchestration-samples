@@ -10,3 +10,7 @@ slots:
     type: bool
     mappings:
       - type: from_llm
+
+responses:
+  utter_agent_busy:
+    - text: "I'm still working on that request. Please wait a moment."

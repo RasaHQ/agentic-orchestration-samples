@@ -6,7 +6,8 @@
   "defaultInputModes": ["text", "text/plain"],
   "defaultOutputModes": ["text", "text/plain", "application/json"],
   "capabilities": {
-    "streaming": true
+    "streaming": true,
+    "pushNotifications": true
   },
   "skills": [
     {

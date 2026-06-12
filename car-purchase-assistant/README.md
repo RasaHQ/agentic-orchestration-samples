@@ -100,14 +100,14 @@ For technical implementation details, see the [Web Search MCP Server README](ser
 ## Setup
 
 ### Prerequisites
-- Python 3.10 or higher
-- pip (Python package installer)
+- Docker and Docker Compose for the Docker setup
+- Python 3.10 or higher with `uv` for the non-Docker setup
 
 ### Installation
 
 **Install dependencies** from the `pyproject.toml`:
 ```bash
-pip install -e .
+uv pip install -e .
 ```
 
 ### Create .env file
@@ -136,7 +136,16 @@ directory.
 ### Running the Assistant
 
 #### Either, with `docker compose`
- - Run `docker compose up`
+ - Install Rasa (`uv pip install rasa-pro==3.17.0rc1 --prerelease=allow`)
+ - Train rasa (`rasa train`)
+ - Run `docker compose up -d`
+
+This trains the Rasa model, starts the assistant services, and starts the local chat
+client.
+
+Open http://127.0.0.1:8282/ and talk to the assistant. The chat client supports
+both REST and callback channels. Callback is preconfigured for Docker Compose in
+[`credentials-docker-compose.yml`](credentials-docker-compose.yml).
 
 #### Or, *without* `docker compose`:
 To run the car purchase assistant, follow these steps in order:
@@ -156,13 +165,13 @@ To run the car purchase assistant, follow these steps in order:
 4. **Train the Rasa model**
    In another terminal (from the project root), train the assistant:
    ```bash
-   rasa train
+   uv run rasa train
    ```
 
 5. **Run the assistant in interactive mode**
    Still in the project root, start the assistant:
    ```bash
-   rasa inspect
+   uv run rasa inspect
    ```
    This will launch an interactive shell where you can chat with the assistant.
 

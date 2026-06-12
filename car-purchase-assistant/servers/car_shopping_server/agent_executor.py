@@ -56,7 +56,7 @@ conversations = [
     )
 ]
 
-async def get_next_update(self) -> AsyncGenerator[ConversationUpdate, None]:
+async def get_next_update() -> AsyncGenerator[ConversationUpdate, None]:
     for conversation in conversations:
         yield conversation
 

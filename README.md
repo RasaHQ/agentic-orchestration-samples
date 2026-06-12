@@ -47,3 +47,8 @@ This sample showcases:
 
 Choose a sample that best fits your use case and follow its README for setup and usage
 instructions.
+
+## Local Chat Client
+
+A minimal browser chat UI for talking to a running Rasa assistant over the REST
+channel is available in [`chat-client`](chat-client/README.md).

@@ -78,6 +78,7 @@ services:
       - CHAT_CLIENT_PUBLIC_URL=http://chat_client:8282
       - RASA_REST_URL=http://agentic_assistant:5005/webhooks/rest/webhook
       - RASA_CALLBACK_URL=http://agentic_assistant:5005/webhooks/callback/webhook
+      - RASA_API_URL=http://rasa_server:5005
 
   tracker_store:
     image: postgres:13-alpine

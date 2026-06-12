@@ -7,7 +7,7 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, quote, urlparse
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -22,6 +22,7 @@ RASA_CALLBACK_URL = os.environ.get(
     "RASA_CALLBACK_URL",
     "http://localhost:5005/webhooks/callback/webhook",
 )
+RASA_API_URL = os.environ.get("RASA_API_URL", "http://localhost:5005").rstrip("/")
 PUBLIC_BASE_URL = os.environ.get(
     "CHAT_CLIENT_PUBLIC_URL",
     f"http://{'127.0.0.1' if HOST == '0.0.0.0' else HOST}:{PORT}",
@@ -49,6 +50,7 @@ class ChatClientHandler(BaseHTTPRequestHandler):
                 {
                     "rest_url": RASA_REST_URL,
                     "callback_url": RASA_CALLBACK_URL,
+                    "rasa_api_url": RASA_API_URL,
                     "callback_endpoint": CALLBACK_ENDPOINT,
                 },
             )
@@ -68,6 +70,20 @@ class ChatClientHandler(BaseHTTPRequestHandler):
                     "messages": self._callback_messages(sender=sender, after=after),
                 },
             )
+            return
+
+        if parsed_path.path == "/api/tracker":
+            query = parse_qs(parsed_path.query)
+            sender = query.get("sender", [""])[0].strip()
+            if not sender:
+                self._send_json(HTTPStatus.BAD_REQUEST, {"error": "sender is required."})
+                return
+
+            try:
+                tracker = self._fetch_tracker(sender=sender)
+                self._send_json(HTTPStatus.OK, {"tracker": tracker})
+            except RuntimeError as exc:
+                self._send_json(HTTPStatus.BAD_GATEWAY, {"error": str(exc)})
             return
 
         self._send_json(
@@ -211,6 +227,31 @@ class ChatClientHandler(BaseHTTPRequestHandler):
         if isinstance(data, dict):
             return [data]
         raise RuntimeError("Rasa response must be a JSON object or array.")
+
+    def _fetch_tracker(self, sender: str) -> dict[str, Any]:
+        tracker_url = (
+            f"{RASA_API_URL}/conversations/{quote(sender, safe='')}/tracker"
+            "?include_events=ALL"
+        )
+        request = Request(tracker_url, method="GET")
+
+        try:
+            with urlopen(request, timeout=30) as response:
+                response_body = response.read().decode("utf-8")
+        except HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            raise RuntimeError(f"Rasa tracker returned HTTP {exc.code}: {detail}") from exc
+        except URLError as exc:
+            raise RuntimeError(f"Could not reach Rasa tracker at {tracker_url}: {exc.reason}") from exc
+
+        try:
+            data = json.loads(response_body)
+        except json.JSONDecodeError as exc:
+            raise RuntimeError(f"Rasa tracker returned non-JSON response: {response_body}") from exc
+
+        if not isinstance(data, dict):
+            raise RuntimeError("Rasa tracker response must be a JSON object.")
+        return data
 
     def _store_callback_messages(self, messages: list[Any]) -> list[dict[str, Any]]:
         global NEXT_CALLBACK_MESSAGE_ID

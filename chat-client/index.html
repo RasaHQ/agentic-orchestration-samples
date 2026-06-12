@@ -21,19 +21,41 @@
       body {
         margin: 0;
         min-height: 100vh;
-        display: grid;
-        place-items: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding: 24px;
       }
 
-      main {
-        width: min(780px, 100%);
+      .app-shell {
+        width: min(1180px, 100%);
         height: min(860px, calc(100vh - 48px));
+        display: grid;
+        grid-template-columns: minmax(0, 780px) minmax(280px, 360px);
+        gap: 16px;
+      }
+
+      main {
+        min-width: 0;
+        min-height: 0;
         display: grid;
         grid-template-rows: auto 1fr auto;
         border: 1px solid #d7dce2;
         border-radius: 8px;
         background: #ffffff;
+        overflow: hidden;
+      }
+
+      aside {
+        min-width: 0;
+        min-height: 0;
+        display: grid;
+        grid-template-rows: auto auto 1fr;
+        gap: 12px;
+        border: 1px solid #d7dce2;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 16px;
         overflow: hidden;
       }
 
@@ -48,6 +70,21 @@
         margin: 0;
         font-size: 20px;
         line-height: 1.2;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.2;
+      }
+
+      .title-row,
+      .debug-title,
+      .debug-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
       }
 
       .settings {
@@ -69,6 +106,22 @@
       select,
       button {
         font: inherit;
+      }
+
+      button {
+        min-height: 38px;
+        border: 1px solid #c5ccd5;
+        border-radius: 6px;
+        padding: 8px 12px;
+        cursor: pointer;
+        background: #ffffff;
+        color: #1b1f24;
+      }
+
+      button.primary {
+        border: 0;
+        background: #1b1f24;
+        color: #ffffff;
       }
 
       input,
@@ -158,16 +211,6 @@
         margin-top: 10px;
       }
 
-      .buttons button,
-      form button {
-        border: 0;
-        border-radius: 6px;
-        padding: 10px 14px;
-        cursor: pointer;
-        background: #1b1f24;
-        color: #ffffff;
-      }
-
       .buttons button {
         background: #ffffff;
         color: #1b1f24;
@@ -188,14 +231,86 @@
         resize: vertical;
       }
 
+      .checkbox {
+        display: flex;
+        grid-template-columns: none;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .checkbox input {
+        width: auto;
+      }
+
+      #tracker-debug {
+        display: grid;
+        gap: 12px;
+        overflow-y: auto;
+        padding-right: 2px;
+      }
+
+      .debug-section {
+        display: grid;
+        gap: 6px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e5e8ec;
+      }
+
+      .debug-section:last-child {
+        border-bottom: 0;
+      }
+
+      .debug-label {
+        font-size: 12px;
+        color: #6b7280;
+        text-transform: uppercase;
+      }
+
+      .debug-value,
+      pre {
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+      }
+
+      pre {
+        max-height: 220px;
+        overflow: auto;
+        padding: 10px;
+        border-radius: 6px;
+        background: #f3f5f7;
+        white-space: pre-wrap;
+      }
+
+      .warning {
+        color: #9a3412;
+      }
+
       @media (max-width: 640px) {
         body {
           padding: 0;
         }
 
-        main {
+        .app-shell {
           height: 100vh;
+          grid-template-columns: 1fr;
+          gap: 0;
+          overflow: auto;
+        }
+
+        main {
+          min-height: 78vh;
           border: 0;
+          border-radius: 0;
+        }
+
+        aside {
+          min-height: 420px;
+          border-right: 0;
+          border-bottom: 0;
+          border-left: 0;
           border-radius: 0;
         }
 
@@ -216,19 +331,23 @@
         }
 
         main,
+        aside,
         input,
         textarea,
-        select {
+        select,
+        button {
           background: #151a20;
           color: #edf1f5;
         }
 
         main,
+        aside,
         header,
         form,
         input,
         textarea,
         select,
+        button,
         .endpoint-panel {
           border-color: #303843;
         }
@@ -257,13 +376,29 @@
           color: #edf1f5;
           border-color: #465160;
         }
+
+        .debug-section {
+          border-color: #303843;
+        }
+
+        pre {
+          background: #0f141a;
+        }
+
+        .warning {
+          color: #fdba74;
+        }
       }
     </style>
   </head>
   <body>
-    <main>
-      <header>
-        <h1>Rasa Chat Client</h1>
+    <div class="app-shell">
+      <main>
+        <header>
+        <div class="title-row">
+          <h1>Rasa Chat Client</h1>
+          <button id="clear-chat" type="button">Clear</button>
+        </div>
         <div class="settings">
           <label>
             Sender ID
@@ -272,35 +407,80 @@
           <label>
             Channel
             <select id="channel">
-              <option value="rest">REST</option>
               <option value="callback">Callback</option>
+              <option value="rest">REST</option>
             </select>
           </label>
         </div>
         <div id="callback-panel" class="endpoint-panel" hidden>
-          <span>Configure Rasa <code>callback.url</code> as:</span>
+          <span>Configure Rasa Callback Endpoint as:</span>
           <code id="callback-endpoint">Loading...</code>
         </div>
-      </header>
+        </header>
 
-      <section id="messages" aria-live="polite">
-        <div id="status-message" class="message system">Connected through REST.</div>
-      </section>
+        <section id="messages" aria-live="polite">
+          <div id="status-message" class="message system">Connected through REST.</div>
+        </section>
 
-      <form id="chat-form">
-        <textarea
-          id="message"
-          name="message"
-          placeholder="Type a message..."
-          rows="1"
-          required
-        ></textarea>
-        <button type="submit">Send</button>
-      </form>
-    </main>
+        <form id="chat-form">
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Type a message..."
+            rows="1"
+            required
+          ></textarea>
+          <button class="primary" type="submit">Send</button>
+        </form>
+      </main>
+
+      <aside aria-label="Tracker debug">
+        <div class="debug-title">
+          <h2>Tracker</h2>
+          <button id="refresh-tracker" type="button">Refresh</button>
+        </div>
+        <div class="debug-actions">
+          <label class="checkbox">
+            <input id="auto-tracker" type="checkbox" checked />
+            Auto after turn
+          </label>
+        </div>
+        <div id="tracker-debug">
+          <div class="debug-section">
+            <div class="debug-label">Status</div>
+            <div id="tracker-status" class="debug-value">No tracker loaded.</div>
+          </div>
+          <div class="debug-section">
+            <div class="debug-label">Latest input channel</div>
+            <div id="tracker-channel" class="debug-value">-</div>
+          </div>
+          <div class="debug-section">
+            <div class="debug-label">Stack frames</div>
+            <div id="tracker-stack" class="debug-value">-</div>
+          </div>
+          <div class="debug-section">
+            <div class="debug-label">Duplicate bot texts</div>
+            <div id="tracker-duplicates" class="debug-value">-</div>
+          </div>
+          <div class="debug-section">
+            <div class="debug-label">Bug signature</div>
+            <div id="tracker-signature" class="debug-value">-</div>
+          </div>
+          <div class="debug-section">
+            <div class="debug-label">Recent events</div>
+            <pre id="tracker-events">-</pre>
+          </div>
+          <div class="debug-section">
+            <div class="debug-label">Top frame</div>
+            <pre id="tracker-top-frame">-</pre>
+          </div>
+        </div>
+      </aside>
+    </div>
 
     <script>
       const form = document.querySelector("#chat-form");
+      const clearChatButton = document.querySelector("#clear-chat");
       const senderInput = document.querySelector("#sender");
       const channelSelect = document.querySelector("#channel");
       const messageInput = document.querySelector("#message");
@@ -308,6 +488,15 @@
       const statusMessage = document.querySelector("#status-message");
       const callbackPanel = document.querySelector("#callback-panel");
       const callbackEndpoint = document.querySelector("#callback-endpoint");
+      const refreshTrackerButton = document.querySelector("#refresh-tracker");
+      const autoTrackerInput = document.querySelector("#auto-tracker");
+      const trackerStatus = document.querySelector("#tracker-status");
+      const trackerChannel = document.querySelector("#tracker-channel");
+      const trackerStack = document.querySelector("#tracker-stack");
+      const trackerDuplicates = document.querySelector("#tracker-duplicates");
+      const trackerSignature = document.querySelector("#tracker-signature");
+      const trackerEvents = document.querySelector("#tracker-events");
+      const trackerTopFrame = document.querySelector("#tracker-top-frame");
 
       let lastCallbackMessageId = 0;
       let callbackPollTimer = null;
@@ -345,6 +534,15 @@
         }
       }
 
+      function clearChat() {
+        messages.querySelectorAll(".message:not(#status-message)").forEach((message) => {
+          message.remove();
+        });
+        lastCallbackMessageId = 0;
+        updateChannelUi();
+        messageInput.focus();
+      }
+
       function startCallbackPolling() {
         if (callbackPollTimer) {
           return;
@@ -375,7 +573,11 @@
             if (!response.ok) {
               throw new Error(data.error || `Callback polling failed with ${response.status}`);
             }
-            renderResponses(data.messages || [], false);
+            const callbackMessages = data.messages || [];
+            renderResponses(callbackMessages, false);
+            if (callbackMessages.length > 0) {
+              refreshTrackerIfAuto();
+            }
           })
           .catch((error) => {
             stopCallbackPolling();
@@ -403,13 +605,16 @@
 
             if (data.callback) {
               appendMessage("system", "Message sent. Waiting for Rasa callback.");
+              refreshTrackerIfAuto();
               return;
             }
 
             renderResponses(data.responses || [], true);
+            refreshTrackerIfAuto();
           })
           .catch((error) => {
             appendMessage("system", error.message);
+            refreshTrackerIfAuto();
           });
       }
 
@@ -453,6 +658,136 @@
         });
       }
 
+      function refreshTrackerIfAuto() {
+        if (autoTrackerInput.checked) {
+          refreshTracker();
+        }
+      }
+
+      function refreshTracker() {
+        const sender = currentSender();
+        trackerStatus.textContent = "Loading...";
+
+        return fetch(`/api/tracker?sender=${encodeURIComponent(sender)}`)
+          .then(async (response) => {
+            const data = await response.json();
+            if (!response.ok) {
+              throw new Error(data.error || `Tracker request failed with ${response.status}`);
+            }
+            renderTracker(data.tracker || {});
+          })
+          .catch((error) => {
+            trackerStatus.textContent = error.message;
+            trackerChannel.textContent = "-";
+            trackerStack.textContent = "-";
+            trackerDuplicates.textContent = "-";
+            trackerSignature.textContent = "-";
+            trackerEvents.textContent = "-";
+            trackerTopFrame.textContent = "-";
+          });
+      }
+
+      function renderTracker(tracker) {
+        const events = Array.isArray(tracker.events) ? tracker.events : [];
+        const frames = trackerFrames(tracker);
+        const topFrame = frames.length > 0 ? frames[frames.length - 1] : null;
+        const duplicateTexts = duplicateBotTexts(events);
+
+        trackerStatus.textContent = `${events.length} events, ${frames.length} stack frame(s)`;
+        trackerChannel.textContent = tracker.latest_input_channel || "-";
+        trackerStack.textContent = frames.length > 0 ? frames.map(formatFrame).join("\n") : "No stack frames.";
+        trackerDuplicates.textContent =
+          duplicateTexts.length > 0 ? duplicateTexts.join("\n") : "No duplicate bot text in events.";
+        trackerSignature.textContent = bugSignature(topFrame);
+        trackerSignature.className = trackerSignature.textContent.startsWith("Possible")
+          ? "debug-value warning"
+          : "debug-value";
+        trackerEvents.textContent = recentEventTimeline(events);
+        trackerTopFrame.textContent = topFrame ? JSON.stringify(topFrame, null, 2) : "No top frame.";
+      }
+
+      function trackerFrames(tracker) {
+        if (Array.isArray(tracker.stack?.frames)) {
+          return tracker.stack.frames;
+        }
+        if (Array.isArray(tracker.stack)) {
+          return tracker.stack;
+        }
+        return [];
+      }
+
+      function formatFrame(frame, index) {
+        const type = frame.type || frame.frame_type || "unknown";
+        const state = frame.state || frame.status || "-";
+        const agentId = frame.agent_id || frame.agent || "-";
+        const taskId = frame.agent_task_id || frame.task_id || "-";
+        const text = frame.metadata?.message?.text || frame.message?.text || "";
+        return `${index + 1}. ${type} state=${state} agent=${agentId} task=${taskId}${text ? ` text="${text}"` : ""}`;
+      }
+
+      function bugSignature(frame) {
+        if (!frame) {
+          return "No top frame.";
+        }
+
+        const isAgentFrame = Boolean(frame.agent_id || frame.agent_task_id || frame.type === "agent");
+        const state = frame.state || frame.status || "";
+        const text = frame.metadata?.message?.text || frame.message?.text || "";
+        const staleStates = new Set([
+          "completed",
+          "terminal",
+          "waiting_for_input_from_push_notification",
+        ]);
+
+        if (isAgentFrame && staleStates.has(state) && text) {
+          return `Possible stale async agent frame: state=${state}, text="${text}"`;
+        }
+        if (isAgentFrame) {
+          return `Top agent frame state=${state || "-"}.`;
+        }
+        return "Top frame is not an agent frame.";
+      }
+
+      function duplicateBotTexts(events) {
+        const counts = new Map();
+        events.forEach((event) => {
+          if ((event.event || event.type) !== "bot") {
+            return;
+          }
+
+          const text = event.text || event.data?.text || "";
+          if (!text) {
+            return;
+          }
+          counts.set(text, (counts.get(text) || 0) + 1);
+        });
+
+        return Array.from(counts.entries())
+          .filter(([, count]) => count > 1)
+          .map(([text, count]) => `${count}x "${text}"`);
+      }
+
+      function recentEventTimeline(events) {
+        const recent = events.slice(-30).map((event) => {
+          const eventName = event.event || event.type || "unknown";
+          const text = event.text || event.metadata?.message?.text || event.data?.text || "";
+          const state = event.state || event.data?.state || "";
+          const taskId = event.agent_task_id || event.task_id || event.data?.agent_task_id || "";
+          const parts = [eventName];
+          if (state) {
+            parts.push(`state=${state}`);
+          }
+          if (taskId) {
+            parts.push(`task=${taskId}`);
+          }
+          if (text) {
+            parts.push(`text="${text}"`);
+          }
+          return parts.join(" ");
+        });
+        return recent.length > 0 ? recent.join("\n") : "No events.";
+      }
+
       fetch("/api/config")
         .then(async (response) => {
           const config = await response.json();
@@ -472,7 +807,10 @@
       channelSelect.addEventListener("change", updateChannelUi);
       senderInput.addEventListener("change", () => {
         lastCallbackMessageId = 0;
+        refreshTrackerIfAuto();
       });
+      clearChatButton.addEventListener("click", clearChat);
+      refreshTrackerButton.addEventListener("click", refreshTracker);
 
       form.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -490,6 +828,7 @@
       });
 
       updateChannelUi();
+      refreshTrackerIfAuto();
     </script>
   </body>
 </html>

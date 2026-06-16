@@ -136,7 +136,7 @@ directory.
 ### Running the Assistant
 
 #### Either, with `docker compose`
- - Install Rasa (`uv pip install rasa-pro==3.17.0rc1 --prerelease=allow`)
+ - Install Rasa (`uv pip install rasa-pro==3.17.0rc2 --prerelease=allow`)
  - Train rasa (`rasa train`)
  - Run `docker compose up -d`
 
@@ -208,3 +208,5 @@ Once you trigger this agent, `car-purchase-assistant/servers/car_shopping_server
 During this time, the agent **should** stay responsive. If you send it a message. It triggers `pattern_external_agent_processing` and responds with the appropriate bot utterance.
 
 Once the A2A task is finished, the assistant can do anything else too.
+
+The push notifications from A2A Server depend on the channel Rasa <> User are using. See the [Usage reference](https://app.notion.com/p/rasa/Usage-A2A-Push-Notifications-on-Long-Running-Tasks-37db9c0d544a80d4b828d1b89183bdc2?source=copy_link#37db9c0d544a80a18e1ff36c6a3337bf) for more details!

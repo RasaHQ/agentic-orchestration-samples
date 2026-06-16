@@ -1,0 +1,20 @@
+scenario:
+  name: User asks an off-topic question outside the clinic knowledge base
+
+  simulation_context: >
+    You are curious about something unrelated to the clinic. Ask exactly one
+    factual question: "What's the weather forecast for Paris tomorrow?"
+    Send this as your opening message only. Set done to true on your first
+    message — do not send any follow-up after the bot replies.
+
+  goals:
+    criteria:
+      - The agent does not provide a specific weather forecast for Paris as if it were clinic knowledge
+    assertions:
+      - flow_started:
+          flow_ids: [pattern_search]
+          operator: any
+      - action_executed: action_trigger_search
+      - flow_started:
+          flow_ids: [pattern_cannot_handle]
+          operator: any

@@ -1,0 +1,56 @@
+[
+  {
+    "scenario_name": "User asks a knowledge question about cancelling an appointment",
+    "runs_passed": 0,
+    "runs_total": 1,
+    "duration_s": 8.938124083913863
+  },
+  {
+    "scenario_name": "User asks a knowledge question about appointment duration",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 9.399010625202209
+  },
+  {
+    "scenario_name": "User asks a knowledge question about what to bring to an appointment",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 23.910871959058568
+  },
+  {
+    "scenario_name": "User asks a knowledge question about clinic hours",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 17.740995290922
+  },
+  {
+    "scenario_name": "User asks a knowledge question about accepted insurance",
+    "runs_passed": 0,
+    "runs_total": 1,
+    "duration_s": 13.948428000090644
+  },
+  {
+    "scenario_name": "User asks an off-topic question outside the clinic knowledge base",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 9.340744832996279
+  },
+  {
+    "scenario_name": "User successfully reschedules an existing appointment",
+    "runs_passed": 0,
+    "runs_total": 1,
+    "duration_s": 34.7683480840642
+  },
+  {
+    "scenario_name": "User successfully schedules a new appointment",
+    "runs_passed": 0,
+    "runs_total": 1,
+    "duration_s": 35.120723915984854
+  },
+  {
+    "scenario_name": "User declines confirmation after selecting an appointment slot",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 35.848776707891375
+  }
+]

@@ -1,0 +1,36 @@
+scenario: User asks a knowledge question about cancelling an appointment
+run: 1
+timestamp: 2026-06-16T12:08:31Z
+conversation_id: sim-b09c1aae-42a6-4eae-b72e-7bd45824faa3
+overall_result: FAIL
+
+--- Quality Criteria Results ---
+[PASS] The agent explains that cancelling requires contacting the clinic front desk at least 24 hours before the scheduled visit
+  rationale: The bot explicitly states that cancelling requires contacting the clinic front desk at least 24 hours before the scheduled visit.
+
+--- Quality Metrics ---
+bot_quality: 4.5/5
+  helpfulness: 4/5 — The answer was useful and concrete, explaining to contact the front desk at least 24 hours in advance and noting possible same-day fees.
+  repair_quality: 5/5 — There was no user pushback or correction, so repair quality is not implicated.
+  coherence: 5/5 — The assistant stayed focused on the cancellation-policy question and did not introduce contradictions.
+  tone: 4/5 — The tone was clear, polite, and professional, with a standard follow-up question that was not disruptive.
+  task_completion: PASS — The user asked how to cancel an appointment, and the assistant provided a direct, relevant cancellation policy and next step.
+summary: The assistant successfully answered the clinic FAQ about cancelling an appointment with actionable information. The response was coherent and professional, though it could have been slightly more helpful by including the actual front desk contact method if available.
+
+--- Assertion Results ---
+[PASS] flow_started(pattern_search)
+[PASS] action_executed(action_trigger_search)
+[PASS] generative_response_is_relevant
+[FAIL] generative_response_is_grounded — Generative response 'To cancel an existing appointment, you need to contact the clinic front desk at least 24 hours before your scheduled visit. Same-day cancellations may result in a missed-appointment fee. [1]
+Sources:
+[1] docs/appointments/rescheduling_and_cancellation.txt' given to the user input 'How do I cancel an appointment?' was not grounded. Expected score to be above '0.7' threshold, but was '0.67'. The LLM Judge model has justified its score like so: There were 1 incorrect statements out of 3 total extracted statements. The justifications for these statements include: The ground truth includes the policy text but does not verify the source path docs/appointments/rescheduling_and_cancellationtxt.
+
+--- Raw Transcript ---
+[1] user: How do I cancel an appointment?
+[2] agent: To cancel an existing appointment, you need to contact the clinic front desk at least 24 hours before your scheduled visit. Same-day cancellations may result in a missed-appointment fee. [1]
+Sources:
+[1] docs/appointments/rescheduling_and_cancellation.txt
+[3] agent: Do you need help with anything else?
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-b09c1aae-42a6-4eae-b72e-7bd45824faa3

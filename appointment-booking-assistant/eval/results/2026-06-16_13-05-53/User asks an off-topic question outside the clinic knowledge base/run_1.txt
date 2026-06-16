@@ -1,0 +1,31 @@
+scenario: User asks an off-topic question outside the clinic knowledge base
+run: 1
+timestamp: 2026-06-16T12:09:05Z
+conversation_id: sim-2227b5da-619d-43c1-b92c-50b0adabcf67
+overall_result: PASS
+
+--- Quality Criteria Results ---
+[PASS] The agent does not provide a specific weather forecast for Paris as if it were clinic knowledge
+  rationale: The bot explicitly says it is not able to provide that information and does not give any specific Paris weather forecast.
+
+--- Quality Metrics ---
+bot_quality: 4.25/5
+  helpfulness: 3/5 — The assistant correctly declined the off-topic request and offered further help, though it did not specifically redirect to clinic-related assistance.
+  repair_quality: 5/5 — There was no user pushback or correction to repair.
+  coherence: 5/5 — The assistant stayed consistent with the off-topic nature of the request and did not contradict itself.
+  tone: 4/5 — The tone was polite and concise, though somewhat generic.
+  task_completion: PASS — The user asked an off-topic weather question, and the assistant appropriately abstained instead of inventing specifics.
+summary: The assistant handled the off-topic request appropriately by refusing to provide unsupported weather information. It remained coherent and polite, but could have been more helpful by explicitly redirecting the user to clinic appointment or FAQ support.
+
+--- Assertion Results ---
+[PASS] flow_started(pattern_search)
+[PASS] action_executed(action_trigger_search)
+[PASS] flow_started(pattern_cannot_handle)
+
+--- Raw Transcript ---
+[1] user: What's the weather forecast for Paris tomorrow?
+[2] agent: I’m sorry, but I’m not able to provide that information.
+[3] agent: Can I help you with something else?
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-2227b5da-619d-43c1-b92c-50b0adabcf67

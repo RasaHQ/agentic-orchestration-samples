@@ -1,0 +1,8 @@
+[
+  {
+    "scenario_name": "User declines confirmation after selecting an appointment slot",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 23.753745125140995
+  }
+]

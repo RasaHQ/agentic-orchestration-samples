@@ -1,0 +1,14 @@
+[
+  {
+    "scenario_name": "User successfully schedules a new appointment",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 28.54198404191993
+  },
+  {
+    "scenario_name": "User declines confirmation after selecting an appointment slot",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 26.41021179105155
+  }
+]

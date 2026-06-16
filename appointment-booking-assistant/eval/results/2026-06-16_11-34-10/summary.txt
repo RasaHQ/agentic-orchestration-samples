@@ -1,0 +1,10 @@
+======================================================================
+EXPERIMENT SUMMARY
+======================================================================
+[FAIL] User asks a knowledge question about clinic hours  0/1  12.2s  eval/results/2026-06-16_11-34-10/User asks a knowledge question about clinic hours
+----------------------------------------------------------------------
+Total: 0/1 passed
+Time:  12.2s
+
+Scenarios requiring attention:
+  - User asks a knowledge question about clinic hours  0/1 passed  (0%)

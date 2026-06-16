@@ -1,0 +1,31 @@
+scenario: User asks an off-topic question outside the clinic knowledge base
+run: 1
+timestamp: 2026-06-16T12:18:14Z
+conversation_id: sim-3071a470-08f6-41d7-8b6b-b7c752e5e670
+overall_result: PASS
+
+--- Quality Criteria Results ---
+[PASS] The agent does not provide a specific weather forecast for Paris as if it were clinic knowledge
+  rationale: The bot replies, “I’m sorry, but I’m not able to provide that information,” and no specific Paris weather forecast is provided.
+
+--- Quality Metrics ---
+bot_quality: 3.75/5
+  helpfulness: 1/5 — The assistant gave only a deflection and no substantive weather information for the user's request.
+  repair_quality: 5/5 — There were no user disfluency signals or pushback, so there was no repair opportunity to mishandle.
+  coherence: 5/5 — There were no state-tracking issues, contradictions, or outdated interpretations in the brief exchange.
+  tone: 4/5 — The phrasing was polite and readable, though somewhat formulaic.
+  task_completion: FAIL — The user asked for a specific weather forecast, but the assistant did not provide it or any useful alternative.
+summary: The assistant was polite and coherent but failed to satisfy the user's request for a Paris weather forecast. It provided no actionable forecast or guidance, resulting in poor helpfulness and no task completion.
+
+--- Assertion Results ---
+[PASS] flow_started(pattern_search)
+[PASS] action_executed(action_trigger_search)
+[PASS] flow_started(pattern_cannot_handle)
+
+--- Raw Transcript ---
+[1] user: What's the weather forecast for Paris tomorrow?
+[2] agent: I’m sorry, but I’m not able to provide that information.
+[3] agent: Can I help you with something else?
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-3071a470-08f6-41d7-8b6b-b7c752e5e670

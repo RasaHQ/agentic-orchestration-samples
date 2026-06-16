@@ -1,0 +1,34 @@
+scenario: User asks a knowledge question about what to bring to an appointment
+run: 1
+timestamp: 2026-06-16T12:08:48Z
+conversation_id: sim-ca2b6277-0040-4bab-951b-d1c06fa76dce
+overall_result: PASS
+
+--- Quality Criteria Results ---
+[PASS] The agent mentions at least two items patients should bring, such as a photo ID, insurance card, medication list, or referral forms
+  rationale: The bot says to bring a valid photo ID, insurance card, current medication list, and referral forms, which is at least two required items.
+
+--- Quality Metrics ---
+bot_quality: 5.0/5
+  helpfulness: 5/5 — The response provided concrete and useful appointment-preparation information, including ID, insurance, medications, referral forms, and medical history for first-time patients.
+  repair_quality: 5/5 — There was no user pushback or correction in the transcript, so repair quality is excellent by default.
+  coherence: 5/5 — The assistant stayed on the user's question and did not introduce contradictions or lose context.
+  tone: 5/5 — The tone was clear, polite, professional, and appropriate for a healthcare scheduling context.
+  task_completion: PASS — The user asked a clinic FAQ about what to bring, and the assistant gave a direct, relevant answer with specific items.
+summary: The assistant successfully answered the user's appointment-preparation question with specific, relevant clinic information. The follow-up offer was appropriate and did not detract from the completed task.
+
+--- Assertion Results ---
+[PASS] flow_started(pattern_search)
+[PASS] action_executed(action_trigger_search)
+[PASS] generative_response_is_relevant
+[PASS] generative_response_is_grounded
+
+--- Raw Transcript ---
+[1] user: What should I bring to my appointment?
+[2] agent: Bring a valid photo ID, your insurance card, a list of your current medications, and any referral forms if your visit requires one. [1] If you’re a first-time patient, you should also bring a summary of your medical history if available. [1]
+Sources:
+[1] docs/appointments/appointment_preparation.txt
+[3] agent: Is there anything more you need help with?
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-ca2b6277-0040-4bab-951b-d1c06fa76dce

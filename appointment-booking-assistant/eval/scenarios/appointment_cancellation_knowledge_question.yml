@@ -1,0 +1,23 @@
+scenario:
+  name: User asks a knowledge question about cancelling an appointment
+
+  simulation_context: >
+    You are a patient who may need to cancel an upcoming visit and wants to know
+    the process. Ask exactly one factual question: "How do I cancel an appointment?"
+    Send this as your opening message only. Set done to true on your first
+    message — do not send any follow-up after the bot replies.
+
+  goals:
+    criteria:
+      - The agent explains that cancelling requires contacting the clinic front desk at least 24 hours before the scheduled visit
+    assertions:
+      - flow_started:
+          flow_ids: [pattern_search]
+          operator: any
+      - action_executed: action_trigger_search
+      - generative_response_is_relevant:
+          threshold: 0.70
+          utter_source: EnterpriseSearchPolicy
+      - generative_response_is_grounded:
+          threshold: 0.70
+          utter_source: EnterpriseSearchPolicy

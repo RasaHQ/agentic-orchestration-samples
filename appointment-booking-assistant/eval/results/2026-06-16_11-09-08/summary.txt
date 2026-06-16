@@ -1,0 +1,10 @@
+======================================================================
+EXPERIMENT SUMMARY
+======================================================================
+[FAIL] User successfully reschedules an existing appointment  0/1  30.3s  eval/results/2026-06-16_11-09-08/User successfully reschedules an existing appointment
+----------------------------------------------------------------------
+Total: 0/1 passed
+Time:  30.3s
+
+Scenarios requiring attention:
+  - User successfully reschedules an existing appointment  0/1 passed  (0%)

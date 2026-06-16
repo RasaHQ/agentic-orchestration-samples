@@ -1,0 +1,34 @@
+scenario: User asks a knowledge question about appointment duration
+run: 1
+timestamp: 2026-06-16T12:08:15Z
+conversation_id: sim-71021d2c-4a13-482c-aff8-ad7faafe2842
+overall_result: PASS
+
+--- Quality Criteria Results ---
+[PASS] The agent states that each appointment slot is 30 minutes long
+  rationale: The bot explicitly answers, "Each appointment slot is 30 minutes long," with a cited clinic document source.
+
+--- Quality Metrics ---
+bot_quality: 4.75/5
+  helpfulness: 5/5 — The assistant provided a direct, concrete answer to the scheduling-related question.
+  repair_quality: 5/5 — There was no user pushback or correction, so repair quality is not negatively implicated.
+  coherence: 5/5 — The assistant stayed on topic and did not contradict itself or lose conversational context.
+  tone: 4/5 — The tone was polite and professional, though the follow-up question was generic.
+  task_completion: PASS — The user asked a clinic FAQ about appointment slot length, and the assistant directly answered that each slot is 30 minutes.
+summary: The assistant successfully answered the user's question with a clear clinic policy fact. The conversation was coherent and professional, with only a minor generic follow-up after the answer.
+
+--- Assertion Results ---
+[PASS] flow_started(pattern_search)
+[PASS] action_executed(action_trigger_search)
+[PASS] generative_response_is_relevant
+[PASS] generative_response_is_grounded
+
+--- Raw Transcript ---
+[1] user: How long is each appointment slot?
+[2] agent: Each appointment slot is 30 minutes long. [1]
+Sources:
+[1] docs/appointments/booking_policy.txt
+[3] agent: Do you need help with anything else?
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-71021d2c-4a13-482c-aff8-ad7faafe2842

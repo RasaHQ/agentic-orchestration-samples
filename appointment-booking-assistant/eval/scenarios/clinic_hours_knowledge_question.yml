@@ -1,0 +1,23 @@
+scenario:
+  name: User asks a knowledge question about clinic hours
+
+  simulation_context: >
+    You are a patient who wants to know the clinic's operating hours before
+    booking a visit. Ask exactly one factual question: "What are the clinic hours?"
+    Send this as your opening message only. Set done to true on your first
+    message — do not send any follow-up after the bot replies.
+
+  goals:
+    criteria:
+      - The agent answers with the main clinic's weekday hours (Monday through Friday, 8 AM to 6 PM)
+    assertions:
+      - flow_started:
+          flow_ids: [pattern_search]
+          operator: any
+      - action_executed: action_trigger_search
+      - generative_response_is_relevant:
+          threshold: 0.70
+          utter_source: EnterpriseSearchPolicy
+      - generative_response_is_grounded:
+          threshold: 0.70
+          utter_source: EnterpriseSearchPolicy

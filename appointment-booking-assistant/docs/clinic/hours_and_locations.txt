@@ -1,0 +1,19 @@
+Clinic Hours and Locations
+
+Main clinic hours:
+The main clinic is open Monday through Friday from 8:00 AM to 6:00 PM. The clinic is closed on weekends and public holidays.
+
+Main clinic address:
+123 Health Street, Medical District, City 10001.
+
+Parking:
+Free patient parking is available in the garage adjacent to the main clinic entrance. Validation is provided at check-in.
+
+Public transit:
+The clinic is a 5-minute walk from Central Station (Metro Line A). Bus routes 12 and 45 stop directly outside the building.
+
+Urgent same-day concerns:
+For urgent medical issues that cannot wait for a scheduled appointment, visit the Urgent Care wing at the same address, open daily from 7:00 AM to 9:00 PM, or call the nurse advice line at 555-0100.
+
+After-hours emergencies:
+For life-threatening emergencies, call emergency services (911). Do not use this booking assistant for emergency care.

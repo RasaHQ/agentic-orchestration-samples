@@ -1,0 +1,19 @@
+Rescheduling and Cancelling Appointments
+
+Rescheduling an appointment:
+To reschedule an existing appointment, tell the assistant you need to change your appointment. You will be asked for your current appointment date and time, then shown new available slots. You must confirm the new slot before the change is finalized.
+
+What you need to reschedule:
+Have your current appointment date and time ready. Provide them in a clear format such as "Tuesday 16/06/2026 at 10:00".
+
+Reschedule confirmation:
+The assistant asks for explicit confirmation before applying a reschedule, just like when booking a new appointment.
+
+Changing your mind during rescheduling:
+If you decline confirmation after selecting a new slot, your original appointment remains unchanged.
+
+Cancelling an appointment:
+To cancel an existing appointment, contact the clinic front desk at least 24 hours before your scheduled visit. Same-day cancellations may be subject to a missed-appointment fee.
+
+No-show policy:
+If you miss an appointment without cancelling in advance, you may be charged a no-show fee and may need to wait longer for your next available slot.

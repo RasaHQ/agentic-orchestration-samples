@@ -1,0 +1,25 @@
+Appointment Booking Policy
+
+How to book an appointment:
+You can schedule a new doctor appointment by telling the assistant you would like to book an appointment. The assistant will ask about your availability, show available weekday slots within business hours, and ask you to confirm before finalizing the booking.
+
+Appointment slot format:
+Available slots are shown with a date in dd/mm/yyyy format and a time in 24-hour HH:MM format (for example, 16/06/2026 at 11:15).
+
+Business hours:
+Appointments are offered Monday through Friday between 8:00 AM and 6:00 PM. Weekend appointments are not available through this booking service.
+
+Appointment duration:
+Each appointment slot is 30 minutes long.
+
+Doctor selection:
+You may request a preferred doctor when booking. If you are flexible, the assistant can search for any available doctor that matches your date and time preferences.
+
+Confirmation required:
+The assistant always asks for explicit confirmation before completing a booking. You must confirm the selected date and time before the appointment is finalized.
+
+Cancellation before booking:
+If you change your mind after selecting a slot but before confirming, you can decline the confirmation and the appointment will not be booked.
+
+After booking:
+Once confirmed, you will receive a confirmation message with your booked date and time. Keep this information for your records.

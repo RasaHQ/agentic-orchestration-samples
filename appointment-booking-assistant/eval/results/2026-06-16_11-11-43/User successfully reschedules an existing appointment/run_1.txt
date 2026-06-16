@@ -1,0 +1,62 @@
+scenario: User successfully reschedules an existing appointment
+run: 1
+timestamp: 2026-06-16T10:11:52Z
+conversation_id: sim-4e93db64-6af2-447d-87fe-1d5779df2f82
+overall_result: PASS
+
+--- Quality Criteria Results ---
+[PASS] The agent asks for explicit confirmation before finalizing the rescheduled appointment
+  rationale: After the user selected option 1, the bot asked, “Are you sure you want to book the Thursday 18/06/2026 at 08:15?” and only after the user replied yes did it confirm the reschedule.
+
+--- Quality Metrics ---
+bot_quality: 4.75/5
+  helpfulness: 5/5 — The assistant's substantive responses were accurate, specific, and directly useful for completing the rescheduling task.
+  repair_quality: 5/5 — There were no user disfluency signals or corrections to handle.
+  coherence: 5/5 — The assistant consistently tracked the original appointment, the user's availability, the selected option, and the confirmation without re-asking or contradicting itself.
+  tone: 4/5 — The tone was clear and polite, though slightly formulaic in places such as repeated 'I'll' statements and the survey prompt.
+  task_completion: PASS — The assistant collected availability, offered suitable options, confirmed the selected slot, and explicitly stated the appointment was rescheduled.
+summary: The assistant successfully guided the user through rescheduling and clearly confirmed the new appointment. It maintained context well and provided actionable options, with only minor stiffness and repetitiveness in phrasing.
+
+--- Assertion Results ---
+[PASS] flow_started(reschedule_appointment)
+[PASS] slot_was_set(selected_appointment_slot, user_confirmation=True, appointment_confirmed=True)
+[PASS] action_executed(utter_appointment_rescheduled)
+[PASS] flow_completed(reschedule_appointment)
+[PASS] sequencing
+
+--- Raw Transcript ---
+[1] user: Hi, I need to reschedule my doctor appointment.
+[2] agent: What is your current appointment date and time that you want to reschedule?
+[3] user: It's Tuesday 16/06/2026 at 10:00.
+[4] agent: Thanks, that helps. Which days and times are you generally available over the next couple of weeks?  
+[5] agent: For example, you can answer like:
+- “Any weekday after 3 pm,” or  
+- “Between 18/06/2026 and 30/06/2026, mornings only,” or  
+- Specific dates and time ranges that work for you.
+[6] user: I'm flexible on the doctor and available weekday mornings over the next two weeks, with no blackout dates.
+[7] agent: Looking into options that fit those mornings.
+[8] agent: Here are some options that fit weekday mornings in the next two weeks:
+[9] agent: 1. Thu 18/06/2026 at 08:15  
+2. Fri 19/06/2026 at 10:00  
+3. Mon 22/06/2026 at 09:15  
+4. Tue 23/06/2026 at 10:45  
+5. Wed 24/06/2026 at 10:45  
+6. Thu 25/06/2026 at 10:15  
+7. Fri 26/06/2026 at 09:30  
+8. Mon 29/06/2026 at 08:30  
+9. Tue 30/06/2026 at 08:15  
+10. Fri 19/06/2026 at 10:30  
+[10] agent: Please tell me the number (1–10) of the slot you’d like to move your appointment to.
+[11] user: I'll take option 1, Thu 18/06/2026 at 08:15.
+[12] agent: I'll update your booking to that new time.
+[13] agent: I'll save this new appointment time in your profile.
+[14] agent: Are you sure you want to book the Thursday 18/06/2026 at 08:15?
+[15] user: Yes, please confirm that appointment.
+[16] agent: Okay, I have rescheduled your appointment from 'Tuesday 16/06/2026 at 10:00' to 'Thursday 18/06/2026 at 08:15'.
+[17] agent: Do you need help with anything else?
+[18] user: No, thanks, that's all I needed.
+[19] agent: Alright, I’ll be here if you need any more help later.
+[20] agent: How would you rate your experience with me today?
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-4e93db64-6af2-447d-87fe-1d5779df2f82

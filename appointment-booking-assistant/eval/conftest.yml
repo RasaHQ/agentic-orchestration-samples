@@ -1,0 +1,9 @@
+simulation:
+  llm:
+    provider: openai
+    model: gpt-5.5
+
+evaluation:
+  llm:
+    provider: openai
+    model: gpt-5.5

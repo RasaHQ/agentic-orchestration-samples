@@ -7,13 +7,22 @@ language: en
 assistant_id: 20250711-005358-oscillating-volcano
 
 pipeline:
-- name: CompactLLMCommandGenerator
+- name: SearchReadyLLMCommandGenerator
   llm:
     model_group: openai-gpt-5-1
   flow_retrieval:
     active: false
-  prompt_template: prompt_templates/no_search_chitchat.jinja2
 
 # Configuration for Rasa Core.
 policies:
 - name: FlowPolicy
+- name: EnterpriseSearchPolicy
+  llm:
+    model_group: openai-gpt-5-1
+  embeddings:
+    model_group: openai-embeddings
+  vector_store:
+    type: faiss
+    source: ./docs
+  citation_enabled: true
+  check_relevancy: true

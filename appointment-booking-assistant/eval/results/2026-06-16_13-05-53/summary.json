@@ -1,0 +1,38 @@
+[
+  {
+    "scenario_name": "User asks a knowledge question about clinic hours",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 12.163221416063607
+  },
+  {
+    "scenario_name": "User asks a knowledge question about accepted insurance",
+    "runs_passed": 0,
+    "runs_total": 1,
+    "duration_s": 18.2440356251318
+  },
+  {
+    "scenario_name": "User asks a knowledge question about appointment duration",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 15.87662100000307
+  },
+  {
+    "scenario_name": "User asks a knowledge question about cancelling an appointment",
+    "runs_passed": 0,
+    "runs_total": 1,
+    "duration_s": 17.840447208145633
+  },
+  {
+    "scenario_name": "User asks a knowledge question about what to bring to an appointment",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 16.97647620900534
+  },
+  {
+    "scenario_name": "User asks an off-topic question outside the clinic knowledge base",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 11.362022832967341
+  }
+]

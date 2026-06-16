@@ -1,0 +1,34 @@
+scenario:
+  name: User declines confirmation after selecting an appointment slot
+
+  simulation_context: >
+    You are a patient who wants to book a doctor appointment but may change your
+    mind at the last step. Ask to schedule a new appointment. When asked about
+    availability, say you are flexible on the doctor and available weekday
+    mornings over the next two weeks with no blackout dates. When shown available
+    slots, pick the first option offered. When the assistant asks you to confirm
+    the booking, clearly decline — say no, you do not want to book that slot after all.
+
+  goals:
+    criteria:
+      - The agent does not claim the appointment was booked after the user declines confirmation
+    assertions:
+      - flow_started:
+          flow_ids: [schedule_new_appointment]
+          operator: any
+      - slot_was_set:
+          - name: selected_appointment_slot
+          - name: user_confirmation
+            value: false
+      - slot_was_not_set:
+          - name: appointment_confirmed
+      - flow_completed:
+          flow_id: schedule_new_appointment
+      - action_executed: utter_cancelling
+      - bot_did_not_utter:
+          utter_name: utter_appointment_confirmed
+      - sequencing:
+          - flow_started: schedule_new_appointment
+          - slot_was_set: selected_appointment_slot
+          - slot_was_set: user_confirmation
+          - flow_completed: schedule_new_appointment

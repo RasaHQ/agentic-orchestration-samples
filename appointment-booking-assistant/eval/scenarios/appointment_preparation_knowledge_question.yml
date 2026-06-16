@@ -1,0 +1,23 @@
+scenario:
+  name: User asks a knowledge question about what to bring to an appointment
+
+  simulation_context: >
+    You are a patient preparing for an upcoming clinic visit. Ask exactly one
+    factual question: "What should I bring to my appointment?"
+    Send this as your opening message only. Set done to true on your first
+    message — do not send any follow-up after the bot replies.
+
+  goals:
+    criteria:
+      - The agent mentions at least two items patients should bring, such as a photo ID, insurance card, medication list, or referral forms
+    assertions:
+      - flow_started:
+          flow_ids: [pattern_search]
+          operator: any
+      - action_executed: action_trigger_search
+      - generative_response_is_relevant:
+          threshold: 0.70
+          utter_source: EnterpriseSearchPolicy
+      - generative_response_is_grounded:
+          threshold: 0.70
+          utter_source: EnterpriseSearchPolicy

@@ -1,0 +1,16 @@
+======================================================================
+EXPERIMENT SUMMARY
+======================================================================
+[PASS] User asks a knowledge question about clinic hours  1/1  12.2s  eval/results/2026-06-16_13-05-53/User asks a knowledge question about clinic hours
+[FAIL] User asks a knowledge question about accepted insurance  0/1  18.2s  eval/results/2026-06-16_13-05-53/User asks a knowledge question about accepted insurance
+[PASS] User asks a knowledge question about appointment duration  1/1  15.9s  eval/results/2026-06-16_13-05-53/User asks a knowledge question about appointment duration
+[FAIL] User asks a knowledge question about cancelling an appointment  0/1  17.8s  eval/results/2026-06-16_13-05-53/User asks a knowledge question about cancelling an appointment
+[PASS] User asks a knowledge question about what to bring to an appointment  1/1  17.0s  eval/results/2026-06-16_13-05-53/User asks a knowledge question about what to bring to an appointment
+[PASS] User asks an off-topic question outside the clinic knowledge base  1/1  11.4s  eval/results/2026-06-16_13-05-53/User asks an off-topic question outside the clinic knowledge base
+----------------------------------------------------------------------
+Total: 4/6 passed
+Time:  92.5s
+
+Scenarios requiring attention:
+  - User asks a knowledge question about accepted insurance  0/1 passed  (0%)
+  - User asks a knowledge question about cancelling an appointment  0/1 passed  (0%)

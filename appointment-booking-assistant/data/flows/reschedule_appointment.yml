@@ -1,0 +1,35 @@
+flows:
+  reschedule_appointment:
+    description: help user reschedule an existing doctor appointment to a new time
+    name: reschedule appointment
+    steps:
+      - collect: existing_appointment_slot
+        description: The currently booked appointment the user wants to change, including date and time
+      - call: appointment_selector
+        exit_if:
+          - slots.selected_appointment_slot is not null
+      - collect: user_confirmation
+        ask_before_filling: true
+        description: Confirmation from the user whether they want to go ahead with rescheduling to the selected new time slot
+        next:
+          - if: slots.user_confirmation == True
+            then: call_reschedule_appointment
+          - else:
+              - action: utter_cancelling
+                next: END
+      - id: call_reschedule_appointment
+        call: reschedule_appointment
+        mcp_server: appointment-booking
+        mapping:
+          input:
+            - param: existing_appointment_slot
+              slot: existing_appointment_slot
+            - param: new_appointment_slot
+              slot: selected_appointment_slot
+          output:
+            - slot: appointment_confirmed
+              value: result.structuredContent.appointment_confirmed
+        next: confirm_reschedule
+      - id: confirm_reschedule
+        action: utter_appointment_rescheduled
+        next: END

@@ -280,6 +280,23 @@ def query_available_appointments(
             }
 
 @mcp.tool()
+def reschedule_appointment(
+    existing_appointment_slot: str, new_appointment_slot: str
+) -> Dict[str, Any]:
+    """
+    Reschedule an existing appointment to a new time slot.
+    """
+    return {
+        "success": True,
+        "appointment_confirmed": True,
+        "message": (
+            f"Appointment rescheduled from {existing_appointment_slot} "
+            f"to {new_appointment_slot}"
+        ),
+    }
+
+
+@mcp.tool()
 def book_appointment(appointment_slot: str) -> Dict[str, Any]:
     """
     Book an appointment at the specified time.

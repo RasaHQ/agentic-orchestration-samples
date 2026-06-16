@@ -1,0 +1,62 @@
+scenario: User successfully schedules a new appointment
+run: 1
+timestamp: 2026-06-16T10:21:00Z
+conversation_id: sim-a926a1dc-ee1b-4d9e-aeec-9f56bd557fd6
+overall_result: FAIL
+
+--- Quality Criteria Results ---
+[PASS] The agent asks for explicit confirmation before booking the selected time slot
+  rationale: After the user selected slot 1, the bot asked, “Can you please confirm that you want to book the appointment on Tue 16/06/2026 at 08:15?” and the ledger shows booking occurred only after the user's confirmation at T5.
+
+--- Quality Metrics ---
+bot_quality: 4.75/5
+  helpfulness: 5/5 — The assistant provided directly useful scheduling options, guided the user through selection and confirmation, and delivered the booking outcome clearly.
+  repair_quality: 5/5 — There were no user disfluency signals or corrections, so there was no repair opportunity to mishandle.
+  coherence: 5/5 — The assistant consistently tracked the appointment type, availability window, selected slot, and confirmation without re-asking or contradicting itself.
+  tone: 4/5 — The tone was polite and readable, though somewhat formulaic with repeated confirmations and structured prompts.
+  task_completion: PASS — The assistant collected the needed preferences, confirmed the selected slot, and clearly stated that the appointment was booked for Tue 16/06/2026 at 08:15.
+summary: The assistant successfully completed the appointment scheduling flow with clear slot options, confirmation, and final booking. It maintained context well and required no repair, with only mildly formulaic phrasing preventing a top tone score.
+
+--- Assertion Results ---
+[PASS] flow_started(schedule_new_appointment)
+[PASS] slot_was_set(selected_appointment_slot, user_confirmation=True, appointment_confirmed=True)
+[FAIL] generative_response_is_relevant — No generative response issued by either the Enterprise Search Policy, IntentlessPolicy, Contextual Response Rephraser or a named custom action was found, but one was expected. Please define an utter_source in the assertion to specify which generative response to evaluate.
+[PASS] flow_completed(schedule_new_appointment)
+[PASS] sequencing
+
+--- Raw Transcript ---
+[1] user: Hi, I'd like to schedule a new doctor appointment.
+[2] agent: Happy to help you set that up.
+[3] agent: First, what type of appointment do you need (for example: general check-up, follow-up for an existing condition, vaccination, etc.)?
+[4] user: A general check-up, please.
+[5] agent: Understood. Which date range works for you for this check-up?  
+[6] agent: For example, you could say:
+- “Any time next week”
+- “Between 20/06/2026 and 30/06/2026”
+- or “As soon as possible, no specific date range”
+[7] user: I'm flexible on the doctor and available weekday mornings over the next two weeks, with no blackout dates.
+[8] agent: Looking into available options over the next two weeks in those time windows.
+[9] agent: Here are some available weekday morning slots in the next two weeks:
+[10] agent: 1. Tue 16/06/2026 – 08:15  
+2. Thu 18/06/2026 – 09:30  
+3. Fri 19/06/2026 – 11:00  
+4. Mon 22/06/2026 – 08:30  
+5. Tue 23/06/2026 – 10:00  
+6. Wed 24/06/2026 – 10:30  
+7. Thu 25/06/2026 – 11:00  
+8. Fri 26/06/2026 – 11:30  
+9. Mon 29/06/2026 – 08:45  
+10. Tue 30/06/2026 – 10:00  
+[11] agent: Please tell me the number of the slot you’d like to book (1–10).
+[12] user: I'll take slot 1, please.
+[13] agent: I'll confirm that slot and save it for you.
+[14] agent: Can you please confirm that you want to book the appointment on Tue 16/06/2026 at 08:15?
+[15] user: Yes, please confirm the booking.
+[16] agent: Alright, I’ve booked your appointment for Tue 16/06/2026 at 08:15.
+[17] agent: Do you need help with anything else?
+[18] user: Thanks, that's all I needed.
+[19] agent: Alright, I’ll be here if you need any more help.
+[20] agent: How would you rate your experience with me today?
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-a926a1dc-ee1b-4d9e-aeec-9f56bd557fd6

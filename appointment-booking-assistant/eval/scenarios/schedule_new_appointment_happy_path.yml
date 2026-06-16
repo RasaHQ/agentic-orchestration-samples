@@ -1,0 +1,30 @@
+scenario:
+  name: User successfully schedules a new appointment
+
+  simulation_context: >
+    You are a cooperative patient who needs to book a doctor appointment.
+    Start by asking to schedule a new appointment. When the assistant asks about
+    your availability, say you are flexible on the doctor and available weekday
+    mornings over the next two weeks, with no blackout dates. When shown available
+    slots, pick the first option offered. When asked to confirm the booking, say yes.
+
+  goals:
+    criteria:
+      - The agent asks for explicit confirmation before booking the selected time slot
+    assertions:
+      - flow_started:
+          flow_ids: [schedule_new_appointment]
+          operator: any
+      - slot_was_set:
+          - name: selected_appointment_slot
+          - name: user_confirmation
+            value: true
+          - name: appointment_confirmed
+            value: true
+      - flow_completed:
+          flow_id: schedule_new_appointment
+      - sequencing:
+          - flow_started: schedule_new_appointment
+          - slot_was_set: selected_appointment_slot
+          - slot_was_set: user_confirmation
+          - flow_completed: schedule_new_appointment

@@ -1,0 +1,57 @@
+scenario: User successfully reschedules an existing appointment
+run: 1
+timestamp: 2026-06-16T10:09:15Z
+conversation_id: sim-3b95ab1b-99dd-4755-84f7-f1d56cb97776
+overall_result: FAIL
+
+--- Quality Criteria Results ---
+[FAIL] The agent asks for explicit confirmation before finalizing the rescheduled appointment
+  rationale: Although the bot asked 'Are you sure you want to book the 16/06/2026 09:30?' before the user's confirmation, the ledger shows the reschedule_appointment tool was already called successfully at T4 immediately after the user selected Option 1, before explicit confirmation.
+
+--- Quality Metrics ---
+bot_quality: 4.5/5
+  helpfulness: 4/5 — The assistant provided actionable appointment options and completed the reschedule, though offering an earlier time on the same day as a 'reschedule' option was a minor potential ambiguity.
+  repair_quality: 5/5 — There were no user disfluency signals or explicit corrections, so there was no repair opportunity to mishandle.
+  coherence: 5/5 — The assistant tracked the original appointment, the user's availability, the selected option, and the confirmation without re-asking or contradicting prior information.
+  tone: 4/5 — The wording was clear and polite, with only mildly formulaic phrasing such as status updates and the final rating prompt.
+  task_completion: PASS — The assistant clearly confirmed that the appointment was rescheduled from the original time to 16/06/2026 at 09:30.
+summary: The assistant successfully guided the user through rescheduling and confirmed the new appointment. It maintained context well and used clear, polite language, with only minor stiffness and a slight ambiguity in offering a same-day earlier slot as a reschedule option.
+
+--- Assertion Results ---
+[PASS] flow_started(reschedule_appointment)
+[PASS] slot_was_set(selected_appointment_slot, user_confirmation=True, appointment_confirmed=True)
+[PASS] flow_completed(reschedule_appointment)
+[PASS] action_executed(utter_appointment_rescheduled)
+[PASS] sequencing
+
+--- Raw Transcript ---
+[1] user: Hi, I need to reschedule my doctor appointment.
+[2] agent: What is your current appointment date and time that you want to reschedule?
+[3] user: It's Tuesday 16/06/2026 at 10:00.
+[4] agent: Thanks. What date would you like to move the appointment to?
+[5] user: I'm flexible on the doctor and available weekday mornings over the next two weeks, with no blackout dates.
+[6] agent: Looking into suitable new time slots for you.
+[7] agent: I’ve found several weekday morning options in the next two weeks. Here are some choices:
+[8] agent: 1. Tue 16/06/2026 – 09:30  
+2. Wed 17/06/2026 – 09:00  
+3. Thu 18/06/2026 – 11:00  
+4. Fri 19/06/2026 – 11:15  
+5. Mon 22/06/2026 – 09:00  
+6. Tue 23/06/2026 – 08:00  
+7. Wed 24/06/2026 – 10:30  
+8. Thu 25/06/2026 – 10:00  
+9. Fri 26/06/2026 – 11:30  
+10. Tue 30/06/2026 – 08:45  
+[9] agent: Please tell me the exact option number (1–10) you’d like to move your appointment to.
+[10] user: Option 1, please.
+[11] agent: Checking that and updating your appointment now.
+[12] agent: Are you sure you want to book the 16/06/2026 09:30?
+[13] user: Yes, please confirm the reschedule.
+[14] agent: Okay, I have rescheduled your appointment from 'Tuesday 16/06/2026 at 10:00' to '16/06/2026 09:30'.
+[15] agent: Do you need help with anything else?
+[16] user: No, thanks. That's all I needed.
+[17] agent: Alright, I’ll be here if you need any more help.
+[18] agent: How would you rate your experience with me today?
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-3b95ab1b-99dd-4755-84f7-f1d56cb97776

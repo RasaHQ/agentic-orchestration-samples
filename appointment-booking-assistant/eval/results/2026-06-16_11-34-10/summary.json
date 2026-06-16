@@ -1,0 +1,8 @@
+[
+  {
+    "scenario_name": "User asks a knowledge question about clinic hours",
+    "runs_passed": 0,
+    "runs_total": 1,
+    "duration_s": 12.211245915852487
+  }
+]

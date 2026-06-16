@@ -1,0 +1,33 @@
+scenario: User asks a knowledge question about clinic hours
+run: 1
+timestamp: 2026-06-16T10:34:34Z
+conversation_id: sim-0c280f0f-736e-448c-a2bb-319855b303a0
+overall_result: PASS
+
+--- Quality Criteria Results ---
+[PASS] The agent answers with the main clinic's weekday hours (Monday through Friday, 8 AM to 6 PM)
+  rationale: The bot states: "The main clinic is open Monday through Friday from 8:00 AM to 6:00 PM."
+
+--- Quality Metrics ---
+bot_quality: 4.75/5
+  helpfulness: 5/5 — The answer was direct, complete, and actionable, including regular clinic hours, closures, and urgent care availability.
+  repair_quality: 5/5 — There were no user disfluency signals or corrections, so there was no repair opportunity to mishandle.
+  coherence: 5/5 — There were no state-tracking issues, contradictions, or re-asking for information in the short exchange.
+  tone: 4/5 — The wording was clear and professional, though slightly formulaic with the follow-up prompt.
+  task_completion: PASS — The assistant clearly answered the user's question by providing clinic hours and relevant urgent care hours.
+summary: The assistant successfully provided the requested clinic hours in a clear and useful way, with an added urgent care note that may be helpful. There were no repair or coherence issues, and the tone was readable though somewhat standard support-bot style.
+
+--- Assertion Results ---
+[PASS] flow_started(pattern_search)
+[PASS] action_executed(action_trigger_search)
+[PASS] generative_response_is_relevant
+
+--- Raw Transcript ---
+[1] user: What are the clinic hours?
+[2] agent: The main clinic is open Monday through Friday from 8:00 AM to 6:00 PM, and it is closed on weekends and public holidays. For urgent same-day concerns, the Urgent Care wing at the same address is open daily from 7:00 AM to 9:00 PM. [1]
+Sources:
+[1] docs/clinic/hours_and_locations.txt
+[3] agent: Is there anything else you would like help with?
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-0c280f0f-736e-448c-a2bb-319855b303a0

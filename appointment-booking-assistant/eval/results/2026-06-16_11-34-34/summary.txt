@@ -1,0 +1,7 @@
+======================================================================
+EXPERIMENT SUMMARY
+======================================================================
+[PASS] User asks a knowledge question about clinic hours  1/1  14.0s  eval/results/2026-06-16_11-34-34/User asks a knowledge question about clinic hours
+----------------------------------------------------------------------
+Total: 1/1 passed
+Time:  14.0s

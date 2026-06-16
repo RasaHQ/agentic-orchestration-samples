@@ -1,0 +1,21 @@
+scenario: User declines confirmation after selecting an appointment slot
+run: 1
+timestamp: 2026-06-16T10:41:07Z
+conversation_id: sim-d9b4e921-a0e6-41d1-9555-595fa6dffc70
+overall_result: FAIL
+error: send_message failed after 3 attempts: ClientConnectorError(ConnectionKey(host='localhost', port=5005, is_ssl=False, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), ConnectionRefusedError(61, "Multiple exceptions: [Errno 61] Connect call failed ('::1', 5005, 0, 0), [Errno 61] Connect call failed ('127.0.0.1', 5005)"))
+
+--- Quality Criteria Results ---
+(none defined)
+
+--- Quality Metrics ---
+(not evaluated)
+
+--- Assertion Results ---
+(none defined)
+
+--- Raw Transcript ---
+(no turns recorded)
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-d9b4e921-a0e6-41d1-9555-595fa6dffc70

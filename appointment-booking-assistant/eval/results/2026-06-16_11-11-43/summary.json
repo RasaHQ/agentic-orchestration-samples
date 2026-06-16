@@ -1,0 +1,8 @@
+[
+  {
+    "scenario_name": "User successfully reschedules an existing appointment",
+    "runs_passed": 1,
+    "runs_total": 1,
+    "duration_s": 27.915033707860857
+  }
+]

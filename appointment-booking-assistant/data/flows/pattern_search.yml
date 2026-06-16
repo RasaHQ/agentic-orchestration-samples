@@ -1,0 +1,6 @@
+flows:
+  pattern_search:
+    name: pattern search
+    description: Handle knowledge-based questions about clinic policies, appointments, and services
+    steps:
+      - action: action_trigger_search

@@ -1,0 +1,13 @@
+version: "3.1"
+
+slots:
+  existing_appointment_slot:
+    type: text
+    mappings:
+      - type: from_llm
+
+responses:
+  utter_ask_existing_appointment_slot:
+    - text: What is your current appointment date and time that you want to reschedule?
+  utter_appointment_rescheduled:
+    - text: "Okay, I have rescheduled your appointment from '{existing_appointment_slot}' to '{selected_appointment_slot}'."

@@ -1,0 +1,23 @@
+scenario:
+  name: User asks a knowledge question about appointment duration
+
+  simulation_context: >
+    You are a patient planning your schedule around a doctor visit. Ask exactly
+    one factual question: "How long is each appointment slot?"
+    Send this as your opening message only. Set done to true on your first
+    message — do not send any follow-up after the bot replies.
+
+  goals:
+    criteria:
+      - The agent states that each appointment slot is 30 minutes long
+    assertions:
+      - flow_started:
+          flow_ids: [pattern_search]
+          operator: any
+      - action_executed: action_trigger_search
+      - generative_response_is_relevant:
+          threshold: 0.70
+          utter_source: EnterpriseSearchPolicy
+      - generative_response_is_grounded:
+          threshold: 0.70
+          utter_source: EnterpriseSearchPolicy

@@ -1,0 +1,32 @@
+scenario:
+  name: User successfully reschedules an existing appointment
+
+  simulation_context: >
+    You are a patient who needs to move an existing doctor appointment to a new time.
+    Start by asking to reschedule your appointment. When asked for your current
+    appointment, say it is Tue 16/06/2026 at 10:00. When asked about availability
+    for the new time, say you are flexible on the doctor and available weekday
+    mornings over the next two weeks with no blackout dates. When shown available
+    slots, pick the first option offered. When asked to confirm the reschedule, say yes.
+
+  goals:
+    criteria:
+      - The agent asks for explicit confirmation before finalizing the rescheduled appointment
+    assertions:
+      - flow_started:
+          flow_ids: [reschedule_appointment]
+          operator: any
+      - slot_was_set:
+          - name: selected_appointment_slot
+          - name: user_confirmation
+            value: true
+          - name: appointment_confirmed
+            value: true
+      - action_executed: utter_appointment_rescheduled
+      - flow_completed:
+          flow_id: reschedule_appointment
+      - sequencing:
+          - flow_started: reschedule_appointment
+          - slot_was_set: selected_appointment_slot
+          - slot_was_set: user_confirmation
+          - flow_completed: reschedule_appointment

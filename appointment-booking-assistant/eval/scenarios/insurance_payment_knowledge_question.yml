@@ -1,0 +1,23 @@
+scenario:
+  name: User asks a knowledge question about accepted insurance
+
+  simulation_context: >
+    You are a patient checking whether your insurance is accepted before booking
+    a visit. Ask exactly one factual question: "What insurance plans do you accept?"
+    Send this as your opening message only. Set done to true on your first
+    message — do not send any follow-up after the bot replies.
+
+  goals:
+    criteria:
+      - The agent mentions at least one accepted insurance plan from the clinic's knowledge base (such as BlueCross, Aetna, UnitedHealthcare, or Medicare)
+    assertions:
+      - flow_started:
+          flow_ids: [pattern_search]
+          operator: any
+      - action_executed: action_trigger_search
+      - generative_response_is_relevant:
+          threshold: 0.70
+          utter_source: EnterpriseSearchPolicy
+      - generative_response_is_grounded:
+          threshold: 0.70
+          utter_source: EnterpriseSearchPolicy

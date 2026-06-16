@@ -1,0 +1,48 @@
+scenario: User successfully schedules a new appointment
+run: 1
+timestamp: 2026-06-16T09:09:02Z
+conversation_id: sim-3e912458-cae5-49d5-a6a0-25170cc0511a
+overall_result: FAIL
+error: 404, message='Not Found', url='http://localhost:5005/conversations/sim-3e912458-cae5-49d5-a6a0-25170cc0511a/tracker'
+
+--- Quality Criteria Results ---
+(none defined)
+
+--- Quality Metrics ---
+(not evaluated)
+
+--- Assertion Results ---
+(none defined)
+
+--- Raw Transcript ---
+[1] user: Hi, I’d like to schedule a new doctor’s appointment, please.
+[2] agent: Happy to help you set that up.
+[3] agent: First, what date range works for you?  
+For example: “Any day next week” or “Between 20/06/2026 and 30/06/2026.”
+[4] user: I’m flexible on the doctor and can do any weekday morning over the next two weeks, no blackout dates.
+[5] agent: Looking into available slots that match that schedule.
+[6] agent: Here are some options for weekday mornings in the next two weeks:
+[7] agent: 1. Tue 16/06/2026 – 10:45  
+2. Wed 17/06/2026 – 11:00  
+3. Thu 18/06/2026 – 10:15  
+4. Fri 19/06/2026 – 10:30  
+5. Mon 22/06/2026 – 09:15  
+6. Tue 23/06/2026 – 10:30  
+7. Wed 24/06/2026 – 10:00  
+8. Fri 26/06/2026 – 08:30  
+9. Mon 29/06/2026 – 10:45  
+10. Tue 30/06/2026 – 10:15  
+[8] agent: Please tell me the number of the option you want (1–10), or you can copy-paste the date and time you prefer.
+[9] user: I’ll take option 1: Tue 16/06/2026 at 10:45.
+[10] agent: I'll go ahead and reserve that specific slot for you now.
+[11] agent: I'll save this confirmed slot in your record.
+[12] agent: Are you sure you want to book the Tue 16/06/2026 – 10:45?
+[13] user: Yes, please confirm that booking for Tue 16/06/2026 at 10:45.
+[14] agent: Okay I have booked the slot 'Tue 16/06/2026 – 10:45' for you!
+[15] agent: Is there anything else I can help you with today?
+[16] user: No, that’s all I needed, thanks for your help.
+[17] agent: Alright, I’ll be here if you need any more help later.
+[18] agent: How would you rate your experience with me today?
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-3e912458-cae5-49d5-a6a0-25170cc0511a

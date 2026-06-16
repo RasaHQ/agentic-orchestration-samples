@@ -1,0 +1,10 @@
+======================================================================
+EXPERIMENT SUMMARY
+======================================================================
+[FAIL] User successfully schedules a new appointment  0/1  35.4s  eval/results/2026-06-16_11-23-21/User successfully schedules a new appointment
+----------------------------------------------------------------------
+Total: 0/1 passed
+Time:  35.4s
+
+Scenarios requiring attention:
+  - User successfully schedules a new appointment  0/1 passed  (0%)

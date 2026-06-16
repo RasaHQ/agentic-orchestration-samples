@@ -1,0 +1,10 @@
+======================================================================
+EXPERIMENT SUMMARY
+======================================================================
+[FAIL] User declines confirmation after selecting an appointment slot  0/1  25.6s  eval/results/2026-06-16_10-50-07/User declines confirmation after selecting an appointment slot
+----------------------------------------------------------------------
+Total: 0/1 passed
+Time:  25.6s
+
+Scenarios requiring attention:
+  - User declines confirmation after selecting an appointment slot  0/1 passed  (0%)

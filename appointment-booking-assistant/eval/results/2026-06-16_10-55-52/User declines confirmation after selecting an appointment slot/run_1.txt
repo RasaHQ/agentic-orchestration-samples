@@ -1,0 +1,59 @@
+scenario: User declines confirmation after selecting an appointment slot
+run: 1
+timestamp: 2026-06-16T09:56:32Z
+conversation_id: sim-3d0bfcf6-96de-4464-8415-ff7f4716cfc2
+overall_result: PASS
+
+--- Quality Criteria Results ---
+[PASS] The agent does not claim the appointment was booked after the user declines confirmation
+  rationale: After the user declined at T4, the bot said "Okay I'll hold off on booking that for you!" and did not claim the appointment was booked.
+
+--- Quality Metrics ---
+bot_quality: 4.5/5
+  helpfulness: 4/5 — The assistant provided relevant appointment options and clear next steps, though it did not complete a booking because the user declined at confirmation.
+  repair_quality: 5/5 — When the user said no to booking the selected slot, the assistant immediately acknowledged the correction and stopped the booking flow.
+  coherence: 5/5 — The assistant tracked the user's availability, selected option, and later cancellation without re-asking or contradicting prior context.
+  tone: 4/5 — The wording was clear and polite, with only slightly formulaic phrasing such as repeated 'I'll' statements and the survey prompt.
+  task_completion: PASS — The user ultimately chose not to book the slot, and the assistant honored that clear change of mind and ended without booking.
+summary: The assistant efficiently gathered scheduling constraints, offered suitable options, and correctly paused for confirmation before booking. It handled the user's change of mind cleanly and maintained context throughout, with only mildly formulaic language.
+
+--- Assertion Results ---
+[PASS] flow_started(schedule_new_appointment)
+[PASS] slot_was_set(selected_appointment_slot, user_confirmation=False)
+[PASS] slot_was_not_set(appointment_confirmed)
+[PASS] flow_completed(schedule_new_appointment)
+[PASS] action_executed(utter_cancelling)
+[PASS] bot_did_not_utter
+[PASS] sequencing
+
+--- Raw Transcript ---
+[1] user: Hi, I’d like to schedule a new doctor appointment.
+[2] agent: Happy to help with that.
+[3] agent: First, what day or date range are you looking for the appointment (for example, “any day next week” or “between 20/06/2026 and 25/06/2026”)?
+[4] user: I’m flexible on the doctor and available weekday mornings over the next two weeks with no blackout dates.
+[5] agent: Looking into available appointment options that fit that schedule.
+[6] agent: Here are some options that fit weekday mornings over the next two weeks:
+[7] agent: 1. Tue 16/06/2026 – 09:30  
+2. Wed 17/06/2026 – 10:30  
+3. Thu 18/06/2026 – 09:30  
+4. Fri 19/06/2026 – 08:00  
+5. Mon 22/06/2026 – 09:00  
+6. Tue 23/06/2026 – 09:15  
+7. Wed 24/06/2026 – 10:00  
+8. Thu 25/06/2026 – 11:15  
+9. Fri 26/06/2026 – 08:15  
+10. Mon 29/06/2026 – 10:30  
+[8] agent: Please tell me the number (1–10) or the exact date and time you’d like to book.
+[9] user: I’ll take option 1, Tue 16/06/2026 at 09:30.
+[10] agent: I'll get that appointment set up for you now.
+[11] agent: I'll save this appointment time to your profile.
+[12] agent: Are you sure you want to book the Tue 16/06/2026 09:30?
+[13] user: No, I don’t want to book that slot after all.
+[14] agent: Okay I'll hold off on booking that for you!
+[15] agent: Is there something else you’d like help with?
+[16] user: No, thanks. That’s all I needed.
+[17] agent: Alright, I’ll be here if you need any more help later.
+[18] agent: How would you rate your experience today with us?
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-3d0bfcf6-96de-4464-8415-ff7f4716cfc2

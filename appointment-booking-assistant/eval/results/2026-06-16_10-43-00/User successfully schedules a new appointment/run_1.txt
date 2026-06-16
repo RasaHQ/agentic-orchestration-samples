@@ -1,0 +1,59 @@
+scenario: User successfully schedules a new appointment
+run: 1
+timestamp: 2026-06-16T09:43:22Z
+conversation_id: sim-68b54a82-efc9-484a-81bd-9663e99cd41a
+overall_result: PASS
+
+--- Quality Criteria Results ---
+[PASS] The agent asks for explicit confirmation before booking the selected time slot
+  rationale: After the user selected Option 1, the bot asked “Are you sure you want to book the Thu 18/06/2026 – 09:00?” and only called book_appointment after the user replied “Yes, please book it” at T5.
+
+--- Quality Metrics ---
+bot_quality: 4.75/5
+  helpfulness: 5/5 — The assistant's substantive responses were accurate, complete, and directly actionable for scheduling the appointment.
+  repair_quality: 5/5 — There were no user disfluency signals or corrections, so there was no repair opportunity to mishandle.
+  coherence: 5/5 — The assistant tracked the user's availability, doctor preference, selected option, and confirmation without re-asking or contradicting itself.
+  tone: 4/5 — The phrasing was clear and polite, with only mildly formulaic wording such as repeated confirmation-style prompts.
+  task_completion: PASS — The assistant collected the needed scheduling preferences, presented fitting options, confirmed the chosen slot, and clearly stated that the appointment was booked.
+summary: The assistant successfully guided the user through booking a doctor appointment and delivered a clear final confirmation. It maintained context well and required no repair, though the language was somewhat templated rather than fully natural.
+
+--- Assertion Results ---
+[PASS] flow_started(schedule_new_appointment)
+[PASS] slot_was_set(selected_appointment_slot, user_confirmation=True, appointment_confirmed=True)
+[PASS] flow_completed(schedule_new_appointment)
+[PASS] action_executed(utter_appointment_confirmed)
+[PASS] sequencing
+
+--- Raw Transcript ---
+[1] user: Hi, I'd like to schedule a new doctor appointment.
+[2] agent: Happy to help with that.  
+[3] agent: First, what date range are you looking at for this appointment (for example, “any time next week” or specific dates)?
+[4] user: I'm available weekday mornings over the next two weeks, with no blackout dates.
+[5] agent: Thanks, that helps.  
+[6] agent: Which doctor would you prefer to see: a specific doctor (if you have a name), or anyone who’s available is fine?
+[7] user: Anyone who’s available is fine.
+[8] agent: Looking into available appointment options next.
+[9] agent: Here are some options that fit your availability over the next two weeks (weekday mornings):
+[10] agent: 1) Thu 18/06/2026 – 09:00  
+2) Fri 19/06/2026 – 11:15  
+3) Mon 22/06/2026 – 10:45  
+4) Tue 23/06/2026 – 08:30  
+5) Wed 24/06/2026 – 11:30  
+6) Thu 25/06/2026 – 09:30  
+7) Fri 26/06/2026 – 08:00  
+8) Mon 29/06/2026 – 11:00  
+9) Tue 30/06/2026 – 10:30  
+10) Wed 17/06/2026 – 10:00 (tomorrow)
+[11] agent: Please reply with the number of the option you’d like, or repeat the date and time (e.g., “Mon 22/06 at 10:45”).
+[12] user: Option 1, Thu 18/06/2026 at 09:00, please.
+[13] agent: I'll confirm that slot and save it for you.
+[14] agent: Are you sure you want to book the Thu 18/06/2026 – 09:00?
+[15] user: Yes, please book it.
+[16] agent: Okay I have booked the slot 'Thu 18/06/2026 – 09:00' for you!
+[17] agent: Do you need help with anything else?
+[18] user: Thanks, that's all I needed.
+[19] agent: Alright, I’ll be here if you need any more help.
+[20] agent: How would you rate your experience with me today?
+
+--- Inspector URL ---
+http://localhost:5005/webhooks/inspector/inspect.html?sender=sim-68b54a82-efc9-484a-81bd-9663e99cd41a
